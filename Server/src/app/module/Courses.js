@@ -9,9 +9,9 @@ const Courses = new Schema(
         courseName: { type: String, required: true, unique: true },
         courseDescription: { type: String, required: true },
         image: { type: String },
-        slug: { type: String, slug: courseName },
+        slug: { type: String, slug: 'courseName' },
     },
-    { timestamps: true },
+    { timestamps: true, collection: 'Courses' },
 );
 
 // plugins

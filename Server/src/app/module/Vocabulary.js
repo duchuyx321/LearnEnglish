@@ -11,7 +11,7 @@ const Vocabulary = new Schema(
         exampleSentence: { type: String, required: true }, // câu ví dụ
         audioUrl: { type: String, required: true },
     },
-    { timestamps: true },
+    { timestamps: true, collection: 'Vocabulary' },
 );
 
 // plugins

@@ -10,7 +10,7 @@ const Lessons = new Schema(
         lessonContent: { type: String, required: true },
         lessonTarget: { type: Object, required: true },
     },
-    { timestamps: true },
+    { timestamps: true, collection: 'Lessons' },
 );
 
 // plugins

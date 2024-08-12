@@ -23,7 +23,7 @@ const Progress = new Schema(
             default: 0,
         },
     },
-    { timestamps: true },
+    { timestamps: true, collection: 'Progress' },
 );
 
 // plugins

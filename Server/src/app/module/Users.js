@@ -13,7 +13,7 @@ const Users = new Schema(
             maxlength: 15,
         },
         email: { type: String, required: true, unique: true, minlength: 10 },
-        password: { type: String, minlength: 8, maxlength: 15 },
+        password: { type: String, minlength: 8 },
         role: {
             type: String,
             required: true,
@@ -28,7 +28,7 @@ const Users = new Schema(
             default: 'Local',
         },
     },
-    { timestamps: true },
+    { timestamps: true, collection: 'Users' },
 );
 
 // create index username email
