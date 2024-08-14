@@ -1,17 +1,35 @@
 const Users = require('../module/Users');
 const { hashPass, decryptPass } = require('../../util/hashPass');
-const { AccessToken, RefreshToken } = require('../../util/JWTUtil');
+const { AccessToken, RefreshToken, setToken } = require('../../util/JWTUtil');
 
 class AuthController {
     // [POST] -/auth/login
     async Login(req, res, next) {
         try {
-            const { username, email, password } = req.body;
-            const currentUser = await Users.findOne({ email });
+            const { username, email } = req.body;
+            const pass = req.body.password;
+            const currentUser = await Users.findOne({
+                email,
+            });
             if (!currentUser) {
-                return res.status(404).json({ message: 'User not found' });
+                return res.status(401).json({ message: 'User not found' });
             }
+            if (currentUser.username !== username) {
+                return res.status(401).json({ message: 'Incorrect username' });
+            }
+            const passDB = currentUser.password;
+            const decryptPassword = await decryptPass(pass, passDB);
+            if (!decryptPassword) {
+                return res.status(401).json({ message: 'Incorrect password ' });
+            }
+            const { password, ...other } = currentUser._doc;
+            console.log(other);
+            const newAccessToken = setToken(res, other);
+            return res
+                .status(200)
+                .json({ data: [other], meta: { newAccessToken } });
         } catch (error) {
+            console.log(error);
             res.status(500).json(error);
         }
     }
@@ -36,14 +54,7 @@ class AuthController {
             });
             await newUser.save();
             const { password, ...other } = newUser._doc;
-            const newAccessToken = `Bearer ${AccessToken(other)}`;
-            const newRefreshToken = RefreshToken(other);
-            res.cookie('RefreshToken', newRefreshToken, {
-                httpOnly: true,
-                secure: true,
-                path: '/',
-                sameSite: 'strict',
-            });
+            const newAccessToken = setToken(res, other);
             return res.json({
                 data: [other],
                 meta: { token: newAccessToken },

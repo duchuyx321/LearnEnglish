@@ -35,6 +35,6 @@ const Users = new Schema(
 Users.index({ username: 1, email: 1 });
 
 // Plugins
-mongoose.plugin(mongooseDelete, { delete: true, deleteAt: true });
+mongoose.plugin(mongooseDelete, { deletedAt: true, overrideMethods: true });
 
 module.exports = mongoose.model('Users', Users);

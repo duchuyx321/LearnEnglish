@@ -27,6 +27,6 @@ const Progress = new Schema(
 );
 
 // plugins
-mongoose.plugin(mongooseDelete, { delete: true, deleteAt: true });
+mongoose.plugin(mongooseDelete, { deletedAt: true, overrideMethods: true });
 
 module.exports = mongoose.model('Progress', Progress);
