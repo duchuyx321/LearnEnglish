@@ -10,12 +10,30 @@ class CourseController {
             res.status(403).json({ message: 'Error must be responded to', e });
         }
     }
-    // [GET] -/course/find/:_id
+    // [GET] -/course/findCourse/_:id
     async findCourse(req, res, next) {
         try {
             const { _id } = req.params;
             const course = await Courses.findOne({ _id });
             res.status(200).json({ data: [course] });
+        } catch (error) {
+            res.status(404).json(error);
+        }
+    }
+    // [GET] -/course/search?q=...
+    async searchCourse(req, res, next) {
+        try {
+            if (req.query.text) {
+                const regexText = new RegExp(req.query.q, 'i');
+                const results = await Notes.find({
+                    $or: [
+                        { title: { $regex: regexText } },
+                        { content: { $regex: regexText } },
+                    ],
+                });
+
+                res.status(200).json({ data: [results] });
+            }
         } catch (error) {
             res.status(404).json(error);
         }

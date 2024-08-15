@@ -91,6 +91,18 @@
 }
 
 // tippy
+.search-result {
+    width: var(--width-search-wrapper);
+    background-color: #fff;
+    min-height: 5rem;
+    padding: 12px 24px;
+    color: #0000008a;
+    display: flex;
+    gap: 1.6rem;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.5);
+}
 
 // _action
 ._action {

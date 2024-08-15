@@ -13,6 +13,8 @@ const Courses = new Schema(
     },
     { timestamps: true, collection: 'Courses' },
 );
+// create index
+Courses.index({ courseName: 1, courseDescription: 1 });
 
 // plugins
 mongoose.plugin(slug);
