@@ -1,0 +1,100 @@
+.wrapper {
+    width: 100%;
+    height: var(--height-header-wrapper);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e8ebed;
+    background-color: #fff;
+    gap: 3rem;
+    padding: 0 2.8rem;
+    font-size: 1.8rem;
+}
+
+// _Logo
+._Logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+    font-size: 1.8rem;
+    color: var(--text-color);
+}
+.img-logo {
+    width: 4.8rem;
+    image-rendering: auto;
+    flex-shrink: 0;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Đổ bóng cho ảnh */
+}
+.subtitle {
+    color: var(--text-color);
+}
+
+// _body
+._body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+._search {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inner-search {
+    position: relative;
+    width: var(--width-search-wrapper);
+    max-width: 100%;
+    height: 5rem;
+    padding: 0 1.6rem 0 1.6rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    border: 2px solid rgb(232, 232, 232);
+    transition: border-color 0.2s ease-in-out;
+}
+.icon-search {
+    font-size: 3.2rem;
+    border-radius: 50%;
+    color: rgb(194, 192, 192);
+    transition: opacity 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input-search {
+    flex: 1;
+    max-width: 100%;
+    height: 100%;
+    padding: 0 8px 0 8px;
+    border-radius: 20px;
+    caret-color: #444;
+}
+.icon-search-clear {
+    font-size: 2.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(133, 131, 131);
+}
+.hidden {
+    display: none;
+}
+
+// tippy
+
+// _action
+._action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

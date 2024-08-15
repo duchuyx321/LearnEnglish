@@ -1,10 +1,7 @@
-import classNames from "classnames/bind";
+import '~/components/GlobalStyle/GlobalStyle.module.scss';
 
-import styles from "./GlobalStyle.module.scss"
-
-const cx = 
-function GlobalStyle() {
-    return (  );
+function GlobalStyle({ children }) {
+    return children;
 }
 
 export default GlobalStyle;

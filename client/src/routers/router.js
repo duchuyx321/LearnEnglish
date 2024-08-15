@@ -1,11 +1,13 @@
 import Home from '~/pages/Home';
 import Profile from '~/pages/Profile';
 
-const PrivateRouters = [
+// Private router
+const PrivateRouters = [];
+
+// Public Router
+const PublicRouters = [
     { path: '/', component: Home },
     { path: '/:username', component: Profile },
 ];
-
-const PublicRouters = [];
 
 export { PrivateRouters, PublicRouters };
