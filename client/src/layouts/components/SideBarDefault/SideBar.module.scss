@@ -1,0 +1,28 @@
+.wrapper {
+    width: var(--width-sidebar-wrapper);
+    height: 100%;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem 8px;
+    row-gap: 4px;
+}
+.itemBtn {
+    width: 100%;
+    height: 7.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--black-color);
+    border-radius: 8px;
+    color: #1a1a1a;
+    &:hover {
+        background: #e3e3e3;
+    }
+}
+
+.active {
+    background: #e8ebed;
+}

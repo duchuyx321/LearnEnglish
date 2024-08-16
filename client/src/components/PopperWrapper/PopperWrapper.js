@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function PopperWrapper({ children, className, title }) {
     return (
         <div className={cx('wrapper', className)}>
-            <div className={cx('title')}>{title}</div>
+            <h2 className={cx('title')}>{title}</h2>
             <div className={cx('content')}>{children}</div>
         </div>
     );

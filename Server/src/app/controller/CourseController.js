@@ -23,16 +23,14 @@ class CourseController {
     // [GET] -/course/search?q=...
     async searchCourse(req, res, next) {
         try {
-            if (req.query.text) {
+            console.log(req.query.q);
+            if (req.query.q) {
                 const regexText = new RegExp(req.query.q, 'i');
-                const results = await Notes.find({
-                    $or: [
-                        { title: { $regex: regexText } },
-                        { content: { $regex: regexText } },
-                    ],
+                const results = await Courses.find({
+                    courseName: { $regex: regexText },
                 });
 
-                res.status(200).json({ data: [results] });
+                res.status(200).json({ data: results });
             }
         } catch (error) {
             res.status(404).json(error);

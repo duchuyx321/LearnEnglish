@@ -21,7 +21,7 @@ app.use(morgan('combined'));
 app.use(
     cors({
         origin: process.env.URL_CLIENT,
-        credentials: true,
+        // credentials: true,
     }),
 );
 

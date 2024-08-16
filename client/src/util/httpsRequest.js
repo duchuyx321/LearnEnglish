@@ -1,22 +1,24 @@
 import axios from 'axios';
 
 const httpsRequest = axios.create({
-    baseURL: 'http://localhost/5000',
-    withCredentials: true,
+    baseURL: 'http://localhost:5000/',
+    // withCredentials: true,
 });
 
 const token = localStorage.getItem('token');
 
 httpsRequest.interceptors.request.use(
     (config) => {
-        config.headers.Authorization = token;
+        if (token) {
+            config.headers.Authorization = token;
+        }
         return config;
     },
     (error) => Promise.reject(error),
 );
 export const get = async (path, config = {}) => {
     const response = await httpsRequest.get(path, config);
-    return response;
+    return response.data;
 };
 
 export const post = async (path, config = {}) => {

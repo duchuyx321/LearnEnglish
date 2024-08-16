@@ -1,6 +1,7 @@
 const Users = require('../module/Users');
+const Profile = require('../module/Profile');
 const { hashPass, decryptPass } = require('../../util/hashPass');
-const { AccessToken, RefreshToken, setToken } = require('../../util/JWTUtil');
+const { setToken } = require('../../util/JWTUtil');
 
 class AuthController {
     // [POST] -/auth/login
@@ -60,6 +61,43 @@ class AuthController {
                 meta: { token: newAccessToken },
             });
         } catch (err) {
+            res.status(500).json(err);
+        }
+    }
+
+    // [PATCH] -/auth/me
+    async updateCurrentUser(req, res, next) {
+        try {
+            const avatar = req.file;
+
+            const userID = req.userID;
+            const data = req.body;
+            if (!userID) {
+                return res.status(400).json({ message: 'ID is required' });
+            }
+            const user = await Users.findOne({ _id: userID });
+            if (!user) {
+                return res.status(404).json({ message: 'user not found' });
+            }
+            // const ProfileUpdate = await Profile.findOneAndUpdate(
+            //     { userID },
+            //     data,
+            //     {
+            //         new: true,
+            //         upsert: true,
+            //     },
+            // );
+            // if (ProfileUpdate.modifiedCount === 0) {
+            //     return res
+            //         .status(404)
+            //         .json({ massage: 'profile update failed' });
+            // }
+            return res.status(200).json({
+                message: 'profile updated successfully',
+                // ProfileUpdate,
+            });
+        } catch (err) {
+            console.log(err);
             res.status(500).json(err);
         }
     }

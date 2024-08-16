@@ -5,7 +5,7 @@ const router = express.Router();
 const CourseController = require('../app/controller/CourseController');
 // [GET]
 router.get('/combined', CourseController.combinedCourse);
-router.get('search', CourseController.searchCourse);
+router.get('/search', CourseController.searchCourse);
 // [POST]
 router.post('/create', CourseController.createCourse);
 

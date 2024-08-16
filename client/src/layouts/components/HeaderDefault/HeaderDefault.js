@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -6,12 +5,13 @@ import Tippy from '@tippyjs/react/headless';
 import { IoIosSearch } from 'react-icons/io';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { RiLoader2Line } from 'react-icons/ri';
-import { useDebounce } from 'use-debounce';
 
 import styles from './HeaderDefault.module.scss';
 import images from '~/assets';
 import PopperWrapper from '~/components/PopperWrapper';
 import { search } from '~/service/searchService';
+import { useDebounce } from '~/hooks';
+import Button from '~/Button';
 
 const cx = classNames.bind(styles);
 
@@ -21,7 +21,7 @@ function HeaderDefault({ children }) {
     const [valueInput, setValueInput] = useState('');
     const [searchResult, setSearchResult] = useState([]);
 
-    const debounce = useDebounce(valueInput, 5000);
+    const debounce = useDebounce(valueInput, 2000);
     // authentication token
     useEffect(() => {
         const Token = localStorage.getItem('token');
@@ -31,6 +31,7 @@ function HeaderDefault({ children }) {
         setIsToken(false);
     }, []);
 
+    // API search
     useEffect(() => {
         if (!debounce) {
             setSearchResult([]);
@@ -40,49 +41,67 @@ function HeaderDefault({ children }) {
             setLoading(true);
 
             const result = await search(debounce);
+
             setSearchResult(result);
             setLoading(false);
         };
         fetchAPI();
-    }, []);
+    }, [debounce]);
     const handleOnChangeInput = (e) => {
         setValueInput(e);
     };
     const handleOnClear = () => {
         setValueInput('');
     };
-    console.log(debounce);
     const renderValue = (attrs) => {
         return (
             <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                {loading ? <RiLoader2Line /> : <IoIosSearch />}
-                {valueInput && !debounce && (
-                    <h4>{`Tìm Kiếm Cho : "${valueInput}"`}</h4>
-                )}
-                {debounce && (
-                    <div>
-                        {searchResult ? (
-                            <h4>{`Kết Quả Tìm Kiếm Cho : "${valueInput}"`}</h4>
+                <div className={cx('search-result-title')}>
+                    <span className={'search-result-icon'}>
+                        {loading ? (
+                            <span className={cx('loading')}>
+                                <RiLoader2Line />
+                            </span>
                         ) : (
-                            <h4>{`Không Có Kết Quả Tìm Kiếm Cho : "${valueInput}"`}</h4>
+                            <IoIosSearch />
                         )}
-                    </div>
-                )}
-                {searchResult ? (
+                    </span>
+                    {valueInput && !debounce && (
+                        <h4>{`Tìm Kiếm Cho : "${valueInput}"`}</h4>
+                    )}
+                    {debounce && (
+                        <div className={cx('search-title-alert')}>
+                            {searchResult ? (
+                                <h4>{`Kết Quả Tìm Kiếm Cho : "${valueInput}"`}</h4>
+                            ) : (
+                                <h4>{`Không Có Kết Quả Tìm Kiếm Cho : "${valueInput}"`}</h4>
+                            )}
+                        </div>
+                    )}
+                </div>
+
+                {searchResult.length > 0 ? (
                     <PopperWrapper
-                        title={'Khóa Học'}
+                        title={'Khóa Học :'}
                         className={cx('popperWrapper')}
                     >
                         {searchResult.map((item) => (
-                            <div
+                            <Link
+                                to={`/@${item.slug}`}
                                 key={item._id}
                                 className={cx('search-result-inner')}
                             >
-                                <img src={item.image} alt="khóa Học" />
+                                <img
+                                    src={
+                                        item.image ||
+                                        'https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/1d9206ca61d04b830f4c7819744a02af.jpeg?lk3s=a5d48078&nonce=40877&refresh_token=dd6021f1e2347cfa047eed14db2fdf4b&x-expires=1723950000&x-signature=nK0AHoyYyPkAH2quwNn2gsC6zCw%3D&shp=a5d48078&shcp=81f88b70'
+                                    }
+                                    alt="khóa Học"
+                                />
                                 <h4 className={cx('title-course')}>
                                     {item.courseName}
                                 </h4>
-                            </div>
+                            </Link>
                         ))}
                     </PopperWrapper>
                 ) : null}
@@ -141,7 +160,12 @@ function HeaderDefault({ children }) {
                 {isToken ? (
                     <div>Đã Đăng nhập</div>
                 ) : (
-                    <div className={cx('_action')}>Chưa đăng nhập </div>
+                    <div className={cx('_action')}>
+                        <Button outlineText>Đăng Ký</Button>
+                        <Button primary text>
+                            Đăng Nhập
+                        </Button>
+                    </div>
                 )}
             </div>
         </div>

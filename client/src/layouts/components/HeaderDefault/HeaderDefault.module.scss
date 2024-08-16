@@ -98,12 +98,61 @@
     padding: 12px 24px;
     color: #0000008a;
     display: flex;
-    gap: 1.6rem;
+    flex-direction: column;
+    gap: 8px;
     overflow-y: auto;
     border-radius: 8px;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.5);
 }
-
+.search-result-title {
+    display: flex;
+    gap: 1.6rem;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #0000008a;
+}
+.search-result-icon {
+    font-size: 2rem;
+}
+.search-title-alert {
+    max-width: 90%;
+}
+.search-title-alert > h4 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.search-result-inner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+    font-size: 1.4rem;
+    gap: 1.6rem;
+    padding: 8px 0;
+    color: #0000008a;
+}
+.search-result-inner > img {
+    width: 4rem;
+    border-radius: 100%;
+}
+.title-course {
+    font-size: 1.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.loading {
+    animation: Loading 1s infinite linear;
+}
+// animation Loading
+@keyframes Loading {
+    to {
+        transform: rotate(-360deg);
+    }
+    from {
+        transform: rotate(0deg);
+    }
+}
 // _action
 ._action {
     display: flex;
