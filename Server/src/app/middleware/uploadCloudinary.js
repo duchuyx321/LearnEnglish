@@ -1,6 +1,7 @@
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
+
 require('dotenv').config();
 
 cloudinary.config({
@@ -9,14 +10,19 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-// storage Avatars
-const storageAvatar = new CloudinaryStorage({
-    cloudinary,
-    allowedFormats: ['jpg', 'png'],
-    params: {
-        folder: 'LearnEnglish/Avatars',
-    },
-});
+const uploadFiles = () => {
+    try {
+        return new CloudinaryStorage({
+            cloudinary,
+            allowedFormats: ['jpg', 'png'],
+            params: {
+                folder: 'LearnEnglish/Avatars',
+            },
+        });
+    } catch (e) {
+        console.log(e);
+    }
+};
 
 const storageCourse = new CloudinaryStorage({
     cloudinary,
@@ -26,7 +32,9 @@ const storageCourse = new CloudinaryStorage({
     },
 });
 
-const uploadAvatarCloud = multer({ storage: storageAvatar });
+const uploadAvatarCloud = multer({
+    storage: uploadFiles(),
+});
 const uploadCourseCloud = multer({ storage: storageCourse });
 
 module.exports = { uploadAvatarCloud, uploadCourseCloud };

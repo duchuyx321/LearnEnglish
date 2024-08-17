@@ -1,7 +1,10 @@
+const cloudinary = require('cloudinary');
+
 const Users = require('../module/Users');
 const Profile = require('../module/Profile');
 const { hashPass, decryptPass } = require('../../util/hashPass');
 const { setToken } = require('../../util/JWTUtil');
+const formatDay = require('../../service/formatDay');
 
 class AuthController {
     // [POST] -/auth/login
@@ -68,35 +71,42 @@ class AuthController {
     // [PATCH] -/auth/me
     async updateCurrentUser(req, res, next) {
         try {
-            const avatar = req.file;
-
+            const fileData = req.file;
+            if (fileData) {
+                req.body.avatar = fileData.path;
+            }
             const userID = req.userID;
-            const data = req.body;
+            const { date_of_birth, ...data } = req.body;
+            const formatDayBirth = formatDay(date_of_birth);
+            data.date_of_birth = formatDayBirth;
             if (!userID) {
+                if (req.file) cloudinary.v2.uploader.destroy(req.file.filename);
                 return res.status(400).json({ message: 'ID is required' });
             }
             const user = await Users.findOne({ _id: userID });
             if (!user) {
+                if (req.file) cloudinary.v2.uploader.destroy(req.file.filename);
                 return res.status(404).json({ message: 'user not found' });
             }
-            // const ProfileUpdate = await Profile.findOneAndUpdate(
-            //     { userID },
-            //     data,
-            //     {
-            //         new: true,
-            //         upsert: true,
-            //     },
-            // );
-            // if (ProfileUpdate.modifiedCount === 0) {
-            //     return res
-            //         .status(404)
-            //         .json({ massage: 'profile update failed' });
-            // }
+            const ProfileUpdate = await Profile.findOneAndUpdate(
+                { userID },
+                data,
+                {
+                    new: true,
+                    upsert: true,
+                },
+            );
+            if (ProfileUpdate.modifiedCount === 0) {
+                return res
+                    .status(404)
+                    .json({ massage: 'profile update failed' });
+            }
             return res.status(200).json({
                 message: 'profile updated successfully',
-                // ProfileUpdate,
+                ProfileUpdate,
             });
         } catch (err) {
+            if (req.file) cloudinary.v2.uploader.destroy(req.file.filename);
             console.log(err);
             res.status(500).json(err);
         }

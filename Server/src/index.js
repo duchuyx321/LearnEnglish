@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const methodOverride = require('method-override');
 
 require('dotenv').config();
 
@@ -21,9 +22,12 @@ app.use(morgan('combined'));
 app.use(
     cors({
         origin: process.env.URL_CLIENT,
-        // credentials: true,
+        credentials: true,
     }),
 );
+
+// methodOverride
+app.use(methodOverride('_method'));
 
 // cookies parser
 app.use(cookieParser());

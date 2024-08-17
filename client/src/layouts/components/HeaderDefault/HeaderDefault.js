@@ -3,15 +3,18 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Tippy from '@tippyjs/react/headless';
 import { IoIosSearch } from 'react-icons/io';
-import { IoCloseCircleOutline } from 'react-icons/io5';
+import { IoCloseCircleOutline, IoNotifications } from 'react-icons/io5';
 import { RiLoader2Line } from 'react-icons/ri';
 
 import styles from './HeaderDefault.module.scss';
 import images from '~/assets';
 import PopperWrapper from '~/components/PopperWrapper';
 import { search } from '~/service/searchService';
+import { user } from '~/service/userService';
 import { useDebounce } from '~/hooks';
-import Button from '~/Button';
+import Button from '~/components/Button';
+import Image from '~/components/Image';
+import MenuPopper from '~/components/PopperWrapper/MenuPopper';
 
 const cx = classNames.bind(styles);
 
@@ -20,6 +23,7 @@ function HeaderDefault({ children }) {
     const [loading, setLoading] = useState(false);
     const [valueInput, setValueInput] = useState('');
     const [searchResult, setSearchResult] = useState([]);
+    const [userResult, setUserResult] = useState({});
 
     const debounce = useDebounce(valueInput, 2000);
     // authentication token
@@ -27,9 +31,18 @@ function HeaderDefault({ children }) {
         const Token = localStorage.getItem('token');
         if (Token) {
             setIsToken(true);
+            const fetchAPI = async () => {
+                const result = await user();
+                if (result) {
+                    setUserResult(result);
+                }
+            };
+            fetchAPI();
+            return;
         }
         setIsToken(false);
     }, []);
+    console.log(userResult);
 
     // API search
     useEffect(() => {
@@ -158,7 +171,123 @@ function HeaderDefault({ children }) {
             </div>
             <div className={cx('_action')}>
                 {isToken ? (
-                    <div>Đã Đăng nhập</div>
+                    <div className={cx('portal')}>
+                        <div className={cx('myLearn')}>
+                            <Tippy
+                                interactive={true}
+                                appendTo="parent"
+                                placement="bottom-end"
+                                duration={[200]}
+                                delay={[50]}
+                                offset={[0, 9]} // Điều chỉnh khoảng cách ngang và dọc
+                                trigger="click" // Chỉ hiện khi click
+                                render={(attrs) => (
+                                    <div
+                                        className={cx('Menu-list')}
+                                        tabIndex="-1"
+                                        {...attrs}
+                                    >
+                                        <MenuPopper
+                                            large
+                                            title={'Khóa Học Của Tôi'}
+                                            extend={!!userResult.progress}
+                                        >
+                                            {userResult?.progress ? (
+                                                'Có Khóa Học Đang theo '
+                                            ) : (
+                                                <h4
+                                                    className={cx(
+                                                        'menu-list-alert',
+                                                    )}
+                                                >
+                                                    Chưa Có Khóa Học Nào !
+                                                </h4>
+                                            )}
+                                        </MenuPopper>
+                                    </div>
+                                )}
+                            >
+                                <button
+                                    className={cx('myLearn-btn')}
+                                    aria-describedby=""
+                                >
+                                    KHóa Học Của tôi
+                                </button>
+                            </Tippy>
+                        </div>
+                        <div className={cx('notification')}>
+                            <Tippy
+                                interactive={true}
+                                appendTo="parent"
+                                placement="bottom-end"
+                                duration={[200]}
+                                delay={[50]}
+                                offset={[0, 5]} // Điều chỉnh khoảng cách ngang và dọc
+                                trigger="click" // Chỉ hiện khi click
+                                render={(attrs) => (
+                                    <div
+                                        className={cx('Menu-list')}
+                                        tabIndex="-1"
+                                        {...attrs}
+                                    >
+                                        <MenuPopper
+                                            large
+                                            title={'Thông Báo'}
+                                            extend={!!userResult.progress}
+                                        >
+                                            {userResult?.progress ? (
+                                                'Có Khóa Học Đang theo '
+                                            ) : (
+                                                <h4
+                                                    className={cx(
+                                                        'menu-list-alert',
+                                                    )}
+                                                >
+                                                    Không có thông báo nào
+                                                </h4>
+                                            )}
+                                        </MenuPopper>
+                                    </div>
+                                )}
+                            >
+                                <button className={cx('notification-btn')}>
+                                    <IoNotifications />
+                                </button>
+                            </Tippy>
+                        </div>
+                        <div className={cx('avatar')}>
+                            <Tippy
+                                interactive={true}
+                                appendTo="parent"
+                                placement="bottom-end"
+                                duration={[200]}
+                                delay={[50]}
+                                offset={[0, 5]} // Điều chỉnh khoảng cách ngang và dọc
+                                trigger="click" // Chỉ hiện khi click
+                                render={(attrs) => (
+                                    <div
+                                        className={cx('Menu-list')}
+                                        tabIndex="-1"
+                                        {...attrs}
+                                    >
+                                        <MenuPopper
+                                            large
+                                            title={'Thông Báo'}
+                                            extend={!!userResult.progress}
+                                        ></MenuPopper>
+                                    </div>
+                                )}
+                            >
+                                <button className={cx('avatar-btn')}>
+                                    <Image
+                                        className={cx('avatar-img')}
+                                        src={userResult?.profile?.avatar}
+                                        alt="avatar"
+                                    />
+                                </button>
+                            </Tippy>
+                        </div>
+                    </div>
                 ) : (
                     <div className={cx('_action')}>
                         <Button outlineText>Đăng Ký</Button>

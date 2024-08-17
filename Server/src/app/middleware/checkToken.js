@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const cloudinary = require('cloudinary');
 
 const checkToken = async (req, res, next) => {
     try {
@@ -16,10 +17,10 @@ const checkToken = async (req, res, next) => {
             }
             const { id } = data;
             req.userID = id;
-            console.log(req.body);
             next();
         });
     } catch (err) {
+        if (req.file) cloudinary.v2.uploader.destroy(req.file.filename);
         res.status(500).json({ message: err });
     }
 };

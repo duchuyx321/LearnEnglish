@@ -3,8 +3,10 @@ const express = require('express');
 const router = express.Router();
 
 const UserController = require('../app/controller/UserController');
+const { checkToken } = require('../app/middleware/checkToken');
+
 // [GET]
-router.get('/@:username', UserController.getUserProfile);
+router.get('/me', checkToken, UserController.getUserProfile);
 
 // [POST]
 
