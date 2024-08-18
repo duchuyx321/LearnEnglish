@@ -15,6 +15,7 @@ import { useDebounce } from '~/hooks';
 import Button from '~/components/Button';
 import Image from '~/components/Image';
 import MenuPopper from '~/components/PopperWrapper/MenuPopper';
+import MenuItem from '~/components/PopperWrapper/MenuItem';
 
 const cx = classNames.bind(styles);
 
@@ -262,7 +263,7 @@ function HeaderDefault({ children }) {
                                 placement="bottom-end"
                                 duration={[200]}
                                 delay={[50]}
-                                offset={[0, 5]} // Điều chỉnh khoảng cách ngang và dọc
+                                offset={[0, 10]} // Điều chỉnh khoảng cách ngang và dọc
                                 trigger="click" // Chỉ hiện khi click
                                 render={(attrs) => (
                                     <div
@@ -270,18 +271,56 @@ function HeaderDefault({ children }) {
                                         tabIndex="-1"
                                         {...attrs}
                                     >
-                                        <MenuPopper
-                                            large
-                                            title={'Thông Báo'}
-                                            extend={!!userResult.progress}
-                                        ></MenuPopper>
+                                        <MenuPopper>
+                                            <div className={cx('user')}>
+                                                <div
+                                                    className={cx('user-inner')}
+                                                >
+                                                    <Image
+                                                        className={cx(
+                                                            'avatar-img',
+                                                        )}
+                                                        src={
+                                                            userResult?.profile
+                                                                ?.avatar ||
+                                                            images.noImage
+                                                        }
+                                                        alt="avatar"
+                                                    />
+                                                </div>
+                                                <div
+                                                    className={cx(
+                                                        'use-description',
+                                                    )}
+                                                >
+                                                    <h3 className={cx('name')}>
+                                                        {`${userResult?.profile?.first_name} ${userResult?.profile?.last_name}`}
+                                                    </h3>
+                                                    <span
+                                                        className={cx(
+                                                            'username',
+                                                        )}
+                                                    >
+                                                        {`@${userResult?.user?.username}`}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <MenuItem
+                                                username={
+                                                    renderValue?.user?.username
+                                                }
+                                            />
+                                        </MenuPopper>
                                     </div>
                                 )}
                             >
                                 <button className={cx('avatar-btn')}>
                                     <Image
                                         className={cx('avatar-img')}
-                                        src={userResult?.profile?.avatar}
+                                        src={
+                                            userResult?.profile?.avatar ||
+                                            images.noImage
+                                        }
                                         alt="avatar"
                                     />
                                 </button>

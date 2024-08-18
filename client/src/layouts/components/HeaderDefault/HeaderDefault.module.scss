@@ -175,8 +175,8 @@
     color: #0000008a;
 }
 .avatar-btn {
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -195,4 +195,36 @@
     color: #0000008a;
     font-size: 1.6rem;
     font-weight: 400;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    gap: 2rem;
+}
+.user-inner {
+    width: 5rem;
+    height: 5rem;
+    overflow: hidden;
+    border-radius: 100%;
+}
+.use-description {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    flex-direction: column;
+    gap: 8px;
+}
+.name {
+    width: 100%;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #292929;
+}
+.username {
+    width: 100%;
+    font-size: 1.4rem;
+    color: #757575;
 }

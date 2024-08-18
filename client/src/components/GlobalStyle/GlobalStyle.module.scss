@@ -23,6 +23,8 @@ html {
 }
 
 a,
+li,
+ul,
 input,
 button,
 label {
@@ -32,6 +34,7 @@ label {
     text-decoration: none;
     user-select: none;
     font-family: 'Oswald', sans-serif;
+    list-style-type: none;
 }
 
 body {

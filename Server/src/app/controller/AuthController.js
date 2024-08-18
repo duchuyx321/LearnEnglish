@@ -27,7 +27,6 @@ class AuthController {
                 return res.status(401).json({ message: 'Incorrect password ' });
             }
             const { password, ...other } = currentUser._doc;
-            console.log(other);
             const newAccessToken = setToken(res, other);
             return res
                 .status(200)
