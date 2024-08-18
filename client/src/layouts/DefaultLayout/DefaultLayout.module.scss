@@ -7,4 +7,12 @@
 .container {
     display: flex;
     background-color: rgba(255, 255, 255, 0.7);
+    gap: 1.6rem;
+}
+.content {
+    flex: 1;
+    width: 100%;
+}
+.inner {
+    width: 100%;
 }

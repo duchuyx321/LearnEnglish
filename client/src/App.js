@@ -13,6 +13,7 @@ function App() {
                         return (
                             <Route
                                 key={index}
+                                s
                                 path={item.path}
                                 element={
                                     <Layout>

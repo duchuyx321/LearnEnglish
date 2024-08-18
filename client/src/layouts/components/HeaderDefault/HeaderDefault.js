@@ -43,7 +43,6 @@ function HeaderDefault({ children }) {
         }
         setIsToken(false);
     }, []);
-    console.log(userResult);
 
     // API search
     useEffect(() => {
@@ -288,7 +287,8 @@ function HeaderDefault({ children }) {
                                                         alt="avatar"
                                                     />
                                                 </div>
-                                                <div
+                                                <Link
+                                                    to={`@${userResult?.user?.username}`}
                                                     className={cx(
                                                         'use-description',
                                                     )}
@@ -303,11 +303,11 @@ function HeaderDefault({ children }) {
                                                     >
                                                         {`@${userResult?.user?.username}`}
                                                     </span>
-                                                </div>
+                                                </Link>
                                             </div>
                                             <MenuItem
                                                 username={
-                                                    renderValue?.user?.username
+                                                    userResult?.user?.username
                                                 }
                                             />
                                         </MenuPopper>

@@ -1,0 +1,98 @@
+.wrapper {
+    width: 100%;
+    padding: 1.6rem 4.4rem;
+    overflow: hidden;
+}
+.container {
+    width: 100%;
+}
+.inner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.title-course {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.courses {
+    width: 100%;
+    margin-top: var(--grid-gutter-y);
+    display: flex;
+    flex-wrap: nowrap;
+}
+.item {
+    flex: 0 0 auto;
+    width: 25%;
+    padding: 8px;
+}
+.wrapper-course {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #e8e8e8;
+    transition: transform 0.2s, box-shadow 0.2s;
+    transition-delay: 0.2s;
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 8px #00000047;
+        transition-delay: 0s;
+    }
+}
+.courseItem {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-img {
+    width: 100%;
+    height: 100%;
+}
+
+.courseItem-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 20px;
+}
+.link-course {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    color: var(--black-color);
+}
+.name-courser {
+    font-size: 1.8rem;
+}
+.description {
+    font-size: 1.6rem;
+    color: #6c6b6bd7;
+    font-weight: 400;
+}
+.type {
+    font-size: 1.6rem;
+    color: var(--primary);
+    font-weight: 400;
+}
+.learnPath {
+    font-size: 1.8rem;
+    color: var(--primary);
+    font-weight: 400;
+}
