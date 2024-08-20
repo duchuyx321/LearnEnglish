@@ -1,20 +1,116 @@
+// responsive
+
+// mobile < 740px
+@media only screen and (max-width: 739px) {
+    .container {
+        gap: 11rem;
+    }
+    .profile {
+        bottom: -100%;
+        left: 35%;
+        flex-direction: column;
+    }
+    .wrapper-avatar {
+        width: 10rem;
+        height: 10rem;
+    }
+    .module {
+        width: 100%;
+    }
+    .body {
+        flex-direction: column;
+    }
+}
+// tablet (740px - 1024px)
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .container {
+        gap: 11rem;
+    }
+    .profile {
+        bottom: -50%;
+        left: 5%;
+    }
+    .wrapper-avatar {
+        width: 15rem;
+        height: 15rem;
+    }
+    .module {
+        width: 100%;
+    }
+    .body {
+        flex-direction: column;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+    .container {
+        gap: 15rem;
+    }
+    .profile {
+        bottom: -50%;
+        left: 10%;
+    }
+    .wrapper-avatar {
+        width: 17rem;
+        height: 17rem;
+    }
+    .module {
+        width: 50%;
+    }
+    .body {
+        flex-direction: row;
+    }
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+    .container {
+        gap: 15rem;
+    }
+    .profile {
+        bottom: -50%;
+        left: 20%;
+    }
+    .wrapper-avatar {
+        width: 17rem;
+        height: 17rem;
+    }
+    .module {
+        width: 42%;
+    }
+    .body {
+        flex-direction: row;
+    }
+}
+
 .wrapper {
     width: 100%;
 }
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
 .header {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     position: relative;
 }
 .wrapper-img {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.border-img {
+    width: 100%;
     max-width: 1100px;
     overflow: hidden;
-    margin: 0 auto;
     border-radius: 0 0 4rem 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative; // Thêm nếu cần để căn chỉnh nội dung bên trong
 }
 .backgroundImage {
     width: 100%;
@@ -23,11 +119,9 @@
     object-position: center; // Căn giữa ảnh
 }
 .profile {
-    position: absolute;
-    bottom: -11rem;
-    left: 10rem;
     display: flex;
-    align-items: center;
+    align-items: end;
+    position: absolute;
 }
 .profile-circle {
     padding: 1.6rem;
@@ -39,8 +133,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 20rem;
-    height: 20rem;
+
     border-radius: 100%;
     overflow: hidden;
 }
@@ -49,9 +142,81 @@
     height: 100%;
 }
 .name {
-    position: relative;
     height: 100%;
     margin-left: 1.6rem;
-    bottom: -6rem;
     font-size: 2.4rem;
+    padding-bottom: 2.6rem;
+}
+// body
+.body {
+    display: flex;
+    gap: 1.6rem;
+    padding: 1.8rem 1.4rem;
+}
+.description {
+    background-color: #fff;
+    box-shadow: #0909091a 0 0 8px, #0000001a 0 0 6px;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 20px;
+    word-break: break-word;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 1.8rem;
+
+    > span {
+        font-size: 2rem;
+        color: #808990;
+    }
+}
+.bio {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.3rem;
+}
+.detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 8px;
+    }
+}
+
+.inner {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    border-bottom: 1px solid #a9a9a9;
+    padding-bottom: 8px;
+}
+.thumb {
+    width: 250px;
+    height: 130px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1.6rem;
+    > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+.info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.6rem;
+}
+.title-course {
+    color: var(--black-color);
 }

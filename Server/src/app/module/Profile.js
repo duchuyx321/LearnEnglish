@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const mongooseDelete = require('mongoose-delete');
-const { schema } = require('./Users');
 
 const Schema = mongoose.Schema;
 

@@ -9,6 +9,7 @@ const Courses = new Schema(
         courseName: { type: String, required: true, unique: true },
         courseDescription: { type: String, required: true },
         image: { type: String },
+        price: { type: Number, default: 0 },
         slug: { type: String, slug: 'courseName' },
     },
     { timestamps: true, collection: 'Courses' },

@@ -20,7 +20,6 @@ const Users = new Schema(
             enum: ['admin', 'student'],
             default: 'student',
         },
-        image: { type: String },
         provider: {
             type: String,
             required: true,
