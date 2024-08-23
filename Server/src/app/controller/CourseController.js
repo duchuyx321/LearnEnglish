@@ -39,13 +39,17 @@ class CourseController {
     // [POST] -/course/create
     async createCourse(req, res, next) {
         try {
-            const { courseName, courseDescription } = req.body;
-            const newCourse = new Courses({ courseName, courseDescription });
+            const files = req.file;
+            if (files) {
+                req.body.image = files.path;
+            }
+            const newCourse = new Courses(req.body);
             await newCourse.save();
             res.status(200).json({
                 data: [{ massage: 'Create new course successfully' }],
             });
         } catch (e) {
+            if (req.file) cloudinary.v2.uploader.destroy(req.file.filename);
             res.status(400).json({
                 message: 'create new course into db failed',
                 e,

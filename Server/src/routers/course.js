@@ -3,11 +3,17 @@ const express = require('express');
 const router = express.Router();
 
 const CourseController = require('../app/controller/CourseController');
+const { uploadCourseCloud } = require('../app/middleware/uploadCloudinary');
+
 // [GET]
 router.get('/combined', CourseController.combinedCourse);
 router.get('/search', CourseController.searchCourse);
 // [POST]
-router.post('/create', CourseController.createCourse);
+router.post(
+    '/create',
+    uploadCourseCloud.single('image'),
+    CourseController.createCourse,
+);
 
 // [PUT]
 router.put('/update/:_id', CourseController.updateCourse);

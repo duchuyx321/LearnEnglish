@@ -6,12 +6,14 @@ const decodeAccessToken = (req, res, next) => {
     if (!authorization) {
         return res.status(403).json({ message: 'you are not logged in' });
     }
-    jwt.verify(authorization, process.env.ACCESS_TOKEN, (err, data) => {
+    const token = authorization.split(' ')[1];
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, data) => {
         if (err) {
             return res.status(500).json({ message: 'invalid token' });
         }
-        const { _id } = data;
-        req.body.userID = _id;
+        const { id } = data;
+
+        req.body.userID = id;
         next();
     });
 };

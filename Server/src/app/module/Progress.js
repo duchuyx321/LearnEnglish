@@ -6,8 +6,13 @@ const Schema = mongoose.Schema;
 const Progress = new Schema(
     {
         userID: { type: Schema.ObjectId, required: true },
-        courseID: { type: Schema.ObjectId, required: true }, // khóa học
-        lessonID: { type: Schema.ObjectId, required: true }, // bài học hiện tại đang học đến
+        lessonID: { type: Schema.ObjectId, default: null }, // bài học hiện tại đang học đến
+        progressable_type: {
+            type: String,
+            required: true,
+            enum: ['course', 'blog'],
+        },
+        progressable_id: { type: Schema.Types.ObjectId, required: true },
         status: {
             type: String,
             required: true,
@@ -18,7 +23,7 @@ const Progress = new Schema(
         completionNumber: {
             type: Number,
             required: true,
-            min: 1,
+            min: 0,
             max: 100,
             default: 0,
         },

@@ -6,7 +6,8 @@ const UserController = require('../app/controller/UserController');
 const { checkToken } = require('../app/middleware/checkToken');
 
 // [GET]
-router.get('/me', checkToken, UserController.getUserProfile);
+router.get('/profile-me', checkToken, UserController.getUserProfile);
+router.get('/combined-me', checkToken, UserController.combinedMe);
 
 // [POST]
 

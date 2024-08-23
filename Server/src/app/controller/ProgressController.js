@@ -3,33 +3,46 @@ const Courses = require('../module/Courses');
 const Progress = require('../module/Progress');
 
 class ProgressController {
-    // [GET] -/progress/combined
+    // [GET] -/progress/combined?type=course
     async combinedByUserID(req, res, next) {
         try {
+            const { type } = req.query;
             const { userID } = req.body;
-            const progress = await Progress.find({ userID });
-            const registeredCourse = await Promise.all(
-                progress.map(async (item) => {
-                    const courses = await Courses.findOne({
-                        _id: item.courseID,
+            const progressData = await Progress.find({
+                userID,
+                progressable_type: type,
+            });
+
+            const data = await Promise.all(
+                progressData.map(async (item) => {
+                    const courseData = await Courses.findOne({
+                        _id: item.progressable_id.toString(),
                     });
+
+                    const course =
+                        courseData.length === 1 ? courseData[0] : courseData;
                     return {
-                        progress: item,
-                        courses,
+                        progress: { ...item.toObject(), course },
                     };
                 }),
             );
-            res.status(200).json({ data: [registeredCourse] });
+            res.status(200).json({ data });
         } catch (err) {
+            console.log(err);
             res.status(404).json({ err });
         }
     }
-    // [POST] -/progress/create/:courseID
+    // [POST] -/progress/create/:courseID?type=
     async createProgress(req, res, next) {
         try {
-            const { courseID } = req.params;
             const { userID } = req.body;
-            const progress = new Progress({ courseID, userID });
+            const { courseID } = req.params;
+            const { type } = req.query;
+            const progress = new Progress({
+                userID,
+                progressable_id: courseID,
+                progressable_type: type,
+            });
             await progress.save();
 
             res.status(200).json({ message: 'created Progress successfully' });
@@ -41,6 +54,7 @@ class ProgressController {
     async updateProgress(req, res, next) {
         try {
             const { _id } = req.params;
+
             await Progress.updateOne({ _id }, res.body);
 
             res.status(200).json({ message: 'Updated progress successfully' });

@@ -16,6 +16,7 @@ import Button from '~/components/Button';
 import Image from '~/components/Image';
 import MenuPopper from '~/components/PopperWrapper/MenuPopper';
 import MenuItem from '~/components/PopperWrapper/MenuItem';
+import Mylearn from './components/Mylearn';
 
 const cx = classNames.bind(styles);
 
@@ -173,47 +174,14 @@ function HeaderDefault({ children }) {
                 {isToken ? (
                     <div className={cx('portal')}>
                         <div className={cx('myLearn')}>
-                            <Tippy
-                                interactive={true}
-                                appendTo="parent"
-                                placement="bottom-end"
-                                duration={[200]}
-                                delay={[50]}
-                                offset={[0, 9]} // Điều chỉnh khoảng cách ngang và dọc
-                                trigger="click" // Chỉ hiện khi click
-                                render={(attrs) => (
-                                    <div
-                                        className={cx('Menu-list')}
-                                        tabIndex="-1"
-                                        {...attrs}
-                                    >
-                                        <MenuPopper
-                                            large
-                                            title={'Khóa Học Của Tôi'}
-                                            extend={!!userResult.progress}
-                                        >
-                                            {userResult?.progress ? (
-                                                'Có Khóa Học Đang theo '
-                                            ) : (
-                                                <h4
-                                                    className={cx(
-                                                        'menu-list-alert',
-                                                    )}
-                                                >
-                                                    Chưa Có Khóa Học Nào !
-                                                </h4>
-                                            )}
-                                        </MenuPopper>
-                                    </div>
-                                )}
-                            >
+                            <Mylearn>
                                 <button
                                     className={cx('myLearn-btn')}
                                     aria-describedby=""
                                 >
                                     KHóa Học Của tôi
                                 </button>
-                            </Tippy>
+                            </Mylearn>
                         </div>
                         <div className={cx('notification')}>
                             <Tippy

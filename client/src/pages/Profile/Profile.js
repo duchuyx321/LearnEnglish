@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 
 import styles from './Profile.module.scss';
 import images from '~/assets';
-import { user } from '~/service/userService';
+import { combineMe } from '~/service/userService';
 import Image from '~/components/Image';
-import { formatTime } from '~/service/formatTime';
+import { formatTime, formatDay } from '~/service/formatTime';
 import Popper from '~/pages/Profile/components/Popper';
 
 const cx = classNames.bind(styles);
@@ -22,7 +22,7 @@ function Profile() {
         const Token = localStorage.getItem('token');
         if (Token) {
             const fetchAPI = async () => {
-                const result = await user();
+                const result = await combineMe();
                 if (result) {
                     setUserResult(result);
                 }
@@ -30,7 +30,7 @@ function Profile() {
             fetchAPI();
         }
     }, []);
-    console.log(userResult);
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
@@ -81,46 +81,63 @@ function Profile() {
                                 <span>
                                     <RxAvatar /> Tên :
                                 </span>
-                                Đức Huy
+                                {userResult?.profile?.first_name &&
+                                userResult?.profile?.last_name
+                                    ? `${userResult.profile.first_name} ${userResult.profile.last_name}`
+                                    : `@${userResult?.user?.username}`}
                             </div>
                             <div className={cx('detail')}>
                                 <span>
                                     <CgMail /> Email:
                                 </span>
-                                duchuyx321@gmail.com
+                                {userResult?.user?.email}
                             </div>
                             <div className={cx('detail')}>
                                 <span>
                                     <FaBirthdayCake /> Ngày Sinh :
                                 </span>
-                                15/07/2004
+                                {userResult?.profile?.date_of_birth
+                                    ? formatDay(
+                                          userResult.profile.date_of_birth,
+                                      )
+                                    : 'No Date Provided'}
                             </div>
                             <div className={cx('detail')}>
                                 <span>
                                     <ImProfile /> Bio :
                                 </span>
-                                -.-
+                                {userResult?.profile?.bio}
                             </div>
                         </Popper>
                     </div>
-                    <Popper title="Các Khóa Học Đã Tham Gia">
-                        <div className={cx('inner')}>
-                            <Link className={cx('thumb')}>
-                                <img
-                                    src={images.backgroundImage}
-                                    alt="img course"
-                                />
-                            </Link>
-                            <div className={cx('info')}>
-                                <Link className={cx('title-course')}>
-                                    Các Từ Tiếng Anh cơ bản
-                                </Link>
-                                <div className={cx('description-course')}>
-                                    Cung cấp các từ tiếng anh cơ bản giúp bạn có
-                                    cái nhìn tổng quá về
+                    <Popper
+                        className={'details'}
+                        title="Các Khóa Học Đã Tham Gia"
+                    >
+                        {userResult?.courses ? (
+                            userResult.courses.map((item) => (
+                                <div key={item._id} className={cx('inner')}>
+                                    <Link className={cx('thumb')}>
+                                        <img
+                                            src={item.image}
+                                            alt="img course"
+                                        />
+                                    </Link>
+                                    <div className={cx('info')}>
+                                        <Link className={cx('title-course')}>
+                                            {item.courseName}
+                                        </Link>
+                                        <div
+                                            className={cx('description-course')}
+                                        >
+                                            {item.courseDescription}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            ))
+                        ) : (
+                            <h1> Chưa theo giỏi khóa học nào </h1>
+                        )}
                     </Popper>
                 </div>
             </div>
