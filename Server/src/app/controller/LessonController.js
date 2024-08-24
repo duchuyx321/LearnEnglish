@@ -2,13 +2,17 @@ const Lessons = require('../module/Lessons');
 const Courses = require('../module/Courses');
 
 class LessonController {
-    // [GET]  -/lesson/combined/:_id
+    // [GET]  -/lesson/combined/:courses
     async combinedByCourseID(req, res, next) {
         try {
             const { courseID } = req.params;
-            const course = await Courses.findOne({ _id: courseID });
+            const courseData = await Courses.findOne({ _id: courseID });
+            if (!courseData) {
+                return res.status(403).json({ message: 'Course not found' });
+            }
             const lessons = await Lessons.find({ courseID });
-            res.status(200).json({ data: [{ course }, { lessons }] });
+            const courses = { ...courseData.toJSON(), lessons };
+            return res.status(200).json({ data: courses });
         } catch (err) {
             console.log(err);
             res.status(500).json(err);

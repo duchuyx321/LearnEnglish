@@ -59,13 +59,6 @@ function Home() {
                                                 >
                                                     {item.courseName}
                                                 </p>
-                                                <p
-                                                    className={cx(
-                                                        'description',
-                                                    )}
-                                                >
-                                                    {item.courseDescription}
-                                                </p>
                                             </Link>
                                         </h3>
                                         <p className={cx('type')}>

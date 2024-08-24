@@ -206,9 +206,19 @@
     padding: 8px 0;
     color: #0000008a;
 }
-.search-result-inner > img {
-    width: 4rem;
+.search-result-inner-img {
+    width: 5rem;
+    height: 5rem;
     border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 }
 .title-course {
     font-size: 1.6rem;
@@ -265,7 +275,6 @@
 }
 
 // tippy action
-
 .menu-list-alert {
     color: #0000008a;
     font-size: 1.6rem;

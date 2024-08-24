@@ -1,11 +1,11 @@
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react/headless';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import styles from './Mylearn.module.scss';
 import MenuPopper from '~/components/PopperWrapper/MenuPopper';
 import { combined } from '~/service/progressService';
-import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -21,7 +21,6 @@ function Mylearn({ children }) {
         };
         fetchAPI();
     }, []);
-    console.log(valueRender);
     return (
         <div className={cx('wrapper')}>
             <Tippy

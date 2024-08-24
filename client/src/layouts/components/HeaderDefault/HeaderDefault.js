@@ -14,9 +14,9 @@ import { user } from '~/service/userService';
 import { useDebounce } from '~/hooks';
 import Button from '~/components/Button';
 import Image from '~/components/Image';
-import MenuPopper from '~/components/PopperWrapper/MenuPopper';
-import MenuItem from '~/components/PopperWrapper/MenuItem';
-import Mylearn from './components/Mylearn';
+import Mylearn from '~/layouts/components/HeaderDefault/components/Mylearn';
+import Notification from '~/layouts/components/HeaderDefault/components/notification';
+import Avatar from '~/layouts/components/HeaderDefault/components/Avatar';
 
 const cx = classNames.bind(styles);
 
@@ -101,17 +101,19 @@ function HeaderDefault({ children }) {
                     >
                         {searchResult.map((item) => (
                             <Link
-                                to={`/@${item.slug}`}
+                                to={`/courses/${item.slug}`}
                                 key={item._id}
                                 className={cx('search-result-inner')}
                             >
-                                <img
-                                    src={
-                                        item.image ||
-                                        'https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/1d9206ca61d04b830f4c7819744a02af.jpeg?lk3s=a5d48078&nonce=40877&refresh_token=dd6021f1e2347cfa047eed14db2fdf4b&x-expires=1723950000&x-signature=nK0AHoyYyPkAH2quwNn2gsC6zCw%3D&shp=a5d48078&shcp=81f88b70'
-                                    }
-                                    alt="khóa Học"
-                                />
+                                <span className={cx('search-result-inner-img')}>
+                                    <img
+                                        src={
+                                            item.image ||
+                                            'https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/1d9206ca61d04b830f4c7819744a02af.jpeg?lk3s=a5d48078&nonce=40877&refresh_token=dd6021f1e2347cfa047eed14db2fdf4b&x-expires=1723950000&x-signature=nK0AHoyYyPkAH2quwNn2gsC6zCw%3D&shp=a5d48078&shcp=81f88b70'
+                                        }
+                                        alt="khóa Học"
+                                    />
+                                </span>
                                 <h4 className={cx('title-course')}>
                                     {item.courseName}
                                 </h4>
@@ -184,104 +186,14 @@ function HeaderDefault({ children }) {
                             </Mylearn>
                         </div>
                         <div className={cx('notification')}>
-                            <Tippy
-                                interactive={true}
-                                appendTo="parent"
-                                placement="bottom-end"
-                                duration={[200]}
-                                delay={[50]}
-                                offset={[0, 5]} // Điều chỉnh khoảng cách ngang và dọc
-                                trigger="click" // Chỉ hiện khi click
-                                render={(attrs) => (
-                                    <div
-                                        className={cx('Menu-list')}
-                                        tabIndex="-1"
-                                        {...attrs}
-                                    >
-                                        <MenuPopper
-                                            large
-                                            title={'Thông Báo'}
-                                            extend={!!userResult.progress}
-                                        >
-                                            {userResult?.progress ? (
-                                                'Có Khóa Học Đang theo '
-                                            ) : (
-                                                <h4
-                                                    className={cx(
-                                                        'menu-list-alert',
-                                                    )}
-                                                >
-                                                    Không có thông báo nào
-                                                </h4>
-                                            )}
-                                        </MenuPopper>
-                                    </div>
-                                )}
-                            >
+                            <Notification>
                                 <button className={cx('notification-btn')}>
                                     <IoNotifications />
                                 </button>
-                            </Tippy>
+                            </Notification>
                         </div>
                         <div className={cx('avatar')}>
-                            <Tippy
-                                interactive={true}
-                                appendTo="parent"
-                                placement="bottom-end"
-                                duration={[200]}
-                                delay={[50]}
-                                offset={[0, 10]} // Điều chỉnh khoảng cách ngang và dọc
-                                trigger="click" // Chỉ hiện khi click
-                                render={(attrs) => (
-                                    <div
-                                        className={cx('Menu-list')}
-                                        tabIndex="-1"
-                                        {...attrs}
-                                    >
-                                        <MenuPopper>
-                                            <div className={cx('user')}>
-                                                <div
-                                                    className={cx('user-inner')}
-                                                >
-                                                    <Image
-                                                        className={cx(
-                                                            'avatar-img',
-                                                        )}
-                                                        src={
-                                                            userResult?.profile
-                                                                ?.avatar ||
-                                                            images.noImage
-                                                        }
-                                                        alt="avatar"
-                                                    />
-                                                </div>
-                                                <Link
-                                                    to={`@${userResult?.user?.username}`}
-                                                    className={cx(
-                                                        'use-description',
-                                                    )}
-                                                >
-                                                    <h3 className={cx('name')}>
-                                                        {`${userResult?.profile?.first_name} ${userResult?.profile?.last_name}`}
-                                                    </h3>
-                                                    <span
-                                                        className={cx(
-                                                            'username',
-                                                        )}
-                                                    >
-                                                        {`@${userResult?.user?.username}`}
-                                                    </span>
-                                                </Link>
-                                            </div>
-                                            <MenuItem
-                                                username={
-                                                    userResult?.user?.username
-                                                }
-                                            />
-                                        </MenuPopper>
-                                    </div>
-                                )}
-                            >
+                            <Avatar userResult={userResult}>
                                 <button className={cx('avatar-btn')}>
                                     <Image
                                         className={cx('avatar-img')}
@@ -292,7 +204,7 @@ function HeaderDefault({ children }) {
                                         alt="avatar"
                                     />
                                 </button>
-                            </Tippy>
+                            </Avatar>
                         </div>
                     </div>
                 ) : (

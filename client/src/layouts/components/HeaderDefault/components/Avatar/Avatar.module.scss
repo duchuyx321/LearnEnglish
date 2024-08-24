@@ -1,0 +1,45 @@
+.menu-list-alert {
+    color: #0000008a;
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    gap: 2rem;
+}
+.user-inner {
+    width: 5rem;
+    height: 5rem;
+    overflow: hidden;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.use-description {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    flex-direction: column;
+    gap: 8px;
+}
+.name {
+    width: 100%;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #292929;
+}
+.username {
+    width: 100%;
+    font-size: 1.4rem;
+    color: #757575;
+}

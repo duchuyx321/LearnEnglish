@@ -8,7 +8,6 @@ const Lessons = new Schema(
         courseID: { type: Schema.ObjectId, required: true },
         lessonName: { type: String, required: true },
         lessonContent: { type: String, required: true },
-        lessonTarget: { type: Object, required: true },
     },
     { timestamps: true, collection: 'Lessons' },
 );
