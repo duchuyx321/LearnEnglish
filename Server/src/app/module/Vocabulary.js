@@ -9,11 +9,7 @@ const Vocabulary = new Schema(
         word: { type: String, required: true }, // từ mới
         definition: { type: String, required: true }, // nghĩa từ
         example: { type: String, required: true }, // câu ví dụ
-        meaningExamples: { type: String, required: true }, // nghĩa câu ví dụ
-
-        audioWord: { type: String, required: true },
-        audioDefinition: { type: String, required: true },
-        audioExample: { type: String, required: true },
+        meaningExample: { type: String, required: true }, // nghĩa câu ví dụ
     },
     { timestamps: true, collection: 'Vocabulary' },
 );

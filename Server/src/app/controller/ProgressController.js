@@ -1,5 +1,6 @@
 const Users = require('../module/Users');
 const Courses = require('../module/Courses');
+const Lessons = require('../module/Lessons');
 const Progress = require('../module/Progress');
 
 class ProgressController {
@@ -30,6 +31,33 @@ class ProgressController {
         } catch (err) {
             console.log(err);
             res.status(404).json({ err });
+        }
+    }
+    // [GET] -/progress/check-course-registration?type=&courseID=&course_slug
+    async checkCourseRegistration(req, res, next) {
+        try {
+            const { courseID, type, course_slug } = req.query;
+            const progress = await Progress.findOne({
+                progressable_type: type,
+                progressable_id: courseID,
+            });
+            if (!progress) {
+                return res
+                    .status(201)
+                    .json({ data: { message: 'Course not registered' } });
+            }
+            let lessonID;
+            if (progress.lessonID) {
+                lessonID = progress.lessonID;
+            }
+            const lesson_first = await Lessons.findOne({ course_slug });
+            lessonID = lesson_first._id;
+            return res
+                .status(200)
+                .json({ data: { message: 'Course registered', lessonID } });
+        } catch (err) {
+            console.log(err);
+            res.status(401).json({ message: err });
         }
     }
     // [POST] -/progress/create/:courseID?type=

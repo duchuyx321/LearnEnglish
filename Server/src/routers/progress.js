@@ -7,6 +7,10 @@ const decodeAccessToken = require('../service/decodeToken');
 
 // [GET]
 router.get('/combined', decodeAccessToken, ProgressController.combinedByUserID);
+router.get(
+    '/check-course-registration',
+    ProgressController.checkCourseRegistration,
+);
 // [POST]
 router.post(
     '/create/:courseID',

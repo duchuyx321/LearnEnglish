@@ -13,6 +13,7 @@ const Lessons = new Schema(
 );
 
 // plugins
+
 mongoose.plugin(mongooseDelete, { deletedAt: true, overrideMethods: true });
 
 module.exports = mongoose.model('Lessons', Lessons);

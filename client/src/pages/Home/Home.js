@@ -1,15 +1,17 @@
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import styles from './Home.module.scss';
 import { combined } from '~/service/CourseService';
+import { checkCourseRegistration } from '~/service/progressService';
 import images from '~/assets';
 
 const cx = classNames.bind(styles);
 
 function Home() {
     const [courseRender, setCourseRender] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchAPI = async () => {
             const result = await combined();
@@ -17,6 +19,19 @@ function Home() {
         };
         fetchAPI();
     }, []);
+    const handleOnCheckRegistered = async (courseID, course_slug) => {
+        const result = await checkCourseRegistration(
+            'course',
+            courseID,
+            course_slug,
+        );
+        console.log(result);
+        if (result.message === 'Course not registered') {
+            return navigate(`/courses/${course_slug}`);
+        } else if (result.message === 'Course registered') {
+            return navigate(`/lesson/${result.lessonID}`);
+        }
+    };
     const typeCourse = 'Miễn Phí';
     return (
         <div className={cx('wrapper')}>
@@ -33,9 +48,14 @@ function Home() {
                             <div key={item._id} className={cx('item')}>
                                 <div className={cx('wrapper-course')}>
                                     <div className={cx('courseItem')}>
-                                        <Link
-                                            to={`/courses/${item.slug}`}
+                                        <button
                                             className={cx('box-img')}
+                                            onClick={() =>
+                                                handleOnCheckRegistered(
+                                                    item._id,
+                                                    item.slug,
+                                                )
+                                            }
                                         >
                                             <img
                                                 className={cx('courseItem-img')}
@@ -44,13 +64,18 @@ function Home() {
                                                 }
                                                 alt="course"
                                             />
-                                        </Link>
+                                        </button>
                                     </div>
                                     <div className={cx('content')}>
                                         <h3>
-                                            <Link
-                                                to={`/courses/${item.slug}`}
+                                            <button
                                                 className={cx('link-course')}
+                                                onClick={() =>
+                                                    handleOnCheckRegistered(
+                                                        item._id,
+                                                        item.slug,
+                                                    )
+                                                }
                                             >
                                                 <p
                                                     className={cx(
@@ -59,7 +84,7 @@ function Home() {
                                                 >
                                                     {item.courseName}
                                                 </p>
-                                            </Link>
+                                            </button>
                                         </h3>
                                         <p className={cx('type')}>
                                             {typeCourse}

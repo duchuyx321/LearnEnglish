@@ -2,23 +2,25 @@ const Lessons = require('../module/Lessons');
 const Vocabulary = require('../module/Vocabulary');
 
 class VocabularyController {
-    // [GET]  -/vocabulary/combined/:_id
+    // [GET]  -/vocabulary/combined/:lessonID
     async combinedByLessonID(req, res, next) {
         try {
-            const { courseID } = req.params;
-            const course = await Lessons.findOne({ _id: courseID });
-            const lessons = await Vocabulary.find({ courseID });
-            res.status(200).json({ data: [{ course }, { lessons }] });
+            const { lessonID } = req.params;
+            const lessons = await Lessons.findOne({ _id: lessonID });
+            if (!lessons) {
+                return res.status(403).json({ message: 'lessons not found' });
+            }
+            const vocabulary = await Vocabulary.find({ lessonID });
+            const lessonData = { ...lessons.toJSON(), vocabulary };
+            res.status(200).json({ data: [lessonData] });
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
         }
     }
-    // [POST] -/vocabulary/create/:_id
+    // [POST] -/vocabulary/create/:lessonID
     async createVocabulary(req, res, next) {
         try {
-            const files = req.file;
-            console.log(files);
             const { lessonID } = req.params;
             const lesson = new Lessons({
                 lessonID,
@@ -38,11 +40,11 @@ class VocabularyController {
             const { lessonID } = req.params;
             const vocabularyData = req.body;
             const vocabularyPromise = vocabularyData.map((item) => {
-                const lesson = new Lessons({
+                const vocabulary = new Vocabulary({
                     lessonID,
                     ...item,
                 });
-                return lesson.save();
+                return vocabulary.save();
             });
             await Promise.all(vocabularyPromise); // chờ lưu tất cả vào
             res.status(200).json({
@@ -56,15 +58,39 @@ class VocabularyController {
     async updateVocabulary(req, res, next) {
         try {
             const { _id } = req.params;
-            const lessonUpdate = await Vocabulary.updateOne({ _id }, req.body);
-            if (lessonUpdate.modifiedCount === 0) {
+            const VocabularyUpdate = await Vocabulary.updateOne(
+                { _id },
+                req.body,
+            );
+            if (VocabularyUpdate.modifiedCount === 0) {
                 return res
                     .status(404)
                     .json({ massage: 'Vocabulary not Found' });
             }
             return res.status(200).json({
                 message: 'Vocabulary updated successfully',
-                lessonUpdate,
+                VocabularyUpdate,
+            });
+        } catch (err) {
+            res.status(500).json({ err });
+        }
+    }
+    // [PUT] -/vocabulary/multiple-update/:lessonID
+    async multipleUpdateVocabulary(req, res, next) {
+        try {
+            const { lessonID } = req.params;
+            const VocabularyUpdate = await Vocabulary.updateOne(
+                { lessonID },
+                req.body,
+            );
+            if (VocabularyUpdate.modifiedCount === 0) {
+                return res
+                    .status(404)
+                    .json({ massage: 'Vocabulary not Found' });
+            }
+            return res.status(200).json({
+                message: 'Vocabulary updated successfully',
+                VocabularyUpdate,
             });
         } catch (err) {
             res.status(500).json({ err });
@@ -99,6 +125,18 @@ class VocabularyController {
         try {
             const { _id } = req.params;
             await Vocabulary.deleteOne({ _id });
+            res.status(200).json({
+                message: 'destroy Vocabulary successfully',
+            });
+        } catch (err) {
+            res.status(500).json({ err });
+        }
+    }
+    // [DELETE] -/vocabulary/multiple-destroy/:lessonID
+    async multipleDestroyVocabulary(req, res, next) {
+        try {
+            const { lessonID } = req.params;
+            await Vocabulary.deleteMany({ lessonID });
             res.status(200).json({
                 message: 'destroy Vocabulary successfully',
             });
