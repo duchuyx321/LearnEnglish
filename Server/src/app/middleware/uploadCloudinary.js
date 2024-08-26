@@ -10,20 +10,13 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-const uploadFiles = () => {
-    try {
-        return new CloudinaryStorage({
-            cloudinary,
-            allowedFormats: ['jpg', 'png'],
-            params: {
-                folder: 'LearnEnglish/Avatars',
-            },
-        });
-    } catch (e) {
-        console.log(e);
-    }
-};
-
+const storageAvatar = new CloudinaryStorage({
+    cloudinary,
+    allowedFormats: ['jpg', 'png'],
+    params: {
+        folder: 'LearnEnglish/Avatars',
+    },
+});
 const storageCourse = new CloudinaryStorage({
     cloudinary,
     allowedFormats: ['jpg', 'png'],
@@ -33,7 +26,7 @@ const storageCourse = new CloudinaryStorage({
 });
 
 const uploadAvatarCloud = multer({
-    storage: uploadFiles(),
+    storage: storageAvatar,
 });
 const uploadCourseCloud = multer({ storage: storageCourse });
 

@@ -17,14 +17,34 @@ class VocabularyController {
     // [POST] -/vocabulary/create/:_id
     async createVocabulary(req, res, next) {
         try {
-            const { lessonID, word, definition, exampleSentence } = req.body;
+            const files = req.file;
+            console.log(files);
+            const { lessonID } = req.params;
             const lesson = new Lessons({
                 lessonID,
-                word,
-                definition,
-                exampleSentence,
+                ...req.body,
             });
             await lesson.save();
+            res.status(200).json({
+                message: 'created Vocabulary Successfully',
+            });
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    }
+    // [POST] -/vocabulary/multiple-create/:lessonID
+    async multipleCreateVocabulary(req, res, next) {
+        try {
+            const { lessonID } = req.params;
+            const vocabularyData = req.body;
+            const vocabularyPromise = vocabularyData.map((item) => {
+                const lesson = new Lessons({
+                    lessonID,
+                    ...item,
+                });
+                return lesson.save();
+            });
+            await Promise.all(vocabularyPromise); // chờ lưu tất cả vào
             res.status(200).json({
                 message: 'created Vocabulary Successfully',
             });
@@ -36,7 +56,7 @@ class VocabularyController {
     async updateVocabulary(req, res, next) {
         try {
             const { _id } = req.params;
-            const lessonUpdate = await Vocabulary({ _id }, req.body);
+            const lessonUpdate = await Vocabulary.updateOne({ _id }, req.body);
             if (lessonUpdate.modifiedCount === 0) {
                 return res
                     .status(404)

@@ -5,11 +5,19 @@ const router = express.Router();
 const LessonController = require('../app/controller/LessonController');
 
 // [GET]
-router.get('/combined/:courseID', LessonController.combinedByCourseID);
+router.get('/combined/:course_slug', LessonController.combinedByCourseID);
 // [POST]
 router.post('/create', LessonController.createLesson);
+router.post(
+    '/multiple-create/:course_slug',
+    LessonController.multipleCreateLesson,
+);
 // [PUT]
-router.post('/update/:_id', LessonController.updateLesson);
+router.put('/update/:_id', LessonController.updateLesson);
+router.put(
+    '/multiple-update/:course_slug',
+    LessonController.multipleUpdateLesson,
+);
 // [PATCH]
 router.patch('/restore/:_id', LessonController.restoreLesson);
 // [DELETE]
