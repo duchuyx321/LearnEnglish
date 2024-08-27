@@ -13,7 +13,6 @@ function MenuItem({ username }) {
                 to: `/@${username}`,
             },
         ],
-        course: [{ title: 'Khóa Học Của Tôi', to: '/my-courses' }],
         blog: [
             { title: 'Viết Blog', to: '/new-post' },
             { title: 'Bài Viết Của Tôi', to: '/me-posts' },

@@ -1,0 +1,71 @@
+// responsive
+
+// mobile < 740px
+@media only screen and (max-width: 739px) {
+    .wrapper {
+        flex-direction: column;
+        margin-bottom: 6rem;
+    }
+}
+// tablet (740px - 1024px)
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .wrapper {
+        margin-bottom: 6rem;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+}
+
+.wrapper {
+    padding: 2.4rem 1.8rem;
+    display: flex;
+    gap: 1.6rem;
+}
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2.6rem;
+}
+.purchaseBadge {
+    flex: 0.6;
+}
+.title {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    & > h2 {
+        font-size: 4rem;
+        color: var(--primary);
+    }
+}
+.textContent {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+}
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.title-course {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    font-size: 1.8rem;
+}
+.total-lessons {
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+
+    gap: 4px;
+}
+.btn-dot {
+    display: flex;
+    align-items: center;
+}

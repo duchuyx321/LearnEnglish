@@ -3,7 +3,7 @@ import LearnPath from '~/pages/LearnPath';
 import Profile from '~/pages/Profile';
 import Blog from '~/pages/Blog';
 import Courses from '~/pages/Courses';
-import Lesson from '~/pages/Lesson';
+import Learning from '~/pages/learning';
 
 // Private router
 const PrivateRouters = [];
@@ -12,7 +12,7 @@ const PrivateRouters = [];
 const PublicRouters = [
     { path: '/', component: Home },
     { path: '/learning-paths', component: LearnPath },
-    { path: '/lesson/:lessonID', component: Lesson },
+    { path: '/learning/:slug', component: Learning },
     { path: '/blog', component: Blog },
     { path: '/courses/:slug', component: Courses },
     { path: '/:username', component: Profile },

@@ -5,7 +5,7 @@ const router = express.Router();
 const LessonController = require('../app/controller/LessonController');
 
 // [GET]
-router.get('/combined/:course_slug', LessonController.combinedByCourseID);
+router.get('/combined', LessonController.combinedByCourseID);
 // [POST]
 router.post('/create', LessonController.createLesson);
 router.post(

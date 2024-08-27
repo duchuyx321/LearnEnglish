@@ -1,33 +1,24 @@
 // responsive
 
 // mobile < 740px
-@media only screen and (max-width: 739px) {
+@media only screen and (max-width: 1023px) {
     .sidebar {
         position: fixed;
         top: unset;
         left: 0;
         bottom: 0;
         width: 100%;
+        height: var(--height-header-wrapper);
         padding: 0;
         border-top: 1px solid #e8ebed;
         background: #fff;
         z-index: 20;
     }
-}
-// tablet (740px - 1024px)
-@media only screen and (min-width: 740px) and (max-width: 1023px) {
-    .sidebar {
-        position: fixed;
-        top: unset;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        padding: 0;
-        border-top: 1px solid #e8ebed;
-        background: #fff;
-        z-index: 20;
+    .content {
+        margin-bottom: var(--height-header-wrapper);
     }
 }
+
 // desktop >= 1024px
 @media only screen and (min-width: 1024px) and (max-width: 1399px) {
     .sidebar {

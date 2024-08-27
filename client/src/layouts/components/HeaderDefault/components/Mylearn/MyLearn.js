@@ -42,7 +42,7 @@ function Mylearn({ children }) {
                                 <div className={cx('content')}>
                                     {valueRender.map((item) => (
                                         <Link
-                                            to={`/courses/${item.progress.course.slug}`}
+                                            to={`/learning/${item.progress.course.slug}`}
                                             key={item.progress._id}
                                             className={cx('inner')}
                                         >

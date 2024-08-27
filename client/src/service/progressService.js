@@ -1,6 +1,6 @@
 import * as Request from '~/util/httpsRequest';
 
-// /progress/combined?type=course
+// [GET] /progress/combined?type=course
 export const combined = async (type = 'course') => {
     try {
         const res = await Request.get('progress/combined', {
@@ -29,5 +29,20 @@ export const checkCourseRegistration = async (
         return res.data;
     } catch (err) {
         console.log(err);
+    }
+};
+
+// [POST] /progress/create?type= & courseID
+export const createProgress = async (type = 'course', courseID) => {
+    try {
+        const res = await Request.post('progress/create', {
+            params: {
+                type,
+                courseID,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
     }
 };
