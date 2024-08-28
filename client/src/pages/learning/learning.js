@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 function Learning() {
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('container')}></div>
+            <div className={cx('container')}>Nội dung Khóa Học </div>
         </div>
     );
 }

@@ -1,0 +1,9 @@
+.wrapper {
+    width: 100%;
+    height: var(--height-header-learning-wrapper);
+    padding: 0 2.4rem;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(to right, #a1afbe, #bdc3c7);
+    color: var(--white-color);
+}
