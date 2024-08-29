@@ -10,4 +10,12 @@ export const combined = async () => {
     }
 };
 
-//  course
+//  course find
+export const course = async (course_slug) => {
+    try {
+        const res = await Request.get(`course/${course_slug}`);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};

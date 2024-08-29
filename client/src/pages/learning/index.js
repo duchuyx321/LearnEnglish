@@ -1,1 +1,1 @@
-export { default } from './learning';
+export { default } from './Learning';

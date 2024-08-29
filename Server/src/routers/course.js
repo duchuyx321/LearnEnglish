@@ -7,6 +7,7 @@ const { uploadCourseCloud } = require('../app/middleware/uploadCloudinary');
 
 // [GET]
 router.get('/combined', CourseController.combinedCourse);
+router.get('/:slug', CourseController.findCourse);
 router.get('/search', CourseController.searchCourse);
 // [POST]
 router.post(

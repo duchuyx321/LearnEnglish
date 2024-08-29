@@ -10,12 +10,12 @@ class CourseController {
             res.status(403).json({ message: 'Error must be responded to', e });
         }
     }
-    // [GET] -/course/findCourse/_:id
+    // [GET] -/course/:course_slug
     async findCourse(req, res, next) {
         try {
-            const { _id } = req.params;
-            const course = await Courses.findOne({ _id });
-            res.status(200).json({ data: [course] });
+            const { slug } = req.params;
+            const course = await Courses.findOne({ slug });
+            res.status(200).json({ data: course });
         } catch (error) {
             res.status(404).json(error);
         }

@@ -3,7 +3,7 @@ import LearnPath from '~/pages/LearnPath';
 import Profile from '~/pages/Profile';
 import Blog from '~/pages/Blog';
 import Courses from '~/pages/Courses';
-import Learning from '~/pages/learning';
+import Learning from '~/pages/Learning';
 import LearningLayout from '~/layouts/LearningLayout';
 
 // Private router

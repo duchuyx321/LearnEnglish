@@ -18,7 +18,7 @@ function ListItem({ data }) {
         if (result.message === 'Course not registered') {
             return navigate(`/courses/${course_slug}`);
         } else if (result.message === 'Course registered') {
-            return navigate(`/learning/${data?.slug}?id=${result.lessonID}`);
+            return navigate(`/learning/${course_slug}?id=${result.lessonID}`);
         }
     };
     const typeCourse = 'Miễn Phí';
