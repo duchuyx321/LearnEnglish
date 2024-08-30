@@ -3,12 +3,12 @@ import classNames from 'classnames/bind';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import styles from './FooterLearning.module.scss';
+import styles from './DescriptionLearning.module.scss';
 import { formatDay } from '~/service/formatTime';
 
 const cx = classNames.bind(styles);
 
-function FooterLearning({ data = [] }) {
+function DescriptionLearning({ data = [] }) {
     const [lesson, setLesson] = useState({});
     const location = useLocation();
     useEffect(() => {
@@ -35,4 +35,4 @@ function FooterLearning({ data = [] }) {
     );
 }
 
-export default FooterLearning;
+export default DescriptionLearning;

@@ -9,13 +9,14 @@
 
 .container {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: 35rem;
+    position: relative;
 }
 
 .flashCard {
-    width: 30rem;
-    min-height: 35rem;
+    position: absolute;
+    width: 60rem;
+    height: 100%;
     background-color: var(--white-color);
     border-radius: 8px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
@@ -78,9 +79,7 @@
 
 .controls {
     margin-top: 2rem;
-    button {
-        margin: 0 1rem;
-        padding: 0.5rem 1rem;
-        font-size: 1.2rem;
-    }
+}
+.Previous {
+    background-color: transparent;
 }

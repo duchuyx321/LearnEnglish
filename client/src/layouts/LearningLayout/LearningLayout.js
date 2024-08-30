@@ -8,7 +8,8 @@ import styles from './LearningLayout.module.scss';
 import HeaderLearning from '~/layouts/LearningLayout/components/HeaderLearning';
 import ContentCourse from '~/layouts/LearningLayout/components/ContentCourse';
 import { combinedByCourseID } from '~/service/LessonService';
-import FooterLearning from './components/FooterLearning';
+import DescriptionLearning from './components/DescriptionLearning';
+import Footer from './components/Footer';
 
 const cx = classNames.bind(styles);
 
@@ -35,13 +36,16 @@ function LearningLayout({ children }) {
                 <div className={cx('content')}>
                     <div className={cx('inner')}>{children}</div>
                     <div className={cx('description')}>
-                        <FooterLearning data={resultLesson?.lessons} />
+                        <DescriptionLearning data={resultLesson?.lessons} />
                     </div>
                 </div>
                 <div className={cx('sidebar')}>
                     <ContentCourse data={resultLesson?.lessons} />
                 </div>
             </div>
+            <footer className={cx('footer')}>
+                <Footer />
+            </footer>
         </div>
     );
 }

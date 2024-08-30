@@ -3,6 +3,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 // header
 .header {
@@ -16,7 +17,7 @@
     width: 75%;
     height: 100%;
     display: flex;
-    margin-top: 6rem;
+    margin: 6rem 0;
 }
 .content {
     width: 100%;
@@ -46,4 +47,13 @@
     position: fixed;
     right: 0;
     background-color: var(--white-color);
+}
+// footer
+.footer {
+    width: 100%;
+    background-color: #7497b9;
+    height: 6rem;
+    z-index: 30;
+    position: absolute;
+    bottom: 0;
 }

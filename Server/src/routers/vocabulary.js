@@ -5,7 +5,7 @@ const router = express.Router();
 const VocabularyController = require('../app/controller/VocabularyController');
 
 // [GET]
-router.get('/combined/:lessonID', VocabularyController.combinedByLessonID);
+router.get('/combined', VocabularyController.combinedByLessonID);
 // [POST]
 router.post('/create/:lessonID', VocabularyController.createVocabulary);
 router.post(

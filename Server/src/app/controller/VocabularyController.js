@@ -2,17 +2,16 @@ const Lessons = require('../module/Lessons');
 const Vocabulary = require('../module/Vocabulary');
 
 class VocabularyController {
-    // [GET]  -/vocabulary/combined/:lessonID
+    // [GET]  -/vocabulary/combined?lessonID=
     async combinedByLessonID(req, res, next) {
         try {
-            const { lessonID } = req.params;
+            const { lessonID } = req.query;
             const lessons = await Lessons.findOne({ _id: lessonID });
             if (!lessons) {
                 return res.status(403).json({ message: 'lessons not found' });
             }
             const vocabulary = await Vocabulary.find({ lessonID });
-            const lessonData = { ...lessons.toJSON(), vocabulary };
-            res.status(200).json({ data: [lessonData] });
+            res.status(200).json({ data: vocabulary });
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
