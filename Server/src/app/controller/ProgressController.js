@@ -60,11 +60,10 @@ class ProgressController {
             res.status(401).json({ message: err });
         }
     }
-    // [POST] -/progress/create?courseID &type=
+    // [POST] -/progress/create
     async createProgress(req, res, next) {
         try {
-            const { userID } = req.body;
-            const { type, courseID } = req.query;
+            const { userID, type, courseID } = req.body;
             const progress = new Progress({
                 userID,
                 progressable_id: courseID,
@@ -79,15 +78,18 @@ class ProgressController {
             res.status(500).json({ err });
         }
     }
-    // [PUT] -/progress/update/:_id
+    // [PUT] -/progress/update?courseID = & type =
     async updateProgress(req, res, next) {
         try {
-            const { _id } = req.params;
-
-            await Progress.updateOne({ _id }, res.body);
+            const { courseID, type } = req.query;
+            await Progress.updateOne(
+                { progressable_id: courseID, progressable_type: type },
+                req.body,
+            );
 
             res.status(200).json({ message: 'Updated progress successfully' });
         } catch (err) {
+            console.log(err);
             res.status(500).json({ err });
         }
     }

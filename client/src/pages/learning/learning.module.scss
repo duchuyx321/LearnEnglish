@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    min-height: 70vh; // Chiều cao toàn màn hình
+    min-height: 64vh; // Chiều cao toàn màn hình
 }
 
 .container {
@@ -29,6 +29,7 @@
     cursor: pointer;
     perspective: 1000px;
     transition: transform 0.6s;
+    user-select: none;
 }
 
 .flashCard.flipped .font {

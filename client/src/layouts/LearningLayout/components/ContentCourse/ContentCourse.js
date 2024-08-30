@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import styles from './ContentCourse.module.scss';
@@ -8,13 +8,15 @@ import styles from './ContentCourse.module.scss';
 const cx = classNames.bind(styles);
 
 function LearningLayout({ data = [] }) {
-    const [id, setId] = useState('');
     const location = useLocation();
-    useEffect(() => {
-        const searchParams = new URLSearchParams(location.search);
-        const id = searchParams.get('id');
-        setId(id);
-    }, [data]);
+
+    // useMemo
+    const searchParams = useMemo(
+        () => new URLSearchParams(location.search),
+        [location.search],
+    );
+    const id = useMemo(() => searchParams.get('id'), [searchParams]);
+
     return (
         <div className={cx('wrapper')}>
             <header className={cx('Header')}>

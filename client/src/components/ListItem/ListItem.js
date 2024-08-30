@@ -10,11 +10,7 @@ const cx = classNames.bind(styles);
 function ListItem({ data }) {
     const navigate = useNavigate();
     const handleOnCheckRegistered = async (courseID, course_slug) => {
-        const result = await checkCourseRegistration(
-            'course',
-            courseID,
-            course_slug,
-        );
+        const result = await checkCourseRegistration(courseID, course_slug);
         if (result.message === 'Course not registered') {
             return navigate(`/courses/${course_slug}`);
         } else if (result.message === 'Course registered') {

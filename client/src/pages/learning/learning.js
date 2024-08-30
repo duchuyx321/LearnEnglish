@@ -2,6 +2,7 @@
 import classNames from 'classnames/bind';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { MdOutlineVolumeUp } from 'react-icons/md';
 
 import styles from './Learning.module.scss';
 import { getVocabulary } from '~/service/VocabularyService';
@@ -78,12 +79,12 @@ function Learning() {
                 <Button
                     outline
                     small
-                    onClick={handlePrev}
+                    onClick={() => handlePrev()}
                     className={cx('Previous')}
                 >
                     Previous
                 </Button>
-                <Button primary small onClick={handleNext}>
+                <Button primary small onClick={() => handleNext()}>
                     Next
                 </Button>
             </div>

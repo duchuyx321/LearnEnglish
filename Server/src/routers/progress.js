@@ -12,13 +12,9 @@ router.get(
     ProgressController.checkCourseRegistration,
 );
 // [POST]
-router.post(
-    '/create/:courseID',
-    decodeAccessToken,
-    ProgressController.createProgress,
-);
+router.post('/create', decodeAccessToken, ProgressController.createProgress);
 // [PUT]
-router.put('/update/:_id', ProgressController.updateProgress);
+router.put('/update', ProgressController.updateProgress);
 // [PATCH]
 
 // [DELETE]

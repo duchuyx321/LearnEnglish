@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classNames from 'classnames/bind';
 import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import styles from './DescriptionLearning.module.scss';
 import { formatDay } from '~/service/formatTime';
@@ -11,9 +11,14 @@ const cx = classNames.bind(styles);
 function DescriptionLearning({ data = [] }) {
     const [lesson, setLesson] = useState({});
     const location = useLocation();
+
+    // useMemo
+    const searchParams = useMemo(
+        () => new URLSearchParams(location.search),
+        [location.search],
+    );
+    const id = useMemo(() => searchParams.get('id'), [searchParams]);
     useEffect(() => {
-        const searchParams = new URLSearchParams(location.search);
-        const id = searchParams.get('id');
         const result = data?.filter((item) => item._id.includes(id));
         setLesson(result[0]);
     }, [data]);

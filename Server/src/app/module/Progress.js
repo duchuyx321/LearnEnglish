@@ -30,6 +30,8 @@ const Progress = new Schema(
     },
     { timestamps: true, collection: 'Progress' },
 );
+// index
+Progress.index({ progressable_id: 1, progressable_type: 1 });
 
 // plugins
 mongoose.plugin(mongooseDelete, { deletedAt: true, overrideMethods: true });

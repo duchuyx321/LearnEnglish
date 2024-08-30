@@ -14,9 +14,9 @@ export const combined = async (type = 'course') => {
 
 // [GET] /progress/check-course-registration?courseID
 export const checkCourseRegistration = async (
-    type = 'course',
     courseID,
     course_slug,
+    type = 'course',
 ) => {
     try {
         const res = await Request.get('progress/check-course-registration', {
@@ -33,15 +33,29 @@ export const checkCourseRegistration = async (
 };
 
 // [POST] /progress/create?type= & courseID
-export const createProgress = async (type = 'course', courseID) => {
+export const createProgress = async (courseID, type = 'course') => {
     try {
         const res = await Request.post('progress/create', {
+            type,
+            courseID,
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+// PUT
+export const updateProgress = (lessonID, courseID, type = 'course') => {
+    try {
+        const res = Request.put('progress/update', {
             params: {
                 type,
                 courseID,
             },
+            lessonID,
         });
-        return res.data;
+        return res.body;
     } catch (error) {
         console.log(error);
     }
