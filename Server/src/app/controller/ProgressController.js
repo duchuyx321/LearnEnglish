@@ -4,7 +4,7 @@ const Lessons = require('../module/Lessons');
 const Progress = require('../module/Progress');
 
 class ProgressController {
-    // [GET] -/progress/combined?type=course
+    // [GET] -/progress/combined?type
     async combinedByUserID(req, res, next) {
         try {
             const { type } = req.query;
@@ -60,13 +60,32 @@ class ProgressController {
             res.status(401).json({ message: err });
         }
     }
+    // [GET] -progress/findOne?progressable_id=&type
+    async findOne(req, res, next) {
+        try {
+            const { useID } = req.body;
+            const { progressable_id, type } = req.query;
+            console.log(!progressable_id || !type);
+            if (!progressable_id || !type) {
+                return res.status(402).json({ message: 'data not enough' });
+            }
+            const progress = await Progress.findOne({
+                progressable_id,
+                progressable_type: type,
+                useID,
+            });
+            return res.status(200).json({ data: progress });
+        } catch (error) {
+            res.status(502).json({ message: error.message });
+        }
+    }
     // [POST] -/progress/create
     async createProgress(req, res, next) {
         try {
-            const { userID, type, courseID } = req.body;
+            const { userID, type, progressable_id } = req.body;
             const progress = new Progress({
                 userID,
-                progressable_id: courseID,
+                progressable_id,
                 progressable_type: type,
             });
             await progress.save();

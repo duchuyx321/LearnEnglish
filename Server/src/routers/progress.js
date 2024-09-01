@@ -9,8 +9,10 @@ const decodeAccessToken = require('../service/decodeToken');
 router.get('/combined', decodeAccessToken, ProgressController.combinedByUserID);
 router.get(
     '/check-course-registration',
+    decodeAccessToken,
     ProgressController.checkCourseRegistration,
 );
+router.get('/findOne', decodeAccessToken, ProgressController.findOne);
 // [POST]
 router.post('/create', decodeAccessToken, ProgressController.createProgress);
 // [PUT]

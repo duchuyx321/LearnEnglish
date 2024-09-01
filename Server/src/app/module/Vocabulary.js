@@ -10,6 +10,7 @@ const Vocabulary = new Schema(
         definition: { type: String, required: true }, // nghĩa từ
         example: { type: String, required: true }, // câu ví dụ
         meaningExample: { type: String, required: true }, // nghĩa câu ví dụ
+        audioUrl: { type: String },
     },
     { timestamps: true, collection: 'Vocabulary' },
 );

@@ -1,40 +1,48 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classNames from 'classnames/bind';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { IoMenu } from 'react-icons/io5';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import styles from './Footer.module.scss';
 import Button from '~/components/Button';
 import { useScreenWidth } from '~/hooks';
+import { updateProgress } from '~/service/progressService';
 
 const cx = classNames.bind(styles);
 
 const defaultFn = () => {};
-function Footer({ handleOnHiddenSidebar = defaultFn, data = [] }) {
+function Footer({
+    handleOnHiddenSidebar = defaultFn,
+    data = [],
+    progress = {},
+}) {
     const [isMenu, setIsMenu] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [timerCompleted, setTimerCompleted] = useState(false);
     const screenWidth = useScreenWidth();
     const location = useLocation();
     const navigate = useNavigate();
-
-    console.log(data);
     // useMemo
     const searchParams = useMemo(
         () => new URLSearchParams(location.search),
         [location.search],
     );
     const id = useMemo(() => searchParams.get('id'), [searchParams]);
-    const index = useMemo(
-        () => data.lessons?.findIndex((lesson) => lesson._id === id) ?? 0,
+    // useCallback
+    const findLessonIndex = useCallback((lessons, id) => {
+        return lessons?.findIndex((lesson) => lesson._id === id) ?? 0;
+    }, []);
+
+    const indexProgress = useMemo(
+        () => findLessonIndex(data?.lessons, progress?.lessonID),
         [data.lessons, id],
     );
-    const timeoutDuration = useMemo(
-        () => 2000 * data?.lessons?.length,
-        [data?.lessons?.length],
+    const index = useMemo(
+        () => findLessonIndex(data?.lessons, id),
+        [data.lessons, id],
     );
-
+    const timeoutDuration = 600000;
     // useEffect
     useEffect(() => {
         if (screenWidth <= 1024) {
@@ -43,15 +51,18 @@ function Footer({ handleOnHiddenSidebar = defaultFn, data = [] }) {
             setIsMenu(false);
         }
     }, [screenWidth]);
-
     useEffect(() => {
         if (index !== -1) {
             setIsButtonDisabled(true);
             setTimerCompleted(false);
 
-            const timer = setTimeout(() => {
+            const timer = setTimeout(async () => {
+                if (index > indexProgress) {
+                    const courseID = data?._id;
+                    const lessonID = data?.lessons[index]?._id;
+                    await updateProgress(lessonID, courseID);
+                }
                 setTimerCompleted(true);
-                // if(index >)
             }, timeoutDuration);
             return () => clearTimeout(timer);
         }
@@ -64,7 +75,6 @@ function Footer({ handleOnHiddenSidebar = defaultFn, data = [] }) {
     }, [timerCompleted]);
 
     // function handle
-
     const handleOnNext = (index) => {
         if (index < data.lessons.length && !isButtonDisabled) {
             navigate(`/learning/${data?.slug}?id=${data?.lessons[index]._id}`);

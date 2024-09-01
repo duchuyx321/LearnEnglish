@@ -17,6 +17,25 @@ class VocabularyController {
             res.status(500).json(err);
         }
     }
+    // [GET] -/vocabulary/all-word?page & limit
+    async AllVocabulary(req, res, next) {
+        try {
+            // Lấy tham số truy vấn từ yêu cầu
+            const page = parseInt(req.query.page) || 1; // Trang hiện tại, mặc định là 1
+            const limit = parseInt(req.query.limit) || 20; // Số lượng tài liệu mỗi trang, mặc định là 20
+
+            // Tính số lượng tài liệu cần bỏ qua
+            const skip = (page - 1) * limit;
+            const allVocabulary = await Vocabulary.find({}, 'word')
+                .skip(skip)
+                .limit(limit);
+
+            res.status(200).json({ data: allVocabulary });
+        } catch (err) {
+            console.log(err);
+            res.status(502).json({ message: err.message });
+        }
+    }
     // [POST] -/vocabulary/create/:lessonID
     async createVocabulary(req, res, next) {
         try {
@@ -74,27 +93,37 @@ class VocabularyController {
             res.status(500).json({ err });
         }
     }
-    // [PUT] -/vocabulary/multiple-update/:lessonID
-    async multipleUpdateVocabulary(req, res, next) {
+    // [PUT] -/vocabulary/multiple-update-id
+    async multipleUpdateVocabularyID(req, res, next) {
         try {
-            const { lessonID } = req.params;
-            const VocabularyUpdate = await Vocabulary.updateOne(
-                { lessonID },
-                req.body,
-            );
+            const files = req.files;
+            const { fileNames } = req.body;
+            console.log(files);
+            // const VocabularyUpdate = await Vocabulary.updateMany(
+            //     { _id },
+            //     { $set: { audioUrl: files } }
+            // );
+            fileNames.map((item) => {
+                if (fs.existsSync(item)) {
+                    fs.unlinkSync(item);
+                }
+            });
             if (VocabularyUpdate.modifiedCount === 0) {
                 return res
                     .status(404)
                     .json({ massage: 'Vocabulary not Found' });
             }
+
             return res.status(200).json({
                 message: 'Vocabulary updated successfully',
                 VocabularyUpdate,
             });
         } catch (err) {
+            if (req.file) cloudinary.v2.uploader.destroy(req.file.filename);
             res.status(500).json({ err });
         }
     }
+
     // [PATCH] -/vocabulary/restore/:_id
     async restoreVocabulary(req, res, next) {
         try {

@@ -32,6 +32,20 @@ export const checkCourseRegistration = async (
     }
 };
 
+// [POST] -/progress/findOne?progressable_id=&type
+export const findOneProgress = (progressable_id, type = 'course') => {
+    try {
+        const res = Request.get('/progress/findOne', {
+            params: {
+                type,
+                progressable_id,
+            },
+        });
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
 // [POST] /progress/create?type= & courseID
 export const createProgress = async (courseID, type = 'course') => {
     try {

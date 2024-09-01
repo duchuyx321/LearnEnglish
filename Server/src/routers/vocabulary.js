@@ -3,9 +3,11 @@ const express = require('express');
 const router = express.Router();
 
 const VocabularyController = require('../app/controller/VocabularyController');
-
+const CreateAudioFile = require('../app/middleware/CreateAudioFile');
+const updateAudioCloud = require('../app/middleware/updateAudioCloud');
 // [GET]
 router.get('/combined', VocabularyController.combinedByLessonID);
+router.get('/all-word', VocabularyController.AllVocabulary);
 // [POST]
 router.post('/create/:lessonID', VocabularyController.createVocabulary);
 router.post(
@@ -13,7 +15,13 @@ router.post(
     VocabularyController.multipleCreateVocabulary,
 );
 // [PUT]
-router.post('/update/:_id', VocabularyController.updateVocabulary);
+router.put('/update/:_id', VocabularyController.updateVocabulary);
+router.put(
+    '/multiple-update-id',
+    CreateAudioFile,
+    updateAudioCloud,
+    VocabularyController.multipleUpdateVocabularyID,
+);
 // [PATCH]
 router.patch('/restore/:_id', VocabularyController.restoreVocabulary);
 // [DELETE]
