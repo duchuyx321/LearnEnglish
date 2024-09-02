@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const multer = require('multer');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
 const cloudinary = require('cloudinary').v2;
 
 require('dotenv').config();
@@ -12,29 +11,61 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-const storageAudio = new CloudinaryStorage({
-    cloudinary,
-    allowedFormats: ['mp3'],
-    params: {
-        folder: 'LearnEnglish/Audio',
-    },
-});
-
-const uploadAudioCloud = multer({ storage: storageAudio }).array('audio');
-
-const uploadToCloudinary = (req, res, next) => {
-    uploadAudioCloud(req, res, (err) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-
-        // Lưu các liên kết file lên Cloudinary vào req.body
-        if (req.files) {
-            req.body.fileLinks = req.files.map((file) => file.path); // Lấy URL của các file
-        }
-
-        next();
+// Function to upload local file to Cloudinary
+const uploadLocalFileToCloudinary = (filePath, folder) => {
+    return new Promise((resolve, reject) => {
+        cloudinary.uploader.upload(
+            filePath,
+            { folder: folder, resource_type: 'auto' }, // Tự động xác định loại file
+            (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(result);
+            },
+        );
     });
 };
 
-module.exports = uploadToCloudinary;
+const uploadToCloudinary = async (req, res, next) => {
+    try {
+        // Tạo mảng lưu các promise upload
+        const fileUploads = req.body.fileNames.map((fileName) => {
+            // Xác định đường dẫn file từ thư mục public/audio
+            const filePath = path.join(
+                __dirname,
+                '../../public/audio',
+                fileName,
+            );
+            // Kiểm tra sự tồn tại của file
+            if (!fs.existsSync(filePath)) {
+                throw new Error(`File không tồn tại: ${filePath}`);
+            }
+            // Upload file lên Cloudinary
+            return uploadLocalFileToCloudinary(
+                filePath,
+                'LearnEnglish/Audio',
+            ).then((result) => {
+                // Xóa file sau khi upload thành công
+                if (fs.existsSync(filePath)) {
+                    fs.unlinkSync(filePath);
+                }
+                return result;
+            });
+        });
+        // Chờ tất cả các file upload xong
+        const results = await Promise.all(fileUploads);
+
+        // Lưu các URL của file trên Cloudinary vào req.body để sử dụng trong các middleware/controller tiếp theo
+        req.body.fileLinks = results;
+
+        next();
+    } catch (error) {
+        console.error('Lỗi khi upload file lên Cloudinary:', error);
+        return res
+            .status(500)
+            .json({ error: 'Upload file thất bại, vui lòng thử lại.' });
+    }
+};
+
+module.exports = { uploadToCloudinary };

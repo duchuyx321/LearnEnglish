@@ -1,4 +1,5 @@
 const Courses = require('../module/Courses');
+const cloudinary = require('cloudinary');
 
 class CourseController {
     // [GET] -/course/combined

@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
+const path = require('path');
 
 require('dotenv').config();
 
@@ -32,11 +33,18 @@ app.use(methodOverride('_method'));
 // cookies parser
 app.use(cookieParser());
 
+// Cấu hình kích thước tối đa của payload
+app.use(express.json({ limit: '250mb' })); // Tăng giới hạn kích thước của JSON payload lên 250MB
+app.use(express.urlencoded({ limit: '250mb', extended: true })); // Tăng giới hạn kích thước của URL-encoded payload lên 250MB
+
 // parse url - encoded data
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 // parse json data
-app.use(express.json());
+// app.use(express.json());
+
+// truy cập vào public
+app.use(express.static(path.join(__dirname, 'public')));
 
 // router
 router(app);
