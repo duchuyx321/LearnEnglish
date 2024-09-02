@@ -54,6 +54,7 @@
     transition: transform 0.6s;
     border-radius: 8px;
     padding: 1.6rem;
+    z-index: 30;
 }
 
 .font {
@@ -64,6 +65,23 @@
 .after {
     background-color: #f8f9fa;
     transform: rotateY(-180deg);
+}
+.flashCard-btn {
+    font-size: 4rem;
+    position: absolute;
+    right: 47%;
+    bottom: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #aeaeaf93;
+    &:hover {
+        color: #5f5f63;
+    }
+    z-index: 35;
+}
+.audio {
+    display: none;
 }
 
 .word,

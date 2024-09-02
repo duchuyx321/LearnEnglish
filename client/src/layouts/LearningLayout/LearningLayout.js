@@ -45,7 +45,7 @@ function LearningLayout({ children }) {
             setHiddenSidebar(true);
         }
     }, [screenWidth]);
-    console.log(resultLesson);
+
     // call api
     const fetchCourseAPI = useCallback(async (slug) => {
         const result = await combinedByCourseID(slug);
@@ -74,7 +74,10 @@ function LearningLayout({ children }) {
                 </div>
                 {hiddenSidebar && (
                     <div className={cx('sidebar')}>
-                        <ContentCourse data={resultLesson?.lessons} />
+                        <ContentCourse
+                            data={resultLesson?.lessons}
+                            progress={resultProgress?.data}
+                        />
                     </div>
                 )}
             </div>

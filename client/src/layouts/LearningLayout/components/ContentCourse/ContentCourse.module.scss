@@ -21,10 +21,11 @@
 }
 .inner {
     z-index: 2;
+    min-height: 5rem;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     padding: 8px 20px;
     background-color: #f7f8fa;
     border-bottom: 1px solid #dedfe0;
@@ -41,4 +42,9 @@
 }
 .active {
     background-color: #f0512333;
+}
+.isCheck {
+    display: flex;
+    align-items: center;
+    color: rgb(155, 236, 114);
 }

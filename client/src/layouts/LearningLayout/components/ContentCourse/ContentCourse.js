@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classNames from 'classnames/bind';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
+import { FaCircleCheck } from 'react-icons/fa6';
 
 import styles from './ContentCourse.module.scss';
 
 const cx = classNames.bind(styles);
 
-function LearningLayout({ data = [] }) {
+function LearningLayout({ data = [], progress = {} }) {
     const location = useLocation();
 
     // useMemo
@@ -16,7 +17,13 @@ function LearningLayout({ data = [] }) {
         [location.search],
     );
     const id = useMemo(() => searchParams.get('id'), [searchParams]);
-
+    const findLessonIndex = useCallback((lessons, id) => {
+        return lessons?.findIndex((lesson) => lesson._id === id) ?? 0;
+    }, []);
+    const indexProgress = useMemo(
+        () => findLessonIndex(data?.lessons, progress?.lessonID),
+        [data.lessons, id],
+    );
     return (
         <div className={cx('wrapper')}>
             <header className={cx('Header')}>
@@ -34,6 +41,11 @@ function LearningLayout({ data = [] }) {
                             <span>{index + 1}.</span>
                             <h4>{item.lessonName}</h4>
                         </div>
+                        {index < indexProgress && (
+                            <div className={cx('isCheck')}>
+                                <FaCircleCheck />
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
