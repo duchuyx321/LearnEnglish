@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classNames from 'classnames/bind';
-import { useLocation, useParams } from 'react-router-dom';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
 
 import styles from './LearningLayout.module.scss';
 
@@ -18,16 +18,11 @@ const cx = classNames.bind(styles);
 function LearningLayout({ children }) {
     const [resultLesson, setResultLesson] = useState([]);
     const [resultProgress, setResultProgress] = useState({});
+    const [isSetLoad, setIsSetLoad] = useState(false);
     const [hiddenSidebar, setHiddenSidebar] = useState(true);
     const params = useParams();
-    const location = useLocation();
     const screenWidth = useScreenWidth();
-    // useMemo
-    const searchParams = useMemo(
-        () => new URLSearchParams(location.search),
-        [location.search],
-    );
-    const id = useMemo(() => searchParams.get('id'), [searchParams]);
+
     useEffect(() => {
         const slug = params.slug;
         fetchCourseAPI(slug);
@@ -37,7 +32,7 @@ function LearningLayout({ children }) {
         if (resultLesson._id) {
             fetchAPIProgress(resultLesson._id);
         }
-    }, [resultLesson._id]); // Chỉ chạy khi resultLesson._id thay đổi
+    }, [resultLesson._id, isSetLoad]); // Chỉ chạy khi resultLesson._id thay đổi
     useEffect(() => {
         if (screenWidth <= 1024) {
             setHiddenSidebar(false);
@@ -45,7 +40,6 @@ function LearningLayout({ children }) {
             setHiddenSidebar(true);
         }
     }, [screenWidth]);
-
     // call api
     const fetchCourseAPI = useCallback(async (slug) => {
         const result = await combinedByCourseID(slug);
@@ -59,6 +53,9 @@ function LearningLayout({ children }) {
     // handle function
     const handleOnHideSidebar = () => {
         setHiddenSidebar(!hiddenSidebar);
+    };
+    const setProgress = () => {
+        setIsSetLoad(!isSetLoad);
     };
     return (
         <div className={cx('wrapper')}>
@@ -86,6 +83,7 @@ function LearningLayout({ children }) {
                     handleOnHiddenSidebar={handleOnHideSidebar}
                     data={resultLesson}
                     progress={resultProgress?.data}
+                    setProgress={setProgress}
                 />
             </footer>
         </div>

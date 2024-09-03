@@ -32,6 +32,7 @@ function Learning() {
 
     const handleNext = () => {
         setIsFlipped(false);
+        setIsOddClick(false);
         setCurrentIndex((prevIndex) =>
             prevIndex === resultVocabulary.length - 1 ? 0 : prevIndex + 1,
         );
@@ -39,6 +40,8 @@ function Learning() {
 
     const handlePrev = () => {
         setIsFlipped(false);
+        setIsOddClick(false);
+
         setCurrentIndex((prevIndex) =>
             prevIndex === 0 ? resultVocabulary.length - 1 : prevIndex - 1,
         );

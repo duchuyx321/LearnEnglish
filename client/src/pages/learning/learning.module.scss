@@ -54,7 +54,7 @@
     transition: transform 0.6s;
     border-radius: 8px;
     padding: 1.6rem;
-    z-index: 30;
+    z-index: 19;
 }
 
 .font {
@@ -78,7 +78,7 @@
     &:hover {
         color: #5f5f63;
     }
-    z-index: 35;
+    z-index: 20;
 }
 .audio {
     display: none;

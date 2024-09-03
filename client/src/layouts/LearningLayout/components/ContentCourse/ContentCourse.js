@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classNames from 'classnames/bind';
-import { useCallback, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FaCircleCheck } from 'react-icons/fa6';
 
@@ -10,20 +10,23 @@ const cx = classNames.bind(styles);
 
 function LearningLayout({ data = [], progress = {} }) {
     const location = useLocation();
+    const [newId, setNewId] = useState(null);
+    const [indexProgress, setIndexProgress] = useState(0);
 
     // useMemo
-    const searchParams = useMemo(
-        () => new URLSearchParams(location.search),
-        [location.search],
-    );
-    const id = useMemo(() => searchParams.get('id'), [searchParams]);
-    const findLessonIndex = useCallback((lessons, id) => {
-        return lessons?.findIndex((lesson) => lesson._id === id) ?? 0;
-    }, []);
-    const indexProgress = useMemo(
-        () => findLessonIndex(data?.lessons, progress?.lessonID),
-        [data.lessons, id],
-    );
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        setNewId(searchParams.get('id'));
+    }, [location]);
+    useEffect(() => {
+        const findLessonIndex = (lessons, id) => {
+            return lessons?.findIndex((lesson) => lesson._id === id) ?? -1;
+        };
+
+        const newIndexProgress = findLessonIndex(data, progress?.lessonID);
+        setIndexProgress(newIndexProgress);
+    }, [data, progress]);
+
     return (
         <div className={cx('wrapper')}>
             <header className={cx('Header')}>
@@ -34,7 +37,7 @@ function LearningLayout({ data = [], progress = {} }) {
                     <div
                         key={item._id}
                         className={cx('inner', {
-                            active: id === item?._id,
+                            active: newId === item?._id,
                         })}
                     >
                         <div className={cx('title')}>

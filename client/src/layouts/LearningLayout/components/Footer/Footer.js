@@ -16,6 +16,7 @@ function Footer({
     handleOnHiddenSidebar = defaultFn,
     data = [],
     progress = {},
+    setProgress = defaultFn,
 }) {
     const [isMenu, setIsMenu] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -42,7 +43,7 @@ function Footer({
         () => findLessonIndex(data?.lessons, id),
         [data.lessons, id],
     );
-    const timeoutDuration = 600000;
+    const timeoutDuration = 4000; //540000
     // useEffect
     useEffect(() => {
         if (screenWidth <= 1024) {
@@ -56,18 +57,22 @@ function Footer({
             setIsButtonDisabled(true);
             setTimerCompleted(false);
 
-            const timer = setTimeout(async () => {
-                if (index > indexProgress) {
+            const timer = setTimeout(() => {
+                if (
+                    index > indexProgress ||
+                    index === data?.lessons?.length - 1
+                ) {
                     const courseID = data?._id;
                     const lessonID = data?.lessons[index]?._id;
-                    await updateProgress(lessonID, courseID);
+                    updateProgress(lessonID, courseID);
+                    setProgress();
                 }
                 setTimerCompleted(true);
+                setIsButtonDisabled(false);
             }, timeoutDuration);
             return () => clearTimeout(timer);
         }
-    }, [index]);
-
+    }, [id]);
     useEffect(() => {
         if (timerCompleted) {
             setIsButtonDisabled(false);
@@ -86,6 +91,7 @@ function Footer({
             navigate(`/learning/${data?.slug}?id=${data?.lessons[index]._id}`);
         }
     };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('content')}>
@@ -99,7 +105,7 @@ function Footer({
                 <Button
                     primary
                     disabled={
-                        index >= data?.lessons?.length || isButtonDisabled
+                        index >= data?.lessons?.length - 1 || isButtonDisabled
                     }
                     onClick={() => handleOnNext(index + 1)}
                 >

@@ -63,13 +63,11 @@ export const createProgress = async (courseID, type = 'course') => {
 export const updateProgress = (lessonID, courseID, type = 'course') => {
     try {
         const res = Request.put('progress/update', {
-            params: {
-                type,
-                courseID,
-            },
+            type,
+            courseID,
             lessonID,
         });
-        return res.body;
+        return res.data;
     } catch (error) {
         console.log(error);
     }

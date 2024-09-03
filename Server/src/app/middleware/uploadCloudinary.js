@@ -24,10 +24,18 @@ const storageCourse = new CloudinaryStorage({
         folder: 'LearnEnglish/Courses',
     },
 });
+const storageLearnPath = new CloudinaryStorage({
+    cloudinary,
+    allowedFormats: ['jpg', 'png'],
+    params: {
+        folder: 'LearnEnglish/Learn-Path',
+    },
+});
 
 const uploadAvatarCloud = multer({
     storage: storageAvatar,
 });
 const uploadCourseCloud = multer({ storage: storageCourse });
+const uploadLearnPathCloud = multer({ storage: storageLearnPath });
 
-module.exports = { uploadAvatarCloud, uploadCourseCloud };
+module.exports = { uploadAvatarCloud, uploadCourseCloud, uploadLearnPathCloud };

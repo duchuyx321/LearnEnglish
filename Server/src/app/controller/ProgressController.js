@@ -47,11 +47,12 @@ class ProgressController {
                     .json({ data: { message: 'Course not registered' } });
             }
             let lessonID;
-            if (progress.lessonID) {
+            if (progress.lessonID === null) {
+                const lesson_first = await Lessons.findOne({ course_slug });
+                lessonID = lesson_first._id;
+            } else {
                 lessonID = progress.lessonID;
             }
-            const lesson_first = await Lessons.findOne({ course_slug });
-            lessonID = lesson_first._id;
             return res
                 .status(200)
                 .json({ data: { message: 'Course registered', lessonID } });
@@ -100,10 +101,10 @@ class ProgressController {
     // [PUT] -/progress/update?courseID = & type =
     async updateProgress(req, res, next) {
         try {
-            const { courseID, type } = req.query;
+            const { courseID, type, ...other } = req.body;
             await Progress.updateOne(
                 { progressable_id: courseID, progressable_type: type },
-                req.body,
+                other,
             );
 
             res.status(200).json({ message: 'Updated progress successfully' });

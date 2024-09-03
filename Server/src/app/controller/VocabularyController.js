@@ -15,7 +15,6 @@ class VocabularyController {
             const vocabulary = await Vocabulary.find({ lessonID });
             res.status(200).json({ data: vocabulary });
         } catch (err) {
-            console.log(err);
             res.status(500).json(err);
         }
     }
