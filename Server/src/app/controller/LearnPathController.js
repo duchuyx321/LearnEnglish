@@ -1,11 +1,25 @@
 const LearnPath = require('../module/LearnPath');
+const Courses = require('../module/Courses');
 const cloudinary = require('cloudinary').v2;
 class LearnPathController {
     // [GET]-- /learn-path/combined
     async AllLearnPath(req, res, next) {
         try {
             const allPath = await LearnPath.find();
-            res.status(200).json({ data: allPath });
+            // Tạo một mảng các ID khóa học từ tất cả các LearnPath
+            const newAllPath = allPath.map(async (item) => {
+                const allCourses = await Courses.find({
+                    _id: { $in: item.courses },
+                });
+                const { courses, ...other } = item.toObject();
+                return {
+                    other,
+                    courseList: allCourses,
+                };
+            });
+            // Chờ tất cả các Promise hoàn thành
+            const data = await Promise.all(newAllPath);
+            res.status(200).json({ data });
         } catch (error) {
             res.status(502).json({ message: error.message });
         }
