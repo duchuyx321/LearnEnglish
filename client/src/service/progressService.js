@@ -47,11 +47,11 @@ export const findOneProgress = (progressable_id, type = 'course') => {
     }
 };
 // [POST] /progress/create?type= & courseID
-export const createProgress = async (courseID, type = 'course') => {
+export const createProgress = async (progressable_id, type = 'course') => {
     try {
         const res = await Request.post('progress/create', {
             type,
-            courseID,
+            progressable_id,
         });
         return res.data;
     } catch (error) {

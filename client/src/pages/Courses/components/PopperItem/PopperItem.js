@@ -13,11 +13,15 @@ function PopperItem({ data = {} }) {
     const typeCourse = 'Miễn Phí';
     // call api
     const fetchAPIProgress = async (courseID) => {
-        const result = await createProgress(courseID);
-        if (result.message === 'created Progress successfully') {
-            navigate(`/learning/${data?.slug}?id=${data?.lessons[0]?._id}`);
+        const token = localStorage.getItem('token');
+        if (token) {
+            const result = await createProgress(courseID);
+            if (result.message === 'created Progress successfully') {
+                navigate(`/learning/${data?.slug}?id=${data?.lessons[0]?._id}`);
+            }
         }
     };
+
     //  function handle
     const handleOnRegister = (courseID) => {
         fetchAPIProgress(courseID);

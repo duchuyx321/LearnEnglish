@@ -43,7 +43,7 @@ function Footer({
         () => findLessonIndex(data?.lessons, id),
         [data.lessons, id],
     );
-    const timeoutDuration = 4000; //540000
+    const timeoutDuration = 540000;
     // useEffect
     useEffect(() => {
         if (screenWidth <= 1024) {

@@ -312,3 +312,14 @@
     font-size: 1.4rem;
     color: #757575;
 }
+.btn-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #808990;
+    font-size: 1.6rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+    &:hover {
+        transform: scale(1.1);
+    }
+}

@@ -1,9 +1,10 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Tippy from '@tippyjs/react/headless';
 import { IoIosSearch } from 'react-icons/io';
 import { IoCloseCircleOutline, IoNotifications } from 'react-icons/io5';
+import { BiChevronsLeft } from 'react-icons/bi';
 import { RiLoader2Line } from 'react-icons/ri';
 
 import styles from './HeaderDefault.module.scss';
@@ -20,7 +21,7 @@ import Avatar from '~/layouts/components/HeaderDefault/components/Avatar';
 
 const cx = classNames.bind(styles);
 
-function HeaderDefault({ children }) {
+function HeaderDefault() {
     const [isToken, setIsToken] = useState(false);
     const [loading, setLoading] = useState(false);
     const [valueInput, setValueInput] = useState('');
@@ -28,6 +29,8 @@ function HeaderDefault({ children }) {
     const [userResult, setUserResult] = useState({});
 
     const debounce = useDebounce(valueInput, 2000);
+    const location = useLocation();
+    const navigate = useNavigate();
     // authentication token
     useEffect(() => {
         const Token = localStorage.getItem('token');
@@ -44,7 +47,8 @@ function HeaderDefault({ children }) {
         }
         setIsToken(false);
     }, []);
-
+    // Tách đường dẫn hiện tại thành mảng bằng cách phân tách dấu "/" [filter(Boolean) loại bỏ phần tử trống trước /]
+    const pathSegments = location.pathname.split('/').filter(Boolean);
     // API search
     useEffect(() => {
         if (!debounce) {
@@ -67,6 +71,15 @@ function HeaderDefault({ children }) {
     const handleOnClear = () => {
         setValueInput('');
     };
+    const handleOnBack = () => {
+        if (window.history.length > 1) {
+            navigate(-1);
+        } else {
+            navigate('/');
+        }
+    };
+
+    // render tippy
     const renderValue = (attrs) => {
         return (
             <div className={cx('search-result')} tabIndex="-1" {...attrs}>
@@ -134,9 +147,19 @@ function HeaderDefault({ children }) {
                         alt="Logo LearnEnglish"
                     />
                 </Link>
-                <Link to="/" className={cx('subtitle')}>
-                    Học Tiếng Anh
-                </Link>
+                {pathSegments.length === 1 ? (
+                    <Link to="/" className={cx('subtitle')}>
+                        Học Tiếng Anh
+                    </Link>
+                ) : (
+                    <button
+                        onClick={() => handleOnBack()}
+                        className={cx('btn-back')}
+                    >
+                        <BiChevronsLeft />
+                        <p>Quay Lại</p>
+                    </button>
+                )}
             </h1>
             <div className={cx('_body')}>
                 <Tippy
