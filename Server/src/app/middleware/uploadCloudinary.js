@@ -31,11 +31,24 @@ const storageLearnPath = new CloudinaryStorage({
         folder: 'LearnEnglish/Learn-Path',
     },
 });
+const storageBlogs = new CloudinaryStorage({
+    cloudinary,
+    allowedFormats: ['jpg', 'png'],
+    params: {
+        folder: 'LearnEnglish/Blogs',
+    },
+});
 
 const uploadAvatarCloud = multer({
     storage: storageAvatar,
 });
 const uploadCourseCloud = multer({ storage: storageCourse });
 const uploadLearnPathCloud = multer({ storage: storageLearnPath });
+const uploadBlogCloud = multer({ storage: storageBlogs });
 
-module.exports = { uploadAvatarCloud, uploadCourseCloud, uploadLearnPathCloud };
+module.exports = {
+    uploadAvatarCloud,
+    uploadCourseCloud,
+    uploadLearnPathCloud,
+    uploadBlogCloud,
+};

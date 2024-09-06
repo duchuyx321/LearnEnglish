@@ -21,7 +21,7 @@ const LIST_SIDEBARS = [
     {
         name: 'Bài Viết',
         icon: <FaNewspaper />,
-        to: '/blog',
+        to: `/blog?page=1`,
     },
 ];
 function SideBarDefault() {

@@ -8,15 +8,15 @@ import { useState } from 'react';
 
 import styles from './Articles.module.scss';
 import Image from '~/components/Image';
+import { formatTime } from '~/service/formatTime';
 
 const cx = classNames.bind(styles);
 
-function Articles() {
+function Articles({ data = [] }) {
     const [isBookmark, setIsBookmark] = useState(false);
     const [isLike, setIsLike] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isComment, setIsComment] = useState(false);
-
     // handle function
     const handleOnBookmark = () => {
         setIsBookmark(!isBookmark);
@@ -35,11 +35,11 @@ function Articles() {
             <div className={cx('header')}>
                 <div className={cx('author')}>
                     <div className={cx('avatar')}>
-                        <Image src="" alt="avatar" />
+                        <Image src={data?.profile?.avatar} alt="avatar" />
                     </div>
                     <div className={cx('profile')}>
-                        <h3>Đức Huy</h3>
-                        <p>5 phút trước </p>
+                        <h3>{`${data?.profile?.first_name} ${data?.profile?.last_name}`}</h3>
+                        <p>{formatTime(data?.createdAt)}</p>
                     </div>
                 </div>
                 <div className={cx('action')}>
@@ -54,13 +54,7 @@ function Articles() {
             <div className={cx('body')}>
                 <div className={cx('info')}>
                     <p className={cx({ expanded: isExpanded })}>
-                        [đồ án] Mình cần làm gấp 1 app Flutter về thời tiết (tầm
-                        3 4 trang) Yêu cầu: 1. Hoàn thành trước 12/9 2. Chức
-                        năng: hiển thị thông tin thời tiết (api tuỳ bạn chọn),
-                        kết nối Bluetooth, thông qua Bluetooth này tiếp nhận
-                        thông tin và hiển thị 4. Yêu cầu kỹ thuật: code đơn giản
-                        nhất có thể, dễ hiểu, dễ đọc không cần bloc…, có
-                        comments, có data models, ios + android.
+                        {data?.content}
                     </p>
                     <button
                         className={cx('btn-toggle')}
@@ -69,7 +63,11 @@ function Articles() {
                         {isExpanded ? 'Thu gọn' : 'Xem thêm'}
                     </button>
                 </div>
-                <Image src="" alt="ảnh nền" className={cx('image')} />
+                <Image
+                    src={data?.image}
+                    alt="ảnh nền"
+                    className={cx('image')}
+                />
             </div>
             <div className={cx('footer')}>
                 <button
@@ -77,7 +75,7 @@ function Articles() {
                     onClick={() => handleOnLike()}
                 >
                     {isLike ? <IoMdHeart /> : <IoIosHeartEmpty />}
-                    <p>20</p>
+                    <p>{data?.like_count}</p>
                 </button>
                 <button
                     className={cx('btn-action', { active: isComment })}

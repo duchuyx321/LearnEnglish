@@ -10,7 +10,7 @@ const Progress = new Schema(
         progressable_type: {
             type: String,
             required: true,
-            enum: ['course', 'blog'],
+            enum: ['course'],
         },
         progressable_id: { type: Schema.Types.ObjectId, required: true },
         status: {

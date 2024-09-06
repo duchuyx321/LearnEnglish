@@ -24,5 +24,24 @@ const checkToken = async (req, res, next) => {
         res.status(500).json({ message: err });
     }
 };
+const decodeToken = async (token) => {
+    try {
+        if (token && token.startsWith('Bearer ')) {
+            token = token.split(' ')[1];
+        }
+        const decode = await new Promise((resole, reject) => {
+            jwt.verify(token, process.env.ACCESS_TOKEN, (err, data) => {
+                if (err) {
+                    return reject(new Error({ message: 'token is not valid' }));
+                }
+                const { id } = data;
+                resole(id);
+            });
+        });
+        return decode;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
-module.exports = { checkToken };
+module.exports = { checkToken, decodeToken };
