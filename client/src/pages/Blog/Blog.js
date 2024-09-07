@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 
@@ -14,6 +14,7 @@ const headerDescription =
 
 function Blog() {
     const [resultBlogs, setResultBlogs] = useState({});
+    const navigate = useNavigate();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const page = parseInt(searchParams.get('page'));
@@ -29,32 +30,40 @@ function Blog() {
     // render
     const renderPagePrev = (page) => {
         const pages = [];
-        let i = 1;
-        if (page - 4) {
-            i = page - 4;
-        }
-        for (i; i < page; i++) {
+        let num = Math.max(1, page - 4); // không vượt quá 1
+        for (let i = num; i < page; i++) {
             pages.push(
-                <div key={i} className={cx('page')}>
+                <button
+                    key={i}
+                    className={cx('page')}
+                    onClick={() => handleOnNext(i)}
+                >
                     {i}
-                </div>,
+                </button>,
             );
         }
         return pages;
     };
     const renderPageNext = (totalPage) => {
-        console.log(totalPage);
         const pages = [];
-        let i = page + 1;
-        console.log(i);
-        for (i; i < totalPage; i++) {
+        const num = Math.min(totalPage, page + 5); // không vượt quá tổng số trang
+        for (let i = page + 1; i <= num; i++) {
             pages.push(
-                <div key={i} className={cx('page')}>
+                <button
+                    key={i}
+                    className={cx('page')}
+                    onClick={() => handleOnNext(i)}
+                >
                     {i}
-                </div>,
+                </button>,
             );
         }
         return pages;
+    };
+
+    // handle
+    const handleOnNext = (page) => {
+        navigate(`/blog?page=${page}`);
     };
 
     return (
@@ -81,9 +90,7 @@ function Blog() {
                     <div className={cx('list-page-current')}>{page}</div>
                     {page <= parseInt(resultBlogs.total) && (
                         <div className={cx('list-page-next')}>
-                            {parseInt(resultBlogs.total) - 4 > 0
-                                ? renderPageNext(page + 5)
-                                : renderPageNext(parseInt(resultBlogs.total))}
+                            {renderPageNext(parseInt(resultBlogs.total))}
                         </div>
                     )}
                 </div>

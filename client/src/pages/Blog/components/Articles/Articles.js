@@ -9,26 +9,42 @@ import { useState } from 'react';
 import styles from './Articles.module.scss';
 import Image from '~/components/Image';
 import { formatTime } from '~/service/formatTime';
+import { updateBlog } from '~/service/BlogService';
 
 const cx = classNames.bind(styles);
 
 function Articles({ data = [] }) {
-    const [isBookmark, setIsBookmark] = useState(false);
-    const [isLike, setIsLike] = useState(false);
+    const [isBookmark, setIsBookmark] = useState(data?.is_bookmark || false);
+    const [isLike, setIsLike] = useState(data?.is_like || false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isComment, setIsComment] = useState(false);
+    const [totalLike, setTotalLike] = useState(data?.like_count || 0);
     // handle function
-    const handleOnBookmark = () => {
-        setIsBookmark(!isBookmark);
+    const handleOnBookmark = async (_id) => {
+        const is_bookmark = !isBookmark;
+        setIsBookmark(is_bookmark);
+        await updateBlog({ _id, is_bookmark });
     };
-    const handleOnLike = () => {
-        setIsLike(!isLike);
+    const handleOnLike = async (_id) => {
+        const is_like = !isLike;
+        setIsLike(is_like);
+        setTotalLike((prev) => (is_like ? prev + 1 : prev - 1));
+        await fetchAPI({ _id, is_like });
     };
     const handleToggle = () => {
         setIsExpanded(!isExpanded);
     };
     const handleComment = () => {
         setIsComment(!isComment);
+    };
+    // call api
+    const fetchAPI = async ({
+        _id,
+        is_like = undefined,
+        is_bookmark = undefined,
+    }) => {
+        const result = await updateBlog({ _id, is_like, is_bookmark });
+        console.log(result);
     };
     return (
         <div className={cx('wrapper')}>
@@ -45,7 +61,7 @@ function Articles({ data = [] }) {
                 <div className={cx('action')}>
                     <button
                         className={cx('btn-action', { active: isBookmark })}
-                        onClick={() => handleOnBookmark()}
+                        onClick={() => handleOnBookmark(data?._id)}
                     >
                         {!isBookmark ? <CiBookmark /> : <IoBookmark />}
                     </button>
@@ -72,10 +88,10 @@ function Articles({ data = [] }) {
             <div className={cx('footer')}>
                 <button
                     className={cx('btn-action', { active: isLike })}
-                    onClick={() => handleOnLike()}
+                    onClick={() => handleOnLike(data?._id)}
                 >
                     {isLike ? <IoMdHeart /> : <IoIosHeartEmpty />}
-                    <p>{data?.like_count}</p>
+                    <p>{totalLike}</p>
                 </button>
                 <button
                     className={cx('btn-action', { active: isComment })}

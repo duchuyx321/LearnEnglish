@@ -15,5 +15,7 @@ router.post(
     checkToken,
     BlogController.createBlog,
 );
+// [PUT]
+router.put('/update/:_id', checkToken, BlogController.updateBlog);
 
 module.exports = router;

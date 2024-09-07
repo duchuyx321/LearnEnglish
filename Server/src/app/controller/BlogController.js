@@ -14,8 +14,10 @@ class BlogController {
             const totalBlogs = await Blogs.countDocuments();
             const totalPages = Math.ceil(totalBlogs / limit);
             const blog = await Blogs.find().skip(skip).limit(limit);
+
             const token = req.headers.authorization;
-            const userID = token ? decodeToken(token) : null;
+            const userID = token ? await decodeToken(token) : null;
+
             const formattedBlogPromises = blog.map(async (item) => {
                 const is_like = userID ? item.likes.includes(userID) : false;
                 const is_bookmark = userID
@@ -64,6 +66,44 @@ class BlogController {
             if (req.file) {
                 cloudinary.uploader.destroy(req.file.fileName);
             }
+            res.status(502).json({ message: error.message });
+        }
+    }
+    // [PUT] --/blog/update/:_id
+    async updateBlog(req, res, next) {
+        try {
+            const { _id } = req.params;
+            const userID = req.userID;
+            const { is_like, is_bookmark, ...other } = req.body;
+            const updateBlog = { ...other };
+            console.log(Boolean(is_like));
+            if (is_like !== undefined) {
+                if (is_like === 'true' || is_like === true || is_like === 1) {
+                    updateBlog.$addToSet = { likes: userID };
+                } else {
+                    updateBlog.$pull = { likes: userID };
+                }
+            }
+            if (is_bookmark !== undefined) {
+                if (
+                    is_bookmark === 'true' ||
+                    is_bookmark === true ||
+                    is_bookmark === 1
+                ) {
+                    updateBlog.$addToSet = {
+                        ...updateBlog.$addToSet,
+                        bookmarks: userID,
+                    };
+                } else {
+                    updateBlog.$pull = {
+                        ...updateBlog.$pull,
+                        bookmarks: userID,
+                    };
+                }
+            }
+            const newBLog = await Blogs.updateOne({ _id }, updateBlog);
+            res.status(200).json({ data: newBLog });
+        } catch (error) {
             res.status(502).json({ message: error.message });
         }
     }
