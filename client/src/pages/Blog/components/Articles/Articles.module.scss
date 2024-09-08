@@ -111,6 +111,7 @@
         text-overflow: ellipsis;
         white-space: normal;
         line-height: 1.5;
+        white-space: pre-wrap;
         max-height: 12rem; /* Giới hạn chiều cao (tương ứng với 4 dòng) */
         transition: max-height 0.2s ease-in-out; /* Hiệu ứng mượt mà khi mở rộng/thu gọn */
     }

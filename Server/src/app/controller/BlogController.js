@@ -13,7 +13,12 @@ class BlogController {
             const skip = (page - 1) * limit;
             const totalBlogs = await Blogs.countDocuments();
             const totalPages = Math.ceil(totalBlogs / limit);
-            const blog = await Blogs.find().skip(skip).limit(limit);
+            const blog = await Blogs.find({
+                is_approved: true,
+                is_public: true,
+            })
+                .skip(skip)
+                .limit(limit);
 
             const token = req.headers.authorization;
             const userID = token ? await decodeToken(token) : null;

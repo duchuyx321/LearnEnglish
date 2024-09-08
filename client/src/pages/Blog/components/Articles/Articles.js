@@ -4,6 +4,7 @@ import { IoBookmark } from 'react-icons/io5';
 import { IoIosHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
 import { LuMessageSquare } from 'react-icons/lu';
+
 import { useState } from 'react';
 
 import styles from './Articles.module.scss';
@@ -19,17 +20,23 @@ function Articles({ data = [] }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isComment, setIsComment] = useState(false);
     const [totalLike, setTotalLike] = useState(data?.like_count || 0);
+    const token = localStorage.getItem('token');
+
     // handle function
     const handleOnBookmark = async (_id) => {
-        const is_bookmark = !isBookmark;
-        setIsBookmark(is_bookmark);
-        await updateBlog({ _id, is_bookmark });
+        if (token) {
+            const is_bookmark = !isBookmark;
+            setIsBookmark(is_bookmark);
+            await updateBlog({ _id, is_bookmark });
+        }
     };
     const handleOnLike = async (_id) => {
-        const is_like = !isLike;
-        setIsLike(is_like);
-        setTotalLike((prev) => (is_like ? prev + 1 : prev - 1));
-        await fetchAPI({ _id, is_like });
+        if (token) {
+            const is_like = !isLike;
+            setIsLike(is_like);
+            setTotalLike((prev) => (is_like ? prev + 1 : prev - 1));
+            await fetchAPI({ _id, is_like });
+        }
     };
     const handleToggle = () => {
         setIsExpanded(!isExpanded);

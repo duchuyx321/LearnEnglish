@@ -14,7 +14,7 @@ function MenuItem({ username }) {
             },
         ],
         blog: [
-            { title: 'Viết Blog', to: '/new-post' },
+            { title: 'Viết Blog', to: `/new-post` },
             { title: 'Bài Viết Của Tôi', to: '/me-posts' },
             { title: 'Bài Viết Đã Lưu', to: '/me-bookmark' },
         ],

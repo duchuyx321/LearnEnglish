@@ -147,7 +147,7 @@ function HeaderDefault() {
                         alt="Logo LearnEnglish"
                     />
                 </Link>
-                {pathSegments.length === 1 ? (
+                {pathSegments.length <= 1 ? (
                     <Link to="/" className={cx('subtitle')}>
                         Học Tiếng Anh
                     </Link>
