@@ -20,6 +20,9 @@
             background-color: transparent;
         }
     }
+    .wrapper-import {
+        height: 23rem;
+    }
 }
 // tablet (740px - 1024px)
 @media only screen and (min-width: 740px) and (max-width: 1023px) {
@@ -35,6 +38,9 @@
             top: 5rem;
             right: -25%;
         }
+    }
+    .wrapper-import {
+        height: 23rem;
     }
 }
 // desktop >= 1024px
@@ -52,6 +58,9 @@
             right: -25%;
         }
     }
+    .wrapper-import {
+        height: 25rem;
+    }
 }
 //  > 1400
 @media only screen and (min-width: 1400px) {
@@ -67,6 +76,9 @@
             top: 5rem;
             right: -25%;
         }
+    }
+    .wrapper-import {
+        height: 25rem;
     }
 }
 .wrapper {
@@ -92,15 +104,6 @@
         flex: 1;
         font-size: 3rem;
         text-align: center;
-    }
-    & > button {
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 4rem;
-        right: 1.6rem;
-        bottom: 8px;
     }
 }
 
@@ -131,6 +134,10 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    & > img {
+        width: 100%;
+        height: 100%;
+    }
 }
 .profile {
     display: flex;
@@ -182,11 +189,12 @@
 .emoji {
     & > div {
         position: absolute;
+        z-index: 32;
 
         & > em-emoji-picker {
             width: 28rem;
             height: 30rem;
-            background-color: transparent;
+            background-color: var(--white-color);
         }
     }
 }
@@ -210,15 +218,31 @@
 }
 .wrapper-import {
     width: 100%;
-    height: 25rem;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 1.6rem;
+    padding: 1.8rem;
     border-radius: 1.6rem;
     overflow: hidden;
-    & > img {
+    position: relative;
+    & > div {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        overflow: hidden;
+        & > img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        & > button {
+            position: absolute;
+            top: -9px;
+            right: -2px;
+            font-size: 3rem;
+            z-index: 31;
+        }
     }
 }
 .take {
@@ -243,4 +267,28 @@
     position: absolute;
     bottom: 6rem;
     left: 0;
+    & > button {
+        background-color: transparent;
+    }
+    & > span {
+        position: absolute;
+        display: none;
+        top: 2.5rem;
+        left: 4rem;
+        font-size: 3rem;
+        color: var(--primary);
+    }
+}
+.footer > span.rotate {
+    display: block; /* Hiển thị khi có class rotate */
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

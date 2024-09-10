@@ -1,8 +1,10 @@
 import classNames from 'classnames/bind';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { BsEmojiHeartEyes } from 'react-icons/bs';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { MdAddPhotoAlternate } from 'react-icons/md';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 
@@ -10,19 +12,31 @@ import styles from './NewPost.module.scss';
 import Image from '~/components/Image';
 import Status from './components/Status';
 import Button from '~/components/Button';
+import { createBlog } from '~/service/BlogService';
+import { user } from '~/service/userService';
 
 const cx = classNames.bind(styles);
 
 function NewPost() {
+    const [dataProfile, setDataProfile] = useState({});
     const [isPublic, setIsPublic] = useState(true);
+    const [is_loading, setIsLoading] = useState(false);
     const [value, setValue] = useState('');
+    const [file, setFile] = useState(null);
     const [showPicker, setShowPicker] = useState(false);
     const [previewImage, setPreviewImage] = useState(null);
     const contentRef = useRef();
     const inputRef = useRef();
-    console.log(value);
-    // import
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchAPIProfile();
+    }, []);
     // call api
+    const fetchAPIProfile = async () => {
+        const result = await user();
+        setDataProfile(result);
+    };
 
     // handle function
     const handleOnStatus = () => {
@@ -56,19 +70,33 @@ function NewPost() {
         }
     };
     const handleOnImportFile = (e) => {
-        const file = e.target.files[0];
-        const imageURL = URL.createObjectURL(file); // Tạo URL tạm thời cho ảnh
+        const files = e.target.files[0];
+        setFile(files);
+        const imageURL = URL.createObjectURL(files); // Tạo URL tạm thời cho ảnh
         setPreviewImage(imageURL); // Cập nhật URL vào state
     };
-    console.log(previewImage);
+    const handleOnClearImg = () => {
+        setPreviewImage(null);
+    };
+    const handleOnPost = async () => {
+        setIsLoading(true);
+        if (value) {
+            const result = await createBlog({
+                content: value,
+                image: file,
+                is_public: isPublic,
+            });
+            if (result.message === 'Created successfully') {
+                navigate('/blog?page=1');
+            }
+            setIsLoading(false);
+        }
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
                 <div className={cx('title')}>
                     <h3>Tạo Bài Viết </h3>
-                    <button>
-                        <IoCloseCircleOutline />
-                    </button>
                 </div>
                 <form
                     className={cx('post')}
@@ -76,10 +104,13 @@ function NewPost() {
                 >
                     <div className={cx('header')}>
                         <div className={cx('avatar')}>
-                            <Image src="" alt="" />
+                            <Image
+                                src={dataProfile?.profile?.avatar}
+                                alt={`ảnh đại diện ${dataProfile?.profile?.first_name} ${dataProfile?.profile?.last_name}`}
+                            />
                         </div>
                         <div className={cx('profile')}>
-                            <h3>Đức Huy</h3>
+                            <h3>{`${dataProfile?.profile?.first_name} ${dataProfile?.profile?.last_name}`}</h3>
                             <Status
                                 isPublic={isPublic}
                                 handleOnClick={handleOnStatus}
@@ -115,7 +146,17 @@ function NewPost() {
                         <div className={cx('import')}>
                             <div className={cx('wrapper-import')}>
                                 {previewImage ? (
-                                    <img src={previewImage} alt="file import" />
+                                    <div>
+                                        <img
+                                            src={previewImage}
+                                            alt="file import"
+                                        />
+                                        <button
+                                            onClick={() => handleOnClearImg()}
+                                        >
+                                            <IoCloseCircleOutline />
+                                        </button>
+                                    </div>
                                 ) : (
                                     <button
                                         className={cx('take')}
@@ -136,9 +177,17 @@ function NewPost() {
                         </div>
                     </div>
                     <div className={cx('footer')}>
-                        <Button outline large>
+                        <Button
+                            outline
+                            large
+                            disabled={value === '' ? true : false}
+                            onClick={() => handleOnPost()}
+                        >
                             Đăng
                         </Button>
+                        <span className={cx({ rotate: is_loading })}>
+                            <AiOutlineLoading3Quarters />
+                        </span>
                     </div>
                 </form>
             </div>

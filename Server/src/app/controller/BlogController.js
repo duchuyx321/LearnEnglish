@@ -64,6 +64,7 @@ class BlogController {
             if (req.file) {
                 req.body.image = req.file.path;
             }
+
             const newBlog = new Blogs({ author: userID, ...req.body });
             await newBlog.save();
             return res.status(200).json({ message: 'Created successfully' });
