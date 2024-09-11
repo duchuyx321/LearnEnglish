@@ -21,7 +21,9 @@ import Avatar from '~/layouts/components/HeaderDefault/components/Avatar';
 
 const cx = classNames.bind(styles);
 
-function HeaderDefault() {
+const defaultFN = () => {};
+
+function HeaderDefault({ handleAuth = defaultFN }) {
     const [isToken, setIsToken] = useState(false);
     const [loading, setLoading] = useState(false);
     const [valueInput, setValueInput] = useState('');
@@ -232,8 +234,21 @@ function HeaderDefault() {
                     </div>
                 ) : (
                     <div className={cx('_action')}>
-                        <Button outlineText>Đăng Ký</Button>
-                        <Button primary text>
+                        <Button
+                            outlineText
+                            onClick={() => {
+                                handleAuth(false);
+                            }}
+                        >
+                            Đăng Ký
+                        </Button>
+                        <Button
+                            primary
+                            text
+                            onClick={() => {
+                                handleAuth(true);
+                            }}
+                        >
                             Đăng Nhập
                         </Button>
                     </div>

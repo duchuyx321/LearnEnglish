@@ -28,9 +28,11 @@ function NewPost() {
     const contentRef = useRef();
     const inputRef = useRef();
     const navigate = useNavigate();
-
+    const token = localStorage.getItem('token');
     useEffect(() => {
-        fetchAPIProfile();
+        if (token) {
+            fetchAPIProfile();
+        }
     }, []);
     // call api
     const fetchAPIProfile = async () => {
@@ -80,7 +82,7 @@ function NewPost() {
     };
     const handleOnPost = async () => {
         setIsLoading(true);
-        if (value) {
+        if (value && token) {
             const result = await createBlog({
                 content: value,
                 image: file,

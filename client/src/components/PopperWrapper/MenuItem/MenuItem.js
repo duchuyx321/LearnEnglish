@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 
 import styles from './MenuItem.module.scss';
 import Button from '~/components/Button';
+import { logout } from '~/service/AuthService';
 
 const cx = classNames.bind(styles);
 
@@ -21,7 +22,18 @@ function MenuItem({ username }) {
         setting: [{ title: 'Cài Đặt', to: '/setting' }, { title: 'Đăng Xuất' }],
     };
     const handleOnclick = (e) => {
-        if (e === 'Đăng Xuất') console.log(e);
+        if (e === 'Đăng Xuất') {
+            fetchAPILogin();
+        }
+    };
+    // fetch  api
+    const fetchAPILogin = async () => {
+        const result = await logout();
+        console.log(result.data);
+        if (result.data.message === 'logout successful') {
+            localStorage.removeItem('token');
+            window.location.reload();
+        }
     };
     return (
         <div className={cx('wrapper')}>

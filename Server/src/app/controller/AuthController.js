@@ -10,21 +10,22 @@ class AuthController {
     // [POST] -/auth/login
     async Login(req, res, next) {
         try {
-            const { username, email } = req.body;
+            const { loginIdentifier } = req.body;
             const pass = req.body.password;
-            const currentUser = await Users.findOne({
-                email,
-            });
+            const query = {
+                $or: [
+                    { email: loginIdentifier },
+                    { username: loginIdentifier },
+                ],
+            };
+            const currentUser = await Users.findOne(query);
             if (!currentUser) {
                 return res.status(401).json({ message: 'User not found' });
-            }
-            if (currentUser.username !== username) {
-                return res.status(401).json({ message: 'Incorrect username' });
             }
             const passDB = currentUser.password;
             const decryptPassword = await decryptPass(pass, passDB);
             if (!decryptPassword) {
-                return res.status(401).json({ message: 'Incorrect password ' });
+                return res.status(401).json({ message: 'Incorrect password' });
             }
             const { password, ...other } = currentUser._doc;
             const newAccessToken = setToken(res, other);
@@ -33,7 +34,7 @@ class AuthController {
                 .json({ data: [other], meta: { newAccessToken } });
         } catch (error) {
             console.log(error);
-            res.status(500).json(error);
+            res.status(500).json({ message: error.message });
         }
     }
     // [POST] -/auth/register
@@ -66,7 +67,15 @@ class AuthController {
             res.status(500).json(err);
         }
     }
-
+    // [POST] --/auth/logout
+    async logout(req, res, next) {
+        try {
+            await res.clearCookie('refreshToken');
+            res.status(200).json({ data: { message: 'logout successful' } });
+        } catch (error) {
+            res.status(502).json({ message: error.message });
+        }
+    }
     // [PATCH] -/auth/me
     async updateCurrentUser(req, res, next) {
         try {
