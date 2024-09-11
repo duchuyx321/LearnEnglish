@@ -67,6 +67,31 @@ class UserController {
             });
         }
     }
+    // [POST] --/users/checkRegister
+    async checkRegister(req, res, next) {
+        try {
+            const { username, email } = req.body;
+            if (username !== undefined && username !== '') {
+                const user = await Users.findOne({ username });
+                if (user) {
+                    return res
+                        .status(409)
+                        .json({ message: 'User already exists' });
+                }
+            }
+            if (email !== undefined && email !== '') {
+                const email = await Users.findOne({ email });
+                if (email) {
+                    return res
+                        .status(409)
+                        .json({ message: 'Email already exists' });
+                }
+            }
+            return res.status(200).json({ message: 'check successful' });
+        } catch (error) {
+            res.status(502).json({ message: error.message });
+        }
+    }
 }
 
 module.exports = new UserController();

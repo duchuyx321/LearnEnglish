@@ -7,6 +7,7 @@ const userRouter = require('./User');
 const progressRouter = require('./progress');
 const learnPathRouter = require('./learnPath');
 const blogRouter = require('./blog');
+const profileRouter = require('./profile');
 
 const router = (app) => {
     app.use('/auth', authRouter);
@@ -16,6 +17,7 @@ const router = (app) => {
     app.use('/course', courseRouter);
     app.use('/progress', progressRouter);
     app.use('/learn-path', learnPathRouter);
+    app.use('/profile', profileRouter);
     app.use('/blog', blogRouter);
     app.use('/', homeRouter);
 };

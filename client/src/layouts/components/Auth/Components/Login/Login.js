@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { RiLoader2Fill } from 'react-icons/ri';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 import styles from './Login.module.scss';
 import Button from '~/components/Button';
@@ -11,6 +12,7 @@ const cx = classNames.bind(styles);
 function Login() {
     const [loginIdentifier, setLoginIdentifier] = useState('');
     const [password, setPassword] = useState('');
+    const [isEye, setIsEye] = useState(false);
     const [waring, setWaring] = useState(null);
     const [waringPass, setWaringPass] = useState(null);
     const [isDisabled, setIsDisabled] = useState(true);
@@ -78,10 +80,16 @@ function Login() {
             </div>
             <div className={cx('boxInput')}>
                 <input
-                    type="password"
+                    type={isEye ? 'text' : 'password'}
                     placeholder="Mật Khẩu"
                     onInput={(e) => handleOnValuePass(e.target.value)}
                 />
+                <button
+                    className={cx('btn-eye')}
+                    onClick={() => setIsEye(!isEye)}
+                >
+                    {isEye ? <FaRegEye /> : <FaRegEyeSlash />}
+                </button>
                 {waringPass && <p>{waringPass}</p>}
             </div>
             <div className={cx('footer')}>

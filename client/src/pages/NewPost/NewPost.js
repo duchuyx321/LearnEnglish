@@ -13,7 +13,7 @@ import Image from '~/components/Image';
 import Status from './components/Status';
 import Button from '~/components/Button';
 import { createBlog } from '~/service/BlogService';
-import { user } from '~/service/userService';
+import { Profile_ME } from '~/service/ProfileService';
 
 const cx = classNames.bind(styles);
 
@@ -33,13 +33,12 @@ function NewPost() {
         if (token) {
             fetchAPIProfile();
         }
-    }, []);
+    }, [token]);
     // call api
     const fetchAPIProfile = async () => {
-        const result = await user();
-        setDataProfile(result);
+        const result = await Profile_ME();
+        setDataProfile(result.data);
     };
-
     // handle function
     const handleOnStatus = () => {
         setIsPublic(!isPublic);
@@ -107,12 +106,12 @@ function NewPost() {
                     <div className={cx('header')}>
                         <div className={cx('avatar')}>
                             <Image
-                                src={dataProfile?.profile?.avatar}
-                                alt={`ảnh đại diện ${dataProfile?.profile?.first_name} ${dataProfile?.profile?.last_name}`}
+                                src={dataProfile?.avatar}
+                                alt={`ảnh đại diện ${dataProfile?.first_name} ${dataProfile?.last_name}`}
                             />
                         </div>
                         <div className={cx('profile')}>
-                            <h3>{`${dataProfile?.profile?.first_name} ${dataProfile?.profile?.last_name}`}</h3>
+                            <h3>{`${dataProfile?.first_name} ${dataProfile?.last_name}`}</h3>
                             <Status
                                 isPublic={isPublic}
                                 handleOnClick={handleOnStatus}
