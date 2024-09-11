@@ -78,17 +78,23 @@ class UserController {
                         .status(409)
                         .json({ message: 'User already exists' });
                 }
+                return res
+                    .status(200)
+                    .json({ message: 'check username successful' });
             }
             if (email !== undefined && email !== '') {
-                const email = await Users.findOne({ email });
-                if (email) {
+                const foundEmail = await Users.findOne({ email });
+                if (foundEmail) {
                     return res
                         .status(409)
                         .json({ message: 'Email already exists' });
                 }
+                return res
+                    .status(200)
+                    .json({ message: 'check email successful' });
             }
-            return res.status(200).json({ message: 'check successful' });
         } catch (error) {
+            console.log(error);
             res.status(502).json({ message: error.message });
         }
     }
