@@ -50,7 +50,7 @@ class AuthController {
                     .status(400)
                     .json({ message: 'user or email has existed' });
             }
-            const hash = hashPass(pass);
+            const hash = await hashPass(pass);
             const newUser = new Users({
                 username,
                 email,

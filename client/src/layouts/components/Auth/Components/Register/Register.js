@@ -8,6 +8,8 @@ import styles from './Register.module.scss';
 import Button from '~/components/Button';
 import { checkRegister } from '~/service/userService';
 import { useDebounce } from '~/hooks';
+import { sendCode, checkCode } from '~/service/ApiService';
+import { register } from '~/service/AuthService';
 
 const cx = classNames.bind(styles);
 const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -18,17 +20,19 @@ function Login() {
     const [isRepeatPass, setIsRepeatPass] = useState(false);
     const [disabled, setDisabled] = useState(true);
     const [token, setToken] = useState('');
+    const [count, setCount] = useState('Gửi Mã');
+    const [isCount, setIsCount] = useState(false);
 
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordRepeat, setPasswordRepeat] = useState('');
 
-    const [waringUsername, setWaringUsername] = useState('');
-    const [waringEmail, setWaringEmail] = useState('');
-    const [waringPassword, setWaringPassword] = useState('');
-    const [waringPasswordRepeat, setWaringPasswordRepeat] = useState('');
-    const [waringToken, setWaringToken] = useState('');
+    const [waringUsername, setWaringUsername] = useState(null);
+    const [waringEmail, setWaringEmail] = useState(null);
+    const [waringPassword, setWaringPassword] = useState(null);
+    const [waringPasswordRepeat, setWaringPasswordRepeat] = useState(null);
+    const [waringToken, setWaringToken] = useState(null);
 
     const delay = 1000;
     const debounceUsername = useDebounce(username, delay);
@@ -79,15 +83,41 @@ function Login() {
         }
         setWaringPasswordRepeat('');
     }, [debounceRepeatPass]);
+    // token
     useEffect(() => {
         if (debounceToken === '') {
-            setWaringToken('Vui Lòng Nhập Token');
             return;
-        } else if (debounceToken.length < 4) {
-            setWaringToken('Token gồm 4 kí tư');
+        } else if (debounceToken.length < 6 && debounceToken.length > 0) {
+            setWaringToken('Token gồm 6 kí tư');
             return;
         }
+        fetchCheckTokenApi({ email: debounceEmail, token: debounceToken });
     }, [debounceToken]);
+    // count
+    useEffect(() => {
+        let timer;
+
+        if (isCount) {
+            // Set up the interval to count down
+            timer = setInterval(() => {
+                setCount((prevCount) => {
+                    if (prevCount <= 1) {
+                        clearInterval(timer);
+                        setIsCount(false);
+                        setCount('Gửi Lại');
+                        return 0;
+                    }
+                    return prevCount - 1;
+                });
+            }, 1000);
+        } else {
+            // Clear the timer if isCount is false
+            clearInterval(timer);
+        }
+
+        return () => clearInterval(timer);
+    }, [isCount]);
+    // SUBMIT
     useEffect(() => {
         if (
             (waringEmail === '',
@@ -122,14 +152,50 @@ function Login() {
             return;
         } else if (result.message === 'check email successful') {
             setWaringEmail('');
+            return;
         } else if (result.message === 'check username successful') {
-            setWaringEmail('');
+            setWaringUsername('');
+            return;
         }
     };
-
+    const fetchCheckTokenApi = async ({ token, email }) => {
+        const result = await checkCode({ email, token });
+        if (result.error) {
+            setWaringToken(result.message);
+            return;
+        }
+        setWaringToken('');
+    };
     // handle
     const handlePreventDefault = (e) => {
         e.preventDefault();
+    };
+    const handleOnSendCode = async () => {
+        const result = await sendCode({ email: debounceEmail });
+        if (result.error) {
+            setWaringToken(result.message);
+            return;
+        }
+        setIsCount(true);
+        setCount(120);
+    };
+    const handleInputToken = (e) => {
+        const UpperCaseValue = e.toUpperCase();
+        setToken(UpperCaseValue);
+    };
+    const handleOnSubmitRegister = async () => {
+        setLoad(true);
+        // setDisabled(true);
+        const result = await register(
+            debounceUsername,
+            debounceEmail,
+            debouncePass,
+        );
+        if (!result.error) {
+            localStorage.setItem('token', result.meta.token);
+            window.location.reload();
+        }
+        setLoad(false);
     };
     return (
         <form
@@ -184,10 +250,24 @@ function Login() {
             {/* send token */}
             <div className={cx('sendToken')}>
                 <div>
-                    <input type="text" maxLength="4" placeholder="Nhập Token" />
-                    <Button outline>Send</Button>
+                    <input
+                        value={token}
+                        type="text"
+                        maxLength="6"
+                        placeholder="Nhập Token"
+                        onInput={(e) => handleInputToken(e.target.value)}
+                    />
+                    {waringEmail === '' && (
+                        <Button
+                            outline
+                            onClick={() => handleOnSendCode()}
+                            disabled={isCount}
+                        >
+                            {count}
+                        </Button>
+                    )}
                 </div>
-                <p>Token Sai</p>
+                {waringToken && <p>{waringToken}</p>}
             </div>
             {/* submit */}
             <div className={cx('footer')}>
@@ -196,6 +276,7 @@ function Login() {
                     disabled={disabled}
                     large
                     className={cx('submit')}
+                    onClick={() => handleOnSubmitRegister()}
                 >
                     Đăng Kí
                 </Button>

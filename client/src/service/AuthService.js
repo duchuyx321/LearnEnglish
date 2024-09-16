@@ -27,3 +27,16 @@ export const login = async (loginIdentifier, password) => {
         console.log(error);
     }
 };
+export const register = async (username, email, password) => {
+    try {
+        const res = await Response.post('auth/register', {
+            username,
+            email,
+            password,
+        });
+        return res;
+    } catch (error) {
+        console.log(error);
+        return { error, message: 'Could not register' };
+    }
+};

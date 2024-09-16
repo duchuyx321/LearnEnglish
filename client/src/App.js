@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PrivateRouters, PublicRouters } from '~/routers';
+
 import DefaultLayout from '~/layouts/DefaultLayout';
 
 function App() {

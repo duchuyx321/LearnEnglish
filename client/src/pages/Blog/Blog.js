@@ -6,6 +6,7 @@ import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 import styles from './Blog.module.scss';
 import Articles from './components/Articles';
 import { getBlogs } from '~/service/BlogService';
+import Comment from './components/Comment';
 
 const cx = classNames.bind(styles);
 

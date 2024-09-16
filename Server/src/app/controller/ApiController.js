@@ -1,4 +1,3 @@
-const { nanoid } = require('nanoid');
 const Token = require('../module/Token');
 const TokenService = require('../../service/TokenService');
 
@@ -6,8 +5,9 @@ class ApiController {
     // [POST] --/api/code/sendCode
     async sendCode(req, res, next) {
         try {
+            const { nanoid } = await import('nanoid');
             const { email } = req.body;
-            const newToken = nanoid(4); // tạo ngẫu nhiên 4 kí tự
+            const newToken = nanoid(6).toUpperCase(); // tạo ngẫu nhiên 4 kí tự
             if (!email) {
                 return res.status(400).json({
                     massage: 'mail not found',
@@ -34,20 +34,22 @@ class ApiController {
     // [POST] --/api/code/checkCode
     async checkCode(req, res, next) {
         try {
-            const { code, email } = req.body;
+            const { token, email } = req.body;
             const now = new Date();
-            const Code = await Token.findOne({ email, code });
-            const timeNow =
-                (now.getTime() - Code.createdAt.getTime()) / 1000 / 60;
-            if (!Code) {
+            const tokenDb = await Token.findOne({ email, token });
+            console.log(tokenDb);
+            if (!tokenDb) {
                 return res.status(403).json({ message: 'code not found!' });
-            } else {
-                if (timeNow > 2) {
-                    return res.status(401).json({ message: 'code expired!' });
-                }
-                return res.status(200).json({ message: 'Successful' });
             }
+            const timeNow =
+                (now.getTime() - tokenDb.createAt.getTime()) / 1000 / 60;
+
+            if (timeNow > 2) {
+                return res.status(401).json({ message: 'code expired!' });
+            }
+            return res.status(200).json({ message: 'Successful' });
         } catch (e) {
+            console.log(e);
             res.status(500).json({
                 massage: 'you are not code',
                 error: e.massage,

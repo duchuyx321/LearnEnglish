@@ -11,6 +11,7 @@ import styles from './Articles.module.scss';
 import Image from '~/components/Image';
 import { formatTime } from '~/service/formatTime';
 import { updateBlog } from '~/service/BlogService';
+import Comment from '~/components/Comment';
 
 const cx = classNames.bind(styles);
 
@@ -108,6 +109,7 @@ function Articles({ data = [] }) {
                     <p>20</p>
                 </button>
             </div>
+            {isComment && <Comment commentId={data._id} />}
         </div>
     );
 }
