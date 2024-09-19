@@ -4,4 +4,101 @@
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 31;
+}
+.container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 32;
+    padding: 4rem 3rem 6rem;
+    width: 50%;
+    height: 100%;
+    background-color: var(--white-color);
+    overflow: hidden;
+}
+// header
+.header {
+    position: absolute;
+    right: 1rem;
+    top: 4px;
+}
+
+.exit {
+    font-size: 3rem;
+}
+
+// body
+.body {
+}
+.post {
+    display: flex;
+    gap: 8px;
+}
+.user {
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.comment {
+    max-width: 90%;
+    width: 100%;
+    height: 5rem;
+    position: relative;
+    .comment-input[contenteditable='true']:empty::before {
+        content: attr(
+            data-placeholder
+        ); /* Lấy nội dung placeholder từ thuộc tính data-placeholder */
+        color: #999; /* Màu của placeholder */
+        pointer-events: none; /* Ngăn chặn người dùng click vào placeholder */
+    }
+}
+.total {
+    position: absolute;
+    top: 2px;
+    right: 5rem;
+    display: flex;
+    font-size: 1.4rem;
+}
+.comment-input {
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    padding: 1.6rem 5rem 1.6rem 1.6rem;
+    caret-color: var(--primary);
+    outline: none;
+    background-color: #e5f0ff;
+    border-radius: 8px;
+    z-index: 1;
+}
+.emoji {
+    & > div {
+        position: absolute;
+        right: 0;
+        z-index: 32;
+
+        & > em-emoji-picker {
+            position: relative;
+            right: 0;
+            width: 28rem;
+            height: 30rem;
+            background-color: var(--white-color);
+        }
+    }
+}
+.btn-emoji {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-size: 3rem;
+    color: rgba(0, 0, 0, 0.4);
+    z-index: 5;
+}
+// footer
+.footer {
 }
