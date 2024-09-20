@@ -1,0 +1,104 @@
+// responsive
+
+// mobile < 740px
+@media only screen and (max-width: 739px) {
+    .comment {
+        max-width: 70%;
+    }
+}
+// tablet (740px - 1024px)
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .comment {
+        max-width: 80%;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+    .comment {
+        max-width: 90%;
+    }
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+    .comment {
+        max-width: 90%;
+    }
+}
+// header
+.wrapper {
+    width: 100%;
+}
+
+.exit {
+    position: absolute;
+    font-size: 3rem;
+    top: 0;
+    right: 0;
+}
+.post {
+    display: flex;
+    gap: 8px;
+}
+.user {
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.comment {
+    width: 100%;
+    height: 5rem;
+    position: relative;
+    .comment-input[contenteditable='true']:empty::before {
+        content: attr(
+            data-placeholder
+        ); /* Lấy nội dung placeholder từ thuộc tính data-placeholder */
+        color: #999; /* Màu của placeholder */
+        pointer-events: none; /* Ngăn chặn người dùng click vào placeholder */
+    }
+}
+.total {
+    position: absolute;
+    top: 2px;
+    right: 5rem;
+    display: flex;
+    font-size: 1.4rem;
+}
+.comment-input {
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    padding: 1.6rem 5rem 1.6rem 1.6rem;
+    caret-color: var(--primary);
+    line-height: 1.5;
+    outline: none;
+    background-color: #e5f0ff;
+    border-radius: 8px;
+    z-index: 1;
+}
+.emoji {
+    & > div {
+        position: absolute;
+        right: 0;
+        z-index: 32;
+
+        & > em-emoji-picker {
+            position: relative;
+            right: 0;
+            width: 28rem;
+            height: 30rem;
+            background-color: var(--white-color);
+        }
+    }
+}
+.btn-emoji {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-size: 3rem;
+    color: rgba(0, 0, 0, 0.4);
+    z-index: 5;
+}
