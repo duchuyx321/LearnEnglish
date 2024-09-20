@@ -41,5 +41,38 @@
         margin: 1.6rem 0;
     }
 }
+
 .reactionBar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+.left {
+    display: flex;
+    gap: 2.4rem;
+    & > span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+    }
+}
+.interaction {
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+}
+
+.Reactions {
+    position: absolute;
+    top: -4.6rem;
+    left: -5px;
+}
+.right {
+}
+.reactionBtn {
 }

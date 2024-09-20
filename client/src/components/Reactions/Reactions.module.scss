@@ -1,0 +1,29 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 310px;
+    min-height: 56px;
+    gap: 8px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+        rgba(0, 0, 0, 0.15) 0px 1px 2px;
+    border-radius: 50px;
+    padding: 2px;
+    background-color: var(--white-color);
+    animation-name: inline;
+    animation-duration: 0.2s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+@keyframes inline {
+    0% {
+        translate: 0 100%;
+        opacity: 0;
+        visibility: hidden;
+    }
+    100% {
+        translate: 0 0;
+        opacity: 1;
+        visibility: visible;
+    }
+}

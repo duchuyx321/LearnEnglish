@@ -1,9 +1,10 @@
 import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
+import Tippy from '@tippyjs/react/headless';
 
 import styles from './CommentItem.module.scss';
 import Image from '~/components/Image';
-import { Link } from 'react-router-dom';
-import { IconLike } from '~/components/Icon';
+import Reactions from '~/components/Reactions';
 
 const cx = classNames.bind(styles);
 
@@ -24,17 +25,29 @@ function CommentItem() {
             </div>
             <div className={cx('reactionBar')}>
                 <div className={cx('left')}>
-                    <span>
-                        <button className={cx('interaction')}>Thích</button>
-                    </span>
+                    <Tippy
+                        interactive={true}
+                        appendTo="parent"
+                        delay={[500]}
+                        placement="top-start"
+                        render={(attrs) => (
+                            <div
+                                className={cx('Reactions')}
+                                tabIndex="-1"
+                                {...attrs}
+                            >
+                                <Reactions />
+                            </div>
+                        )}
+                    >
+                        <span>
+                            <button className={cx('interaction')}>Thích</button>
+                        </span>
+                    </Tippy>
                     <button className={cx('interaction')}>Phản Hồi</button>
                 </div>
                 <div className={cx('right')}>
-                    <div className={cx('reactionBtn')}>
-                        <div>
-                            <IconLike width="3.2rem" height="3.2rem" />
-                        </div>
-                    </div>
+                    <div className={cx('reactionBtn')}></div>
                 </div>
             </div>
         </div>
