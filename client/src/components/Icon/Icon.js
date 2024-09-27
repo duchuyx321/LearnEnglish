@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 
 export const IconLike = forwardRef(
-    ({ width = '2.4rem', height = '2.4rem' }, ref) => (
-        <div ref={ref}>
+    ({ width = '2.8rem', height = '2.8rem', ...props }, ref) => (
+        <div ref={ref} {...props}>
             <svg
                 className="svg-inline--fa"
                 viewBox="0 0 24 24"
@@ -42,8 +42,8 @@ export const IconLike = forwardRef(
     ),
 );
 export const IconLove = forwardRef(
-    ({ width = '2.4rem', height = '2.4rem', ref }) => (
-        <div ref={ref}>
+    ({ width = '2.8rem', height = '2.8rem', ...props }, ref) => (
+        <div ref={ref} {...props}>
             <svg
                 className="svg-inline--fa"
                 viewBox="0 0 24 24"
@@ -83,8 +83,8 @@ export const IconLove = forwardRef(
     ),
 );
 export const IconCrush = forwardRef(
-    ({ width = '2.4rem', height = '2.4rem', ref }) => (
-        <div ref={ref}>
+    ({ width = '2.8rem', height = '2.8rem', ...props }, ref) => (
+        <div ref={ref} {...props}>
             <svg
                 className="svg-inline--fa"
                 viewBox="0 0 24 24"
@@ -516,8 +516,8 @@ export const IconCrush = forwardRef(
     ),
 );
 export const IconHaha = forwardRef(
-    ({ width = '2.4rem', height = '2.4rem', ref }) => (
-        <div ref={ref}>
+    ({ width = '2.8rem', height = '2.8rem', ...props }, ref) => (
+        <div ref={ref} {...props}>
             <svg
                 className="svg-inline--fa"
                 viewBox="0 0 24 24"
@@ -587,8 +587,8 @@ export const IconHaha = forwardRef(
     ),
 );
 export const IconSad = forwardRef(
-    ({ width = '2.4rem', height = '2.4rem', ref }) => (
-        <div ref={ref}>
+    ({ width = '2.8rem', height = '2.8rem', ...props }, ref) => (
+        <div ref={ref} {...props}>
             <svg
                 className="svg-inline--fa"
                 viewBox="0 0 24 24"
@@ -756,8 +756,8 @@ export const IconSad = forwardRef(
     ),
 );
 export const IconAngry = forwardRef(
-    ({ width = '2.4rem', height = '2.4rem', ref }) => (
-        <div ref={ref}>
+    ({ width = '2.8rem', height = '2.8rem', ...props }, ref) => (
+        <div ref={ref} {...props}>
             <svg
                 className="svg-inline--fa"
                 viewBox="0 0 24 24"

@@ -6,7 +6,6 @@ import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 import styles from './Blog.module.scss';
 import Articles from './components/Articles';
 import { getBlogs } from '~/service/BlogService';
-import Comment from './components/Comment';
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +17,7 @@ function Blog() {
     const navigate = useNavigate();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const page = parseInt(searchParams.get('page'));
+    const page = parseInt(searchParams.get('page')) || '1';
 
     useEffect(() => {
         fetchAPI(page);

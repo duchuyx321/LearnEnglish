@@ -109,7 +109,9 @@ function Articles({ data = [] }) {
                     <p>20</p>
                 </button>
             </div>
-            {isComment && <Comment commentId={data._id} />}
+            {isComment && (
+                <Comment commentId={data._id} handleClose={handleComment} />
+            )}
         </div>
     );
 }
