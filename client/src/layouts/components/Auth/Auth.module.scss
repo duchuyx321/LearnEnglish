@@ -1,6 +1,6 @@
 .wrapper {
-    width: 485px;
-    height: 65rem;
+    width: var(--width-login-wrapper);
+    height: var(--height-login-wrapper);
     border-radius: 1.6rem;
     background-color: var(--white-color);
     display: flex;

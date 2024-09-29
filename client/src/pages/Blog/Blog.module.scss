@@ -9,6 +9,9 @@
         width: 100%;
         margin: 20px 0 40px;
     }
+    .isHidden {
+        height: 74vh;
+    }
 }
 // tablet (740px - 1024px)
 @media only screen and (min-width: 740px) and (max-width: 1023px) {
@@ -18,6 +21,9 @@
     .header {
         width: 70%;
         margin: 32px 0 32px;
+    }
+    .isHidden {
+        height: 74vh;
     }
 }
 // desktop >= 1024px
@@ -29,6 +35,9 @@
         width: 70%;
         margin: 32px 0 32px;
     }
+    // .isHidden {
+    //     height: 84vh;
+    // }
 }
 //  > 1400
 @media only screen and (min-width: 1400px) {
@@ -42,6 +51,9 @@
     .body {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+    }
+    .isHidden {
+        height: 84vh;
     }
 }
 .wrapper {

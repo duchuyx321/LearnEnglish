@@ -1,6 +1,29 @@
+// responsive
+
+// mobile < 740px
+@media only screen and (max-width: 739px) {
+    .waring {
+        display: none;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .waring {
+        display: none;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+}
 .wrapper {
     width: 100%;
+    min-height: 70%;
     margin-top: 2.4rem;
+    display: flex;
+    flex-direction: column;
 }
 .header {
     display: flex;
@@ -12,5 +35,23 @@
         & > span {
             margin-right: 4px;
         }
+    }
+}
+
+.hollow {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    & > div {
+        font-size: 5rem;
+        color: #999;
+    }
+    & > p {
+        font-size: 1.8rem;
+        color: #999;
     }
 }

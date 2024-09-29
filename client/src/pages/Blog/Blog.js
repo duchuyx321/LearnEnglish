@@ -18,7 +18,6 @@ function Blog() {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const page = parseInt(searchParams.get('page')) || '1';
-
     useEffect(() => {
         fetchAPI(page);
     }, [page]);
@@ -65,7 +64,6 @@ function Blog() {
     const handleOnNext = (page) => {
         navigate(`/blog?page=${page}`);
     };
-
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>

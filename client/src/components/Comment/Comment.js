@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-// import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import styles from './Comment.module.scss';
 import Header from './components/Header';
@@ -10,13 +10,21 @@ const cx = classNames.bind(styles);
 const DefaultFN = () => {};
 
 function Comment({ commentId = '', type = 'blog', handleClose = DefaultFN }) {
+    const [isClose, setIsClose] = useState(false);
+    // handle
+    const handleIsClose = () => {
+        setIsClose(true);
+        setTimeout(() => {
+            handleClose();
+        }, 300);
+    };
     return (
-        <div className={cx('wrapper')} onClick={() => handleClose()}>
+        <div className={cx('wrapper')} onClick={() => handleIsClose()}>
             <div
-                className={cx('container')}
+                className={cx('container', { isClose })}
                 onClick={(e) => e.stopPropagation()}
             >
-                <Header handleOnclose={handleClose} />
+                <Header handleOnclose={handleIsClose} />
                 <Body />
                 <div className={cx('footer')}></div>
             </div>

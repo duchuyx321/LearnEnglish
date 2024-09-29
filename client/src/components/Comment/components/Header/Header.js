@@ -11,10 +11,6 @@ const cx = classNames.bind(styles);
 const DefaultFN = () => {};
 
 function Header({ handleOnclose = DefaultFN }) {
-    const [value, setValue] = useState('');
-    const [show, setShow] = useState(false);
-    const inputRef = useRef(null);
-    const MAX_CHARACTERS = 119;
     return (
         <div className={cx('wrapper')}>
             <button className={cx('exit')} onClick={() => handleOnclose()}>

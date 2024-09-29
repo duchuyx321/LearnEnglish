@@ -14,7 +14,6 @@ import { updateBlog } from '~/service/BlogService';
 import Comment from '~/components/Comment';
 
 const cx = classNames.bind(styles);
-
 function Articles({ data = [] }) {
     const [isBookmark, setIsBookmark] = useState(data?.is_bookmark || false);
     const [isLike, setIsLike] = useState(data?.is_like || false);
