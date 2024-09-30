@@ -11,6 +11,7 @@ const DefaultFN = () => {};
 
 function Comment({ commentId = '', type = 'blog', handleClose = DefaultFN }) {
     const [isClose, setIsClose] = useState(false);
+    console.log(commentId);
     // handle
     const handleIsClose = () => {
         setIsClose(true);
@@ -25,7 +26,7 @@ function Comment({ commentId = '', type = 'blog', handleClose = DefaultFN }) {
                 onClick={(e) => e.stopPropagation()}
             >
                 <Header handleOnclose={handleIsClose} />
-                <Body />
+                <Body commentable_type={type} commentable_id={commentId} />
                 <div className={cx('footer')}></div>
             </div>
         </div>

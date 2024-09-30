@@ -15,8 +15,9 @@ const checkToken = async (req, res, next) => {
             if (err) {
                 return res.status(500).json({ message: 'token is not valid' });
             }
-            const { id } = data;
+            const { id, role } = data;
             req.userID = id;
+            req.role = role;
             next();
         });
     } catch (err) {

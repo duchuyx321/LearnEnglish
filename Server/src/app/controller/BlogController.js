@@ -1,5 +1,5 @@
-const { request } = require('express');
 const cloudinary = require('cloudinary').v2;
+const Comments = require('../module/Comments');
 
 const Blogs = require('../module/Blog');
 const Profile = require('../module/Profile');
@@ -31,6 +31,10 @@ class BlogController {
                 const profile = await Profile.findOne({
                     userID: item.author.toString(),
                 });
+                const toastComment = await Comments.countDocuments({
+                    commentable_type: 'blog',
+                    commentable_id: item._id,
+                });
                 return {
                     _id: item._id,
                     content: item.content,
@@ -40,6 +44,7 @@ class BlogController {
                     is_bookmark,
                     like_count: item.likes.length,
                     profile,
+                    toastComment,
                     createdAt: item.createdAt,
                     updatedAt: item.updatedAt,
                 };

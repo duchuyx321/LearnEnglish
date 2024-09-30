@@ -13,6 +13,15 @@ const Comments = new Schema(
         commentContent: { type: String, required: true },
         commentable_type: { type: String, enum: ['blog', 'course', 'lesson'] },
         commentable_id: { type: Schema.Types.ObjectId, required: true },
+        reactions: [
+            {
+                reactable_id: { type: Schema.Types.ObjectId },
+                reactable_type: {
+                    type: String,
+                    enum: ['like,love.crush,haha,sad,angry'],
+                },
+            },
+        ],
     },
     { timestamps: true, collection: 'Comments' },
 );

@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 
 const DefaultFN = () => {};
 
-function Header({ handleOnclose = DefaultFN }) {
+function Header({ handleOnclose = DefaultFN, profile = {} }) {
     return (
         <div className={cx('wrapper')}>
             <button className={cx('exit')} onClick={() => handleOnclose()}>
@@ -18,7 +18,13 @@ function Header({ handleOnclose = DefaultFN }) {
             </button>
             <div className={cx('post')}>
                 <div className={cx('user')}>
-                    <Image src="" alt="" />
+                    <Image
+                        src={profile?.avatar || ''}
+                        alt={
+                            `${profile?.first_name} ${profile?.last_name}` ||
+                            'avatar'
+                        }
+                    />
                 </div>
                 <div className={cx('comment')}>
                     <Input />

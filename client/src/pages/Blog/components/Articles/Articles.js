@@ -105,11 +105,15 @@ function Articles({ data = [] }) {
                     onClick={() => handleComment()}
                 >
                     <LuMessageSquare />
-                    <p>20</p>
+                    <p>{data?.toastComment || 0}</p>
                 </button>
             </div>
             {isComment && (
-                <Comment commentId={data._id} handleClose={handleComment} />
+                <Comment
+                    commentId={data._id}
+                    handleClose={handleComment}
+                    profile={data?.profile}
+                />
             )}
         </div>
     );

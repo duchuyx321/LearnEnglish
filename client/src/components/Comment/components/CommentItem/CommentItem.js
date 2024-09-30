@@ -8,10 +8,12 @@ import Image from '~/components/Image';
 import Reactions from '~/components/Reactions';
 import { IconLike } from '~/components/Icon';
 import Input from '../Input';
+import { formatTime } from '~/service/formatTime';
 
 const cx = classNames.bind(styles);
 
-function CommentItem() {
+function CommentItem({ data = {} }) {
+    console.log(data);
     const [icon, setIcon] = useState('Thích');
     const [isReply, setIsReply] = useState(false);
 
@@ -31,16 +33,27 @@ function CommentItem() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
-                <Link className={cx('user')}>
-                    <Image src="" alt="" className={cx('avatar')} />
+                <Link to={`/@${data?.username}`} className={cx('user')}>
+                    <Image
+                        src={data?.profile?.avatar}
+                        alt={
+                            `${data?.profile?.first_name} ${data?.profile?.last_name}` ||
+                            'avatar'
+                        }
+                        className={cx('avatar')}
+                    />
                     <div className={cx('info')}>
-                        <span className={cx('username')}>Đức Huy</span>
-                        <span className={cx('createAt')}>3 Tháng Trước</span>
+                        <span className={cx('username')}>
+                            {`${data?.profile?.first_name} ${data?.profile?.last_name}`}
+                        </span>
+                        <span className={cx('createAt')}>
+                            {formatTime(data.createdAt) || ''}
+                        </span>
                     </div>
                 </Link>
             </div>
             <div className={cx('body')}>
-                <p>Nội Dung Hay Chất Lượng Cao</p>
+                <p>{data.commentContent || ' '}</p>
             </div>
             <div className={cx('footer')}>
                 <div className={cx('reactionBar')}>

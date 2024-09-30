@@ -1,14 +1,35 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RiBracesLine } from 'react-icons/ri';
 
 import styles from './Body.module.scss';
 import CommentItem from '../CommentItem';
+import { getComments } from '~/service/CommentService';
 
 const cx = classNames.bind(styles);
 
-function Body() {
+function Body({ commentable_id, commentable_type }) {
+    console.log({ commentable_type, commentable_id });
     const [renderComments, setRenderComments] = useState([]);
+    useEffect(() => {
+        fetchComments({ commentable_id, commentable_type });
+    }, []);
+
+    // fetch api
+    const fetchComments = async ({
+        commentable_type,
+        commentable_id,
+        page = 1,
+        limit = 5,
+    }) => {
+        const result = await getComments({
+            commentable_id,
+            commentable_type,
+            page,
+            limit,
+        });
+        setRenderComments(result);
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
@@ -29,12 +50,9 @@ function Body() {
                 </div>
             ) : (
                 <div className={cx('body')}>
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
+                    {renderComments.map((item) => (
+                        <CommentItem key={item._id} data={item} />
+                    ))}
                 </div>
             )}
         </div>
