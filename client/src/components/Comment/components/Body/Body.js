@@ -9,11 +9,10 @@ import { getComments } from '~/service/CommentService';
 const cx = classNames.bind(styles);
 
 function Body({ commentable_id, commentable_type }) {
-    console.log({ commentable_type, commentable_id });
     const [renderComments, setRenderComments] = useState([]);
     useEffect(() => {
         fetchComments({ commentable_id, commentable_type });
-    }, []);
+    }, [commentable_id, commentable_type]);
 
     // fetch api
     const fetchComments = async ({

@@ -59,7 +59,7 @@ function Reactions({ handleOnClick = DefaultFN }) {
                     animation="scale"
                     delay={[100, 100]}
                 >
-                    <button onClick={() => handleOnClick(item.iconReply)}>
+                    <button onClick={() => handleOnClick(item.content)}>
                         {item.icon}
                     </button>
                 </Tippy>

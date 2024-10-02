@@ -12,6 +12,7 @@ router.post('/create', checkToken, CommentController.createComment);
 // [PUT]
 router.put('/edit/:_id', checkToken, CommentController.editComment);
 // [PATCH]
+router.patch('/reaction/:_id', checkToken, CommentController.reactionComment);
 router.patch('/restore/:_id', checkToken, CommentController.restoreComment);
 // [DELETE]
 router.delete('/delete/:_id', checkToken, CommentController.deleteComment);

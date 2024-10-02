@@ -21,3 +21,11 @@ export const getComments = async ({
         console.log(error);
     }
 };
+export const reactions = async ({ _id, type = 'none' }) => {
+    try {
+        const res = Response.patch(`comments/reaction/${_id}`, { type });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};

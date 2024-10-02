@@ -1,30 +1,99 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 
 import styles from './CommentItem.module.scss';
 import Image from '~/components/Image';
 import Reactions from '~/components/Reactions';
-import { IconLike } from '~/components/Icon';
 import Input from '../Input';
 import { formatTime } from '~/service/formatTime';
+import {
+    IconLike,
+    IconLove,
+    IconCrush,
+    IconHaha,
+    IconSad,
+    IconAngry,
+} from '~/components/Icon';
+import { reactions } from '~/service/CommentService';
 
 const cx = classNames.bind(styles);
 
+const LIST_ICON = [
+    {
+        content: 'Like',
+        iconReply: <IconLike width="3.2rem" height="3.2rem" />,
+    },
+    {
+        content: 'Love',
+        iconReply: <IconLove width="3.2rem" height="3.2rem" />,
+    },
+    {
+        content: 'Crush',
+        iconReply: <IconCrush width="3.2rem" height="3.2rem" />,
+    },
+    {
+        content: 'Haha',
+        iconReply: <IconHaha width="3.2rem" height="3.2rem" />,
+    },
+    {
+        content: 'Sad',
+        iconReply: <IconSad width="3.2rem" height="3.2rem" />,
+    },
+    {
+        content: 'Angry',
+        iconReply: <IconAngry width="3.2rem" height="3.2rem" />,
+    },
+];
+
 function CommentItem({ data = {} }) {
-    console.log(data);
     const [icon, setIcon] = useState('Thích');
+    const [typeIcon, setTypeIcon] = useState(data.reaction || 'none');
     const [isReply, setIsReply] = useState(false);
 
-    const handleOnIcon = (icon) => {
-        setIcon(icon);
+    console.log(data);
+    const token = localStorage.getItem('token');
+    useEffect(() => {
+        if (!token) {
+            console.log('bạn cần đăng nhập');
+        } else {
+            if (typeIcon === 'none') {
+                setIcon('Thích');
+            } else {
+                for (const i of LIST_ICON) {
+                    if (i.content === typeIcon) {
+                        setIcon(i.iconReply);
+                        break;
+                    }
+                }
+            }
+            fetchReactAPI({ _id: data._id, type: typeIcon });
+        }
+    }, [typeIcon, data._id]);
+    // fetch api
+    const fetchReactAPI = async ({ _id, type }) => {
+        const result = await reactions({ _id, type });
+        console.log(result);
+    };
+    // handle event
+    const handleOnIcon = (type) => {
+        if (!token) {
+            console.log('bạn cần đăng nhập');
+            return;
+        }
+        setTypeIcon(type);
     };
     const handleOnClick = () => {
+        if (!token) {
+            console.log('bạn cần đăng nhập');
+            return;
+        }
         if (icon === 'Thích') {
-            setIcon(<IconLike width="3.2rem" height="3.2rem" />);
+            setTypeIcon('Like');
         } else {
-            setIcon('Thích');
+            setTypeIcon('none');
         }
     };
     const handleIsReply = () => {

@@ -15,10 +15,10 @@ const Comments = new Schema(
         commentable_id: { type: Schema.Types.ObjectId, required: true },
         reactions: [
             {
-                reactable_id: { type: Schema.Types.ObjectId },
+                reactable_id: { type: Schema.Types.ObjectId, unique: true },
                 reactable_type: {
                     type: String,
-                    enum: ['like,love.crush,haha,sad,angry'],
+                    enum: ['like', 'love', 'crush', 'haha', 'sad', 'angry'],
                 },
             },
         ],

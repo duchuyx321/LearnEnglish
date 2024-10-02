@@ -11,7 +11,6 @@ const DefaultFN = () => {};
 
 function Comment({ commentId = '', type = 'blog', handleClose = DefaultFN }) {
     const [isClose, setIsClose] = useState(false);
-    console.log(commentId);
     // handle
     const handleIsClose = () => {
         setIsClose(true);

@@ -29,6 +29,10 @@ export const put = async (path, config = {}) => {
     const response = await httpsRequest.put(path, config);
     return response.data;
 };
+export const patch = async (path, config = {}) => {
+    const response = await httpsRequest.patch(path, config);
+    return response.data;
+};
 export const del = async (path, config = {}) => {
     const response = await httpsRequest.delete(path, config);
     return response.data;
