@@ -29,3 +29,19 @@ export const reactions = async ({ _id, type = 'none' }) => {
         console.log(error);
     }
 };
+export const createComment = async ({
+    commentContent = '',
+    commentable_type = 'blog',
+    commentable_id = '',
+}) => {
+    try {
+        const res = await Response.post('comments/create', {
+            commentable_id,
+            commentable_type,
+            commentContent,
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};

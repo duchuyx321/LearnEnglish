@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from './Comment.module.scss';
 import Header from './components/Header';
 import Body from './components/Body';
+import { getComments } from '~/service/CommentService';
 
 const cx = classNames.bind(styles);
 
@@ -11,6 +13,15 @@ const DefaultFN = () => {};
 
 function Comment({ commentId = '', type = 'blog', handleClose = DefaultFN }) {
     const [isClose, setIsClose] = useState(false);
+    const [isReset, setIsReset] = useState(false);
+    const handleOnReset = () => {
+        setIsReset((prev) => !prev);
+    };
+    const [renderComments, setRenderComments] = useState([]);
+    useEffect(() => {
+        fetchComments({ commentable_id: commentId, commentable_type: type });
+        console.log(renderComments);
+    }, [isReset]);
     // handle
     const handleIsClose = () => {
         setIsClose(true);
@@ -18,14 +29,39 @@ function Comment({ commentId = '', type = 'blog', handleClose = DefaultFN }) {
             handleClose();
         }, 300);
     };
+    // fetch api
+    const fetchComments = async ({
+        commentable_type,
+        commentable_id,
+        page = 1,
+        limit = 5,
+    }) => {
+        const result = await getComments({
+            commentable_id,
+            commentable_type,
+            page,
+            limit,
+        });
+        setRenderComments(result);
+    };
+
     return (
         <div className={cx('wrapper')} onClick={() => handleIsClose()}>
             <div
                 className={cx('container', { isClose })}
                 onClick={(e) => e.stopPropagation()}
             >
-                <Header handleOnclose={handleIsClose} />
-                <Body commentable_type={type} commentable_id={commentId} />
+                <Header
+                    commentable_id={commentId}
+                    commentable_type={type}
+                    handleOnclose={handleIsClose}
+                    handleReset={handleOnReset}
+                />
+                <Body
+                    data={renderComments}
+                    handleFetchAPI={handleOnReset}
+                    isFetchAPI={isReset}
+                />
                 <div className={cx('footer')}></div>
             </div>
         </div>

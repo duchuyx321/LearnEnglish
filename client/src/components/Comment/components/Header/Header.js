@@ -10,7 +10,13 @@ const cx = classNames.bind(styles);
 
 const DefaultFN = () => {};
 
-function Header({ handleOnclose = DefaultFN, profile = {} }) {
+function Header({
+    handleOnclose = DefaultFN,
+    handleReset = DefaultFN,
+    profile = {},
+    commentable_type = '',
+    commentable_id = '',
+}) {
     return (
         <div className={cx('wrapper')}>
             <button className={cx('exit')} onClick={() => handleOnclose()}>
@@ -27,7 +33,11 @@ function Header({ handleOnclose = DefaultFN, profile = {} }) {
                     />
                 </div>
                 <div className={cx('comment')}>
-                    <Input />
+                    <Input
+                        commentable_type={commentable_type}
+                        commentable_id={commentable_id}
+                        handleFetchAPI={handleReset}
+                    />
                 </div>
             </div>
         </div>

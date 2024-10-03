@@ -88,3 +88,15 @@
 .comment {
     width: 100%;
 }
+.btn-reply {
+    font-size: 1.6rem;
+    color: var(--primary);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 8px;
+    padding-left: 8px;
+    &:hover {
+        text-decoration: underline;
+    }
+}

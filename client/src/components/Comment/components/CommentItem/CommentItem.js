@@ -20,6 +20,7 @@ import {
 import { reactions } from '~/service/CommentService';
 
 const cx = classNames.bind(styles);
+const DefaultFN = () => {};
 
 const LIST_ICON = [
     {
@@ -48,12 +49,11 @@ const LIST_ICON = [
     },
 ];
 
-function CommentItem({ data = {} }) {
+function CommentItem({ data = {}, handleFetchAPI = DefaultFN }) {
     const [icon, setIcon] = useState('Thích');
     const [typeIcon, setTypeIcon] = useState(data.reaction || 'none');
     const [isReply, setIsReply] = useState(false);
-
-    console.log(data);
+    const [isReplies, setIsReplies] = useState(false);
     const token = localStorage.getItem('token');
     useEffect(() => {
         if (!token) {
@@ -164,9 +164,22 @@ function CommentItem({ data = {} }) {
                 </div>
                 {isReply && (
                     <div className={cx('comment')}>
-                        <Input handleOnClose={handleIsReply} model />
+                        <Input
+                            handleFetchAPI={handleFetchAPI}
+                            handleOnClose={handleIsReply}
+                            model
+                        />
                     </div>
                 )}
+                <button
+                    className={cx('btn-reply')}
+                    onClick={() => setIsReplies(!isReplies)}
+                >
+                    {isReplies
+                        ? 'Thu Hồi'
+                        : `Xem ${data.toastPath} câu trả lời`}
+                </button>
+                <div className={cx('replies')}></div>
             </div>
         </div>
     );

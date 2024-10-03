@@ -14,6 +14,10 @@ class CommentController {
                 reactable_id = await decodeToken(token);
             }
             const skip = (page - 1) * limit;
+            const toastComment = await Comments.countDocuments({
+                commentable_id,
+                commentable_type,
+            });
             const comments = await Comments.find({
                 commentable_id,
                 commentable_type,
@@ -43,6 +47,7 @@ class CommentController {
                     ...other,
                     reaction,
                     toastPath,
+                    toastComment,
                     username: itemUser.username,
                     profile: itemProfile,
                 };

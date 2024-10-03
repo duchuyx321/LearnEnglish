@@ -6,15 +6,24 @@ import Picker from '@emoji-mart/react';
 
 import styles from './Input.module.scss';
 import Button from '~/components/Button';
+import { createComment } from '~/service/CommentService';
 
 const cx = classNames.bind(styles);
 const DefaultFN = () => {};
 
-function Input({ className, handleOnClose = DefaultFN, model = false }) {
+function Input({
+    className,
+    handleOnClose = DefaultFN,
+    handleFetchAPI = DefaultFN,
+    model = false,
+    commentable_type = '',
+    commentable_id = '',
+}) {
     const [value, setValue] = useState('');
     const [show, setShow] = useState(false);
     const inputRef = useRef(null);
     const MAX_CHARACTERS = 119;
+    console.log(handleFetchAPI);
     // handle
     const handleOnSelect = (e) => {
         const { current } = inputRef;
@@ -61,6 +70,15 @@ function Input({ className, handleOnClose = DefaultFN, model = false }) {
         current.innerHTML = valueUndefined;
         handleOnClose();
     };
+    const handleOnComment = async () => {
+        const result = await createComment({
+            commentable_id,
+            commentable_type,
+            commentContent: value,
+        });
+        handleFetchAPI();
+        console.log(result);
+    };
     // class name
     const classes = cx('comment', {
         [className]: className,
@@ -104,7 +122,9 @@ function Input({ className, handleOnClose = DefaultFN, model = false }) {
                     <Button outlineText onClick={(e) => handleOnCloseReply(e)}>
                         Hủy
                     </Button>
-                    <Button outline>Bình Luận</Button>
+                    <Button outline onClick={() => handleOnComment()}>
+                        Bình Luận
+                    </Button>
                 </div>
             )}
         </div>
