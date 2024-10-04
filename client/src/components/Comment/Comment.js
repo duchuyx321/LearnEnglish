@@ -20,7 +20,6 @@ function Comment({ commentId = '', type = 'blog', handleClose = DefaultFN }) {
     const [renderComments, setRenderComments] = useState([]);
     useEffect(() => {
         fetchComments({ commentable_id: commentId, commentable_type: type });
-        console.log(renderComments);
     }, [isReset]);
     // handle
     const handleIsClose = () => {
@@ -61,6 +60,7 @@ function Comment({ commentId = '', type = 'blog', handleClose = DefaultFN }) {
                     data={renderComments}
                     handleFetchAPI={handleOnReset}
                     isFetchAPI={isReset}
+                    commentable_type={type}
                 />
                 <div className={cx('footer')}></div>
             </div>

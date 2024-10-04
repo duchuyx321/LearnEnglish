@@ -25,9 +25,9 @@ class CommentController {
                 .skip(skip)
                 .limit(limit);
             const listCommentPath = comments.map(async (item) => {
-                const { userID, commentable_type } = item;
+                const { userID, _id, commentable_type } = item;
                 const toastPath = await Comments.countDocuments({
-                    commentable_id: userID,
+                    commentable_id: _id,
                     commentable_type,
                 });
                 const itemProfile = await Profile.findOne({ userID });

@@ -23,7 +23,6 @@ function Input({
     const [show, setShow] = useState(false);
     const inputRef = useRef(null);
     const MAX_CHARACTERS = 119;
-    console.log(handleFetchAPI);
     // handle
     const handleOnSelect = (e) => {
         const { current } = inputRef;

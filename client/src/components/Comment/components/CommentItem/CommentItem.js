@@ -18,6 +18,7 @@ import {
     IconAngry,
 } from '~/components/Icon';
 import { reactions } from '~/service/CommentService';
+import Replies from '../Replies';
 
 const cx = classNames.bind(styles);
 const DefaultFN = () => {};
@@ -49,7 +50,11 @@ const LIST_ICON = [
     },
 ];
 
-function CommentItem({ data = {}, handleFetchAPI = DefaultFN }) {
+function CommentItem({
+    data = {},
+    handleFetchAPI = DefaultFN,
+    commentable_type = '',
+}) {
     const [icon, setIcon] = useState('Thích');
     const [typeIcon, setTypeIcon] = useState(data.reaction || 'none');
     const [isReply, setIsReply] = useState(false);
@@ -74,8 +79,7 @@ function CommentItem({ data = {}, handleFetchAPI = DefaultFN }) {
     }, [typeIcon, data._id]);
     // fetch api
     const fetchReactAPI = async ({ _id, type }) => {
-        const result = await reactions({ _id, type });
-        console.log(result);
+        await reactions({ _id, type });
     };
     // handle event
     const handleOnIcon = (type) => {
@@ -165,21 +169,36 @@ function CommentItem({ data = {}, handleFetchAPI = DefaultFN }) {
                 {isReply && (
                     <div className={cx('comment')}>
                         <Input
+                            commentable_id={data._id}
+                            commentable_type={commentable_type}
                             handleFetchAPI={handleFetchAPI}
                             handleOnClose={handleIsReply}
                             model
                         />
                     </div>
                 )}
-                <button
-                    className={cx('btn-reply')}
-                    onClick={() => setIsReplies(!isReplies)}
-                >
-                    {isReplies
-                        ? 'Thu Hồi'
-                        : `Xem ${data.toastPath} câu trả lời`}
-                </button>
-                <div className={cx('replies')}></div>
+                {data.toastPath > 0 && (
+                    <button
+                        className={cx('btn-reply')}
+                        onClick={() => setIsReplies(!isReplies)}
+                    >
+                        {isReplies
+                            ? 'Thu Hồi'
+                            : `Xem ${data.toastPath} câu trả lời`}
+                    </button>
+                )}
+                {isReplies && (
+                    <div
+                        className={cx('replies', {
+                            slideUp: isReplies === false,
+                        })}
+                    >
+                        <Replies
+                            commentable_id={data._id}
+                            commentable_type={commentable_type}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );

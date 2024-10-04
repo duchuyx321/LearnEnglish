@@ -100,3 +100,33 @@
         text-decoration: underline;
     }
 }
+.replies {
+    margin-left: 8px;
+    border-left: 2px solid #cecece;
+    animation: slideDown 0.3s ease-out forwards;
+}
+.slideUp {
+    animation: slideUp 0.3s ease-in forwards;
+}
+// animation
+@keyframes slideDown {
+    0% {
+        max-height: 0;
+        opacity: 0;
+    }
+    100% {
+        max-height: 500px; // Điều chỉnh chiều cao tối đa bạn muốn
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        max-height: 500px;
+        opacity: 1;
+    }
+    100% {
+        max-height: 0;
+        opacity: 0;
+    }
+}

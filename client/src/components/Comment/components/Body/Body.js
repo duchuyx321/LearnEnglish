@@ -8,7 +8,7 @@ import CommentItem from '../CommentItem';
 const cx = classNames.bind(styles);
 const DefaultFN = () => {};
 
-function Body({ data = {}, handleFetchAPI = DefaultFN }) {
+function Body({ data = {}, handleFetchAPI = DefaultFN, commentable_type }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
@@ -34,6 +34,7 @@ function Body({ data = {}, handleFetchAPI = DefaultFN }) {
                             handleFetchAPI={handleFetchAPI}
                             key={item._id}
                             data={item}
+                            commentable_type={commentable_type}
                         />
                     ))}
                 </div>
