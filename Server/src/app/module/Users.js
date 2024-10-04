@@ -26,6 +26,7 @@ const Users = new Schema(
             enum: ['Local', 'Google', 'Facebook'],
             default: 'Local',
         },
+        provider_id: { type: String },
     },
     { timestamps: true, collection: 'Users' },
 );

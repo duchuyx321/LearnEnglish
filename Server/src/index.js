@@ -6,6 +6,7 @@ const methodOverride = require('method-override');
 const path = require('path');
 
 require('dotenv').config();
+require('./config/connectPassport/passport');
 
 const router = require('./routers');
 const Connect = require('./config/db/connectDB');

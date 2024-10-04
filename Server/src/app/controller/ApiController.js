@@ -1,5 +1,7 @@
 const Token = require('../module/Token');
+const Users = require('../module/Users');
 const TokenService = require('../../service/TokenService');
+const { setToken } = require('../../util/JWTUtil');
 
 class ApiController {
     // [POST] --/api/code/sendCode
@@ -54,6 +56,26 @@ class ApiController {
                 massage: 'you are not code',
                 error: e.massage,
             });
+        }
+    }
+    // [POST] --/api/auth/
+    async ggCallback(req, res, next) {
+        try {
+            const { _id } = req.body;
+            if (!_id) {
+                return res.status(404).json({ message: 'not id available' });
+            }
+            const user = await Users.findOne({ _id });
+            if (!user) {
+                return res.status(403).json({ message: 'user not found' });
+            }
+            const AccessToken = await setToken(res, user);
+            const { password, ...other } = user._doc;
+            res.status(200).json({
+                data: { ...other, meta: { token: AccessToken } },
+            });
+        } catch (error) {
+            res.status(500).json({ message: error });
         }
     }
 }
