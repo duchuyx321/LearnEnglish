@@ -40,7 +40,8 @@ passport.use(
                         provider_Id: profile.id,
                     });
                     await newUser.save();
-                    return cb(null, newUser);
+                    const { password, ...other } = newUser._doc;
+                    return cb(null, other);
                 } else {
                     return cb(null, existingProfile);
                 }

@@ -19,6 +19,6 @@ router.get('/auth/google/callback', PassportProfile, PassportRedirect);
 // [POST]
 router.post('/code/sendCode', ApiController.sendCode);
 router.post('/code/checkCode', ApiController.checkCode);
-router.post('/auth/login-Success', ApiController.ggCallback);
+router.post('/auth/success', ApiController.ggCallback);
 
 module.exports = router;

@@ -69,7 +69,7 @@ class ApiController {
             if (!user) {
                 return res.status(403).json({ message: 'user not found' });
             }
-            const AccessToken = await setToken(res, user);
+            const AccessToken = setToken(res, user);
             const { password, ...other } = user._doc;
             res.status(200).json({
                 data: { ...other, meta: { token: AccessToken } },

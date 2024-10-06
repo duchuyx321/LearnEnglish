@@ -8,7 +8,6 @@ const PassportProfile = (req, res, next) => {
         }
         console.log(profile);
         req.user = profile;
-
         next();
     })(req, res, next);
 };
@@ -16,9 +15,7 @@ const PassportProfile = (req, res, next) => {
 const PassportRedirect = (req, res) => {
     try {
         if (req?.user?._id) {
-            res.redirect(
-                `${process.env.URL_CLIENT}/login-success/${req.user?._id}`,
-            );
+            res.redirect(`${process.env.URL_CLIENT}/success/${req.user?._id}`);
         }
     } catch (err) {
         res.status(500).json({ massage: err });
