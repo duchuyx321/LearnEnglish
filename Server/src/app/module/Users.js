@@ -23,7 +23,7 @@ const Users = new Schema(
         provider: {
             type: String,
             required: true,
-            enum: ['Local', 'Google', 'Facebook'],
+            enum: ['Local', 'google', 'facebook'],
             default: 'Local',
         },
         provider_id: { type: String },

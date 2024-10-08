@@ -1,4 +1,7 @@
 const cloudinary = require('cloudinary');
+const jwt = require('jsonwebtoken');
+
+require('dotenv').config();
 
 const Users = require('../module/Users');
 const Profile = require('../module/Profile');
@@ -72,6 +75,22 @@ class AuthController {
         try {
             await res.clearCookie('refreshToken');
             res.status(200).json({ data: { message: 'logout successful' } });
+        } catch (error) {
+            res.status(502).json({ message: error.message });
+        }
+    }
+    async refresh(req, res, next) {
+        try {
+            const token = req.cookies.refreshToken;
+            jwt.verify(token, process.env.REFRESH_TOKEN, (error, user) => {
+                if (error) {
+                    res.status(402).json({ message: error });
+                }
+                const AccessToken = `Bearer ${AccessToken(user)}`;
+                return res
+                    .status(200)
+                    .json({ data: { meta: { token: AccessToken } } });
+            });
         } catch (error) {
             res.status(502).json({ message: error.message });
         }

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const httpsRequest = axios.create({
     baseURL: 'http://localhost:5000/',
-    // withCredentials: true,
+    withCredentials: true,
 });
 
 const token = localStorage.getItem('token');

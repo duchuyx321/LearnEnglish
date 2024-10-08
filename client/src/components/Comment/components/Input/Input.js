@@ -76,6 +76,7 @@ function Input({
             commentContent: value,
         });
         handleFetchAPI();
+        handleOnClose();
         console.log(result);
     };
     // class name

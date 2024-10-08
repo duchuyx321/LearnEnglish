@@ -8,6 +8,7 @@ const {
 } = require('../app/middleware/passportAuth');
 
 // [GET]
+// -- Google
 router.get(
     '/auth/google',
     passport.authenticate('google', {
@@ -15,7 +16,24 @@ router.get(
         session: false,
     }),
 );
-router.get('/auth/google/callback', PassportProfile, PassportRedirect);
+router.get(
+    '/auth/google/callback',
+    PassportProfile('google'),
+    PassportRedirect,
+);
+// -- facebook
+router.get(
+    '/auth/facebook',
+    passport.authenticate('facebook', {
+        session: false,
+        scope: ['email'],
+    }),
+);
+router.get(
+    '/auth/facebook/callback',
+    PassportProfile('facebook'),
+    PassportRedirect,
+);
 // [POST]
 router.post('/code/sendCode', ApiController.sendCode);
 router.post('/code/checkCode', ApiController.checkCode);

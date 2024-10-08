@@ -12,7 +12,11 @@ const Profile = new Schema(
         first_name: { type: String },
         last_name: { type: String },
         avatar: { type: String },
-        gender: { type: String, enum: ['male', 'female', 'other'] },
+        gender: {
+            type: String,
+            enum: ['male', 'female', 'other'],
+            default: 'male',
+        },
         bio: { type: String, maxlength: 500 },
         date_of_birth: { type: Date },
         facebook_url: { type: String },

@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
 import { FcGoogle } from 'react-icons/fc';
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import styles from './MenuOther.module.scss';
-import { Link } from 'react-router-dom';
+import images from '~/assets';
 
 const cx = classNames.bind(styles);
 
@@ -16,7 +16,7 @@ const MENU_OTHER = [
     {
         key: 'facebook',
         content: 'Tiếp Tục Với Facebook',
-        icon: <FcGoogle />,
+        image: images.iconFB,
     },
     {
         key: 'std',
@@ -36,10 +36,20 @@ function MenuOther() {
             {MENU_OTHER.map((item) => (
                 <Link
                     key={item.key}
-                    to={`${process.env.REACT_APP_URL_SERVER}/api/auth/google`}
+                    to={`${process.env.REACT_APP_URL_SERVER}/api/auth/${item.key}`}
                     className={cx('boxContainer')}
                 >
-                    <div className={cx('icon')}>{item.icon}</div>
+                    <div className={cx('icon')}>
+                        {item.icon ? (
+                            item.icon
+                        ) : (
+                            <img
+                                className={cx('img_icon')}
+                                src={item.image}
+                                alt={item.key}
+                            />
+                        )}
+                    </div>
                     <div className={cx('content')}>{item.content}</div>
                 </Link>
             ))}

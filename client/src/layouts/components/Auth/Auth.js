@@ -18,7 +18,7 @@ function Auth({ is_login, handleOnClose = defaultFn }) {
         setIsLogin(!isLogin);
     };
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper', !isLogin ? 'is_login' : 'is_register')}>
             <div className={cx('header')}>
                 <h3>
                     {isLogin
