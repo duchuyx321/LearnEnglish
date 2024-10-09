@@ -79,17 +79,30 @@ class AuthController {
             res.status(502).json({ message: error.message });
         }
     }
+    // [POST] --/auth/refresh
     async refresh(req, res, next) {
         try {
             const token = req.cookies.refreshToken;
             jwt.verify(token, process.env.REFRESH_TOKEN, (error, user) => {
                 if (error) {
-                    res.status(402).json({ message: error });
+                    return res.status(402).json({ message: error });
                 }
                 const AccessToken = `Bearer ${AccessToken(user)}`;
-                return res
-                    .status(200)
-                    .json({ data: { meta: { token: AccessToken } } });
+                const currentTime = new Date();
+                const expTime = new Date(decode.exp * 1000);
+                const timeBeforeExpiration = new Date(
+                    expTime.getTime() - 12 * 60 * 60 * 1000, // 12 giờ trước
+                );
+                const existenceTime = currentTime > timeBeforeExpiration;
+
+                return res.status(200).json({
+                    data: {
+                        meta: {
+                            token: AccessToken,
+                            existenceTime,
+                        },
+                    },
+                });
             });
         } catch (error) {
             res.status(502).json({ message: error.message });

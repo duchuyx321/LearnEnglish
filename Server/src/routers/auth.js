@@ -13,6 +13,7 @@ router.get('/');
 router.post('/register', AuthController.register);
 router.post('/login', AuthController.Login);
 router.post('/logout', AuthController.logout);
+router.post('/refresh', AuthController.refresh);
 
 // [PATCH]
 router.patch(

@@ -40,3 +40,11 @@ export const register = async (username, email, password) => {
         return { error, message: 'Could not register' };
     }
 };
+export const refresh = async () => {
+    try {
+        const res = await Response.post('auth/refresh');
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};

@@ -4,29 +4,50 @@ import { jwtDecode } from 'jwt-decode';
 
 import DefaultLayout from '~/layouts/DefaultLayout';
 import { PrivateRouters, PublicRouters } from '~/routers';
+import { logout, refresh } from '~/service/AuthService';
 
 function App() {
     useEffect(() => {
         const accessToken = localStorage.getItem('token');
-        const token = accessToken.split(' ')[1];
-        if (token) {
+        if (accessToken) {
+            const token = accessToken.split(' ')[1];
             const decode = jwtDecode(token);
-            const currentTime = new Date();
             const expTime = new Date(decode.exp * 1000);
-            // Trừ đi 1 tiếng (3600 giây = 1 giờ)
+            // gọi trước 10p
             const timeBeforeExpiration = new Date(
-                expTime.getTime() - 3600 * 1000,
+                expTime.getTime() - 600 * 1000,
             );
 
+            // Kiểm tra ngay lập tức khi trang được mở
+            const currentTime = new Date();
+            if (currentTime > timeBeforeExpiration) {
+                refreshToken();
+            }
             const interval = setInterval(async () => {
+                const currentTime = new Date();
                 if (currentTime > timeBeforeExpiration) {
+                    console.log(
+                        '---------- tiến hành cập nhật token ----------',
+                    );
+                    refreshToken();
+                } else {
+                    console.log('---------- token chưa hết hạn ----------');
                 }
-            }, 1000 * 60 * 30);
+            }, 1000 * 60 * 5);
+            return () => clearInterval(interval);
         }
     }, []);
     // fetch api
     const refreshToken = async () => {
-        // const result = await
+        const result = await refresh();
+        localStorage.setItem('token', result.meta.accessToken);
+        if (result.meta.existenceTime) {
+            const result = await logout();
+            if (result.data.message === 'logout successful') {
+                localStorage.removeItem('token');
+                window.location.reload();
+            }
+        }
     };
     return (
         <Router>
