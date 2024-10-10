@@ -83,6 +83,11 @@ class AuthController {
     async refresh(req, res, next) {
         try {
             const token = req.cookies.refreshToken;
+            if (!token) {
+                return res
+                    .status(402)
+                    .json({ message: 'Refresh token is required' });
+            }
             jwt.verify(token, process.env.REFRESH_TOKEN, (error, user) => {
                 if (error) {
                     return res.status(402).json({ message: error });

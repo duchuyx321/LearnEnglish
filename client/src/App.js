@@ -41,6 +41,7 @@ function App() {
     const refreshToken = async () => {
         const result = await refresh();
         localStorage.setItem('token', result.meta.accessToken);
+        console.log(result);
         if (result.meta.existenceTime) {
             const result = await logout();
             if (result.data.message === 'logout successful') {

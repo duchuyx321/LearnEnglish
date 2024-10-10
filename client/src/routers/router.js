@@ -7,6 +7,7 @@ import Courses from '~/pages/Courses';
 import Learning from '~/pages/Learning';
 import NewPost from '~/pages/NewPost';
 import Success from '~/pages/Success';
+import Setting from '~/pages/Setting';
 // layout
 import LearningLayout from '~/layouts/LearningLayout';
 import HomeLayout from '~/layouts/HomeLayout';
@@ -23,6 +24,7 @@ const PublicRouters = [
     { path: '/new-post', component: NewPost, layout: HomeLayout },
     { path: '/courses/:slug', component: Courses, layout: HomeLayout },
     { path: '/success/:id', component: Success },
+    { path: '/setting', component: Setting },
     { path: '/:username', component: Profile, layout: HomeLayout },
 ];
 

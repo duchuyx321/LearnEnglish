@@ -29,7 +29,6 @@ const MENU_OTHER = [
         icon: <FcGoogle />,
     },
 ];
-console.log(process.env.REACT_APP_URL_SERVER);
 function MenuOther() {
     return (
         <div className={cx('wrapper')}>

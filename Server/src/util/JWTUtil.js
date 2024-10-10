@@ -19,6 +19,7 @@ const setToken = (res, user) => {
         secure: true,
         path: '/',
         sameSite: 'strict',
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     });
     return newAccessToken;
 };
