@@ -24,7 +24,11 @@ function NavBar() {
     return (
         <div className={cx('wrapper')}>
             {LIST_NAVBAR.map((item) => (
-                <NavLink key={item.key} className={cx('link')}>
+                <NavLink
+                    to={`/setting/${item.key}`}
+                    key={item.key}
+                    className={(nav) => cx('link', { active: nav.isActive })}
+                >
                     <div className={cx('icon')}>{item.icon}</div>
                     <div className={cx('linkInner')}>{item.content}</div>
                 </NavLink>

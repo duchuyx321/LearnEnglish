@@ -8,6 +8,8 @@ import Learning from '~/pages/Learning';
 import NewPost from '~/pages/NewPost';
 import Success from '~/pages/Success';
 import Setting from '~/pages/Setting';
+import Personal from '~/pages/Setting/components/Personal';
+import Security from '~/pages/Setting/components/Security';
 // layout
 import LearningLayout from '~/layouts/LearningLayout';
 import HomeLayout from '~/layouts/HomeLayout';
@@ -24,7 +26,9 @@ const PublicRouters = [
     { path: '/new-post', component: NewPost, layout: HomeLayout },
     { path: '/courses/:slug', component: Courses, layout: HomeLayout },
     { path: '/success/:id', component: Success },
-    { path: '/setting', component: Setting },
+    // { path: '/setting', component:  },
+    { path: '/setting/personal', component: Personal, layout: Setting },
+    { path: '/setting/security', component: Security, layout: Setting },
     { path: '/:username', component: Profile, layout: HomeLayout },
 ];
 

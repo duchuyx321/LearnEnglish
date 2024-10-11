@@ -19,7 +19,10 @@ function MenuItem({ username }) {
             { title: 'Bài Viết Của Tôi', to: '/me-posts' },
             { title: 'Bài Viết Đã Lưu', to: '/me-bookmark' },
         ],
-        setting: [{ title: 'Cài Đặt', to: '/setting' }, { title: 'Đăng Xuất' }],
+        setting: [
+            { title: 'Cài Đặt', to: '/setting/personal' },
+            { title: 'Đăng Xuất' },
+        ],
     };
     const handleOnclick = (e) => {
         if (e === 'Đăng Xuất') {

@@ -7,8 +7,8 @@ import { PrivateRouters, PublicRouters } from '~/routers';
 import { logout, refresh } from '~/service/AuthService';
 
 function App() {
+    const accessToken = localStorage.getItem('token');
     useEffect(() => {
-        const accessToken = localStorage.getItem('token');
         if (accessToken) {
             const token = accessToken.split(' ')[1];
             const decode = jwtDecode(token);
@@ -36,7 +36,7 @@ function App() {
             }, 1000 * 60 * 5); // 5p kiểm tra 1 lần
             return () => clearInterval(interval);
         }
-    }, []);
+    }, [accessToken]);
     // fetch api
     const refreshToken = async () => {
         const result = await refresh();

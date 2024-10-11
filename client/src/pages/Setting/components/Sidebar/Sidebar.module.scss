@@ -1,0 +1,35 @@
+.wrapper {
+    width: var(--width-sidebar-setting);
+    min-height: 100vh;
+    padding: 3rem 4rem;
+    border-right: 1px solid #dedddd;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+.logo {
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    & > img {
+        width: 100%;
+        height: 100%;
+    }
+}
+.title_sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    & > h3 {
+        font-size: 2.4rem;
+    }
+    & > p {
+        font-size: 1.8rem;
+        line-height: 1.5;
+    }
+}
+.navbar {
+}
