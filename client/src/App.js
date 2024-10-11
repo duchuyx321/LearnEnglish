@@ -33,15 +33,15 @@ function App() {
                 } else {
                     console.log('---------- token chưa hết hạn ----------');
                 }
-            }, 1000 * 60 * 5);
+            }, 1000 * 60 * 5); // 5p kiểm tra 1 lần
             return () => clearInterval(interval);
         }
     }, []);
     // fetch api
     const refreshToken = async () => {
         const result = await refresh();
-        localStorage.setItem('token', result.meta.accessToken);
         console.log(result);
+        localStorage.setItem('token', result.meta.token);
         if (result.meta.existenceTime) {
             const result = await logout();
             if (result.data.message === 'logout successful') {

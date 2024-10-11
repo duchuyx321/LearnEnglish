@@ -11,10 +11,15 @@ export const user = async () => {
 };
 
 // combined-me?include=course
-export const combineMe = async (include = 'course') => {
+export const combineMe = async ({
+    username = '',
+    include = 'course',
+    page = 1,
+    limit = 5,
+}) => {
     try {
-        const res = await Request.get('users/combined-me', {
-            params: { include },
+        const res = await Request.get(`users/${username}`, {
+            params: { page, limit, include },
         });
         return res.data;
     } catch (err) {

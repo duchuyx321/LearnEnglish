@@ -4,7 +4,7 @@ import { FaUserFriends, FaBirthdayCake } from 'react-icons/fa';
 import { RxAvatar } from 'react-icons/rx';
 import { CgMail } from 'react-icons/cg';
 import { ImProfile } from 'react-icons/im';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import styles from './Profile.module.scss';
 import images from '~/assets';
@@ -17,19 +17,20 @@ const cx = classNames.bind(styles);
 
 function Profile() {
     const [userResult, setUserResult] = useState({});
+    const { username } = useParams();
     // authentication token
     useEffect(() => {
         const Token = localStorage.getItem('token');
         if (Token) {
             const fetchAPI = async () => {
-                const result = await combineMe();
+                const result = await combineMe({ username });
                 if (result) {
                     setUserResult(result);
                 }
             };
             fetchAPI();
         }
-    }, []);
+    }, [username]);
 
     return (
         <div className={cx('wrapper')}>

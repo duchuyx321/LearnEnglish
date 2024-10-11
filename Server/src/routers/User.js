@@ -7,7 +7,7 @@ const { checkToken } = require('../app/middleware/checkToken');
 
 // [GET]
 router.get('/profile-me', checkToken, UserController.getUserProfile);
-router.get('/combined-me', checkToken, UserController.combinedMe);
+router.get('/@:username', UserController.combinedMe);
 
 // [POST]
 router.post('/checkRegister', UserController.checkRegister);

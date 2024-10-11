@@ -77,7 +77,6 @@ function Input({
         });
         handleFetchAPI();
         handleOnClose();
-        console.log(result);
     };
     // class name
     const classes = cx('comment', {

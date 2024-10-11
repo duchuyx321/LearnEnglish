@@ -6,7 +6,7 @@ require('dotenv').config();
 const Users = require('../module/Users');
 const Profile = require('../module/Profile');
 const { hashPass, decryptPass } = require('../../util/hashPass');
-const { setToken } = require('../../util/JWTUtil');
+const { setToken, AccessToken } = require('../../util/JWTUtil');
 const formatDay = require('../../service/formatDay');
 
 class AuthController {
@@ -82,7 +82,7 @@ class AuthController {
     // [POST] --/auth/refresh
     async refresh(req, res, next) {
         try {
-            const token = req.cookies.refreshToken;
+            const token = req.cookies.RefreshToken;
             if (!token) {
                 return res
                     .status(402)
@@ -92,9 +92,10 @@ class AuthController {
                 if (error) {
                     return res.status(402).json({ message: error });
                 }
-                const AccessToken = `Bearer ${AccessToken(user)}`;
+                const accessToken = `Bearer ${AccessToken(user)}`;
+                console.log(accessToken);
                 const currentTime = new Date();
-                const expTime = new Date(decode.exp * 1000);
+                const expTime = new Date(user.exp * 1000);
                 const timeBeforeExpiration = new Date(
                     expTime.getTime() - 12 * 60 * 60 * 1000, // 12 giờ trước
                 );
@@ -103,13 +104,14 @@ class AuthController {
                 return res.status(200).json({
                     data: {
                         meta: {
-                            token: AccessToken,
+                            token: accessToken,
                             existenceTime,
                         },
                     },
                 });
             });
         } catch (error) {
+            console.log(error);
             res.status(502).json({ message: error.message });
         }
     }

@@ -30,38 +30,49 @@ class UserController {
             });
         }
     }
-    // [GET] -/users/combined-me?include=course
+    // [GET] -/users/@:username?include=course&page=1&limit=5
     async combinedMe(req, res, next) {
         try {
-            const userID = req.userID;
-            const { include } = req.query;
-            if (!userID) {
+            const { username } = req.params;
+            const { include, page, limit } = req.query;
+            const skip = (page - 1) * limit;
+            if (!username) {
                 return res
                     .status(403)
                     .json({ message: 'you are not logged in' });
             }
-            const user = await Users.findOne({ _id: userID });
-            const { password, ...data } = user._doc;
+            const user = await Users.findOne({ username });
             if (!user) {
                 return res.status(404).json({ massage: 'User not found' });
             }
+            const { password, ...data } = user._doc;
             const profile = await Profile.findOne({
-                userID,
+                userID: user._id,
             });
-            const progressable_id = await Progress.distinct('progressable_id', {
-                userID,
+            const progressRecords = await Progress.find({
+                userID: user._id,
                 progressable_type: include,
-            });
-            const courseIDs = progressable_id.map((item) => item.toString());
+            })
+                .skip(skip)
+                .limit(parseInt(limit)); // Đảm bảo chuyển đổi limit thành số nguyên
+
+            // Lấy danh sách distinct progressable_id từ kết quả trả về
+            const progressable_ids = [
+                ...new Set(
+                    progressRecords.map((item) =>
+                        item.progressable_id.toString(),
+                    ),
+                ),
+            ];
             const courses = await Courses.find({
-                _id: { $in: courseIDs },
+                _id: { $in: progressable_ids },
             });
             return res.status(200).json({
                 data: { user: data, profile, courses },
             });
         } catch (error) {
             console.log(error);
-            res.status(400).json({
+            res.status(502).json({
                 message: "'Error must be responded to",
                 error,
             });
