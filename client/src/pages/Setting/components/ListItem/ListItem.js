@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 
 import styles from './ListItem.module.scss';
-import Item from '../Item';
+import Item from '~/pages/Setting/components/Item';
 
 const cx = classNames.bind(styles);
 

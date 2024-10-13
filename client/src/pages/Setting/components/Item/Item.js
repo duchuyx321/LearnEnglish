@@ -1,16 +1,25 @@
 import classNames from 'classnames/bind';
 import { FaChevronRight } from 'react-icons/fa';
+import { useState } from 'react';
 
 import styles from './Item.module.scss';
 import Image from '~/components/Image';
 import images from '~/assets';
+import Overlay from '~/pages/Setting/components/Overlay';
 
 const cx = classNames.bind(styles);
 
 function Item({ data = {} }) {
+    const [isOverlay, setIsOverlay] = useState(false);
+    const handleOnOverlay = () => {
+        setIsOverlay(!isOverlay);
+    };
     return (
         <div className={cx('wrapper')}>
-            <button className={cx('btn-Item')}>
+            <button
+                className={cx('btn-Item')}
+                onClick={() => handleOnOverlay()}
+            >
                 <div className={cx('content')}>
                     <h3>{data.title}</h3>
                     {data.key === 'image' ? (
@@ -28,6 +37,9 @@ function Item({ data = {} }) {
                     <FaChevronRight />
                 </div>
             </button>
+            {isOverlay && (
+                <Overlay data={data} handleOnClose={handleOnOverlay} />
+            )}
         </div>
     );
 }
