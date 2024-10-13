@@ -15,6 +15,8 @@ class ProfileController {
             res.status(502).json({ message: error.message });
         }
     }
+    // [GET] --/profile/social
+    async;
 
     // [POST] ---/profile/create/:userID
     async createProfile(req, res, next) {

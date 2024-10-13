@@ -22,6 +22,7 @@ function App() {
             const currentTime = new Date();
             if (currentTime > timeBeforeExpiration) {
                 refreshToken();
+                window.location.reload();
             }
             const interval = setInterval(async () => {
                 const currentTime = new Date();
