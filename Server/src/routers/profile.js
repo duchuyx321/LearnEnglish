@@ -14,5 +14,12 @@ router.post(
     uploadAvatarCloud.single('avatar'),
     ProfileController.createProfile,
 );
+// [PUT]
+router.patch(
+    '/edit',
+    uploadAvatarCloud.single('avatar'),
+    checkToken,
+    ProfileController.editProfile,
+);
 
 module.exports = router;

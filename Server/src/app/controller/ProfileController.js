@@ -1,4 +1,4 @@
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary');
 
 const Profile = require('../module/Profile');
 
@@ -15,8 +15,6 @@ class ProfileController {
             res.status(502).json({ message: error.message });
         }
     }
-    // [GET] --/profile/social
-    async;
 
     // [POST] ---/profile/create/:userID
     async createProfile(req, res, next) {
@@ -32,8 +30,34 @@ class ProfileController {
             res.status(200).json({ data: newProfile });
         } catch (error) {
             if (req.file) {
-                cloudinary.uploader.destroy(req.file.path);
+                if (req.file) cloudinary.v2.uploader.destroy(req.file.filename);
             }
+            res.status(502).json({ message: error.message });
+        }
+    }
+
+    // [PATCH] --/profile/edit
+    async editProfile(req, res, next) {
+        try {
+            const file = req.file;
+            const userID = req.userID;
+            console.log(req.userID);
+            if (file) {
+                req.body.avatar = file.path;
+            }
+            const updateProfile = await Profile.updateMany(
+                { userID },
+                req.body,
+            );
+            res.status(200).json({
+                data: {
+                    message: 'Profile updated successfully',
+                    updateProfile,
+                },
+            });
+        } catch (error) {
+            console.log(error);
+            if (req.file) cloudinary.v2.uploader.destroy(req.file.filename);
             res.status(502).json({ message: error.message });
         }
     }
