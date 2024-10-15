@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './Personal.module.scss';
 import ListItem from '~/pages/Setting/components/ListItem';
@@ -82,10 +83,11 @@ const LIST_SOCIAL = {
 function Personal() {
     const [listInfo, setListInfo] = useState(LIST_INFO);
     const [listSocial, setListSocial] = useState(LIST_SOCIAL);
-
+    const [isRerender, setIsRerender] = useState(false);
+    const navigate = useNavigate();
     useEffect(() => {
         fetchAPI();
-    }, []);
+    }, [isRerender]);
     // fetch api
     const fetchAPI = async () => {
         const result = await Profile_ME();
@@ -120,11 +122,20 @@ function Personal() {
             }),
         }));
     };
+    const handleOnRerender = () => {
+        setIsRerender(!isRerender);
+    };
+    const handleOnClose = () => {
+        navigate(-1);
+    };
 
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
-                <button className={cx('btn-close')}>
+                <button
+                    className={cx('btn-close')}
+                    onClick={() => handleOnClose()}
+                >
                     <IoIosCloseCircleOutline />
                 </button>
                 <div className={cx('title')}>
@@ -133,12 +144,17 @@ function Personal() {
                 </div>
             </div>
             <div className={cx('inner')}>
-                <ListItem ListItem={listInfo.content} title={listInfo.title} />
+                <ListItem
+                    ListItem={listInfo.content}
+                    title={listInfo.title}
+                    handle={handleOnRerender}
+                />
             </div>
             <div className={cx('inner')}>
                 <ListItem
                     ListItem={listSocial.content}
                     title={listSocial.title}
+                    handle={handleOnRerender}
                 />
             </div>
         </div>

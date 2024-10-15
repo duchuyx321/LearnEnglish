@@ -8,8 +8,9 @@ import images from '~/assets';
 import Overlay from '~/pages/Setting/components/Overlay';
 
 const cx = classNames.bind(styles);
+const DefaultFN = () => {};
 
-function Item({ data = {} }) {
+function Item({ data = {}, handleOnRefresh = DefaultFN }) {
     const [isOverlay, setIsOverlay] = useState(false);
     const handleOnOverlay = () => {
         setIsOverlay(!isOverlay);
@@ -38,7 +39,11 @@ function Item({ data = {} }) {
                 </div>
             </button>
             {isOverlay && (
-                <Overlay data={data} handleOnClose={handleOnOverlay} />
+                <Overlay
+                    handleRerender={handleOnRefresh}
+                    data={data}
+                    handleOnClose={handleOnOverlay}
+                />
             )}
         </div>
     );

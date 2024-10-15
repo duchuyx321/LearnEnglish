@@ -1,16 +1,23 @@
 import classNames from 'classnames/bind';
-import { IoIosCloseCircleOutline } from 'react-icons/io';
+import { IoIosCloseCircleOutline, IoIosAdd } from 'react-icons/io';
 import { useState } from 'react';
 
 import styles from './Overlay.module.scss';
 import Button from '~/components/Button';
 import { updateProfile } from '~/service/ProfileService';
+import Image from '~/components/Image';
+import images from '~/assets';
 
 const cx = classNames.bind(styles);
 const DefaultFN = () => {};
 
-function Overlay({ data = {}, handleOnClose = DefaultFN }) {
+function Overlay({
+    data = {},
+    handleOnClose = DefaultFN,
+    handleRerender = DefaultFN,
+}) {
     const [value, setValue] = useState(data?.content || '');
+    const [valueAvatar, setValueAvatar] = useState(data?.content || '');
     // handle
     const handleOnSave = () => {
         if (value.length === 0 || value === data?.content) {
@@ -30,6 +37,13 @@ function Overlay({ data = {}, handleOnClose = DefaultFN }) {
         } else if (data.key === 'tiktok') {
             fetchAPIUpdate({ tiktok_url: value });
         }
+        handleRerender();
+        handleOnClose();
+    };
+    const handleOnUpload = (file) => {
+        setValue(file);
+        const previewUrl = URL.createObjectURL(file);
+        setValueAvatar(previewUrl);
     };
     // fetch api
     const fetchAPIUpdate = async ({
@@ -66,13 +80,54 @@ function Overlay({ data = {}, handleOnClose = DefaultFN }) {
                     <p>{data?.contentOverlay}</p>
                 </div>
                 <div className={cx('body')}>
-                    <p>{data?.title}</p>
-                    <input
-                        value={value}
-                        type="text"
-                        placeholder={data?.placeholder}
-                        onInput={(e) => setValue(e.target.value)}
-                    />
+                    {data?.key === 'image' ? (
+                        <div className={cx('inner_img')}>
+                            <input
+                                type="file"
+                                id="avatar"
+                                accept="image/*"
+                                hidden
+                                onInput={(e) =>
+                                    handleOnUpload(e.target.files[0])
+                                }
+                            />
+                            <label htmlFor="avatar">
+                                <Image
+                                    src={valueAvatar || images.noImage}
+                                    alt={data?.title}
+                                />
+                            </label>
+                            <label
+                                className={cx('action_upload')}
+                                htmlFor="avatar"
+                            >
+                                <span>
+                                    <IoIosAdd />
+                                </span>
+                                <p>Tải ảnh lên</p>
+                            </label>
+                        </div>
+                    ) : (
+                        <div>
+                            <p>{data?.title}</p>
+                            {data?.key === 'bio' ? (
+                                <textarea
+                                    value={value}
+                                    placeholder={data?.placeholder}
+                                    onInput={(e) => setValue(e.target.value)}
+                                    spellCheck="false"
+                                    maxLength="150"
+                                ></textarea>
+                            ) : (
+                                <input
+                                    value={value}
+                                    type="text"
+                                    placeholder={data?.placeholder}
+                                    onInput={(e) => setValue(e.target.value)}
+                                />
+                            )}
+                        </div>
+                    )}
                 </div>
                 <div className={cx('action')}>
                     <Button
