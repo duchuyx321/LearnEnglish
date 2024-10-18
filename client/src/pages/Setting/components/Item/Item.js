@@ -5,12 +5,13 @@ import { useState } from 'react';
 import styles from './Item.module.scss';
 import Image from '~/components/Image';
 import images from '~/assets';
-import Overlay from '~/pages/Setting/components/Overlay';
+import Overlay from '~/pages/Setting/components/Personal/Components/Overlay';
+import OverlaySetting from '~/pages/Setting/components/Security/Components/OverlaySetting';
 
 const cx = classNames.bind(styles);
 const DefaultFN = () => {};
 
-function Item({ data = {}, handleOnRefresh = DefaultFN }) {
+function Item({ data = {}, handleOnRefresh = DefaultFN, type = '' }) {
     const [isOverlay, setIsOverlay] = useState(false);
     const handleOnOverlay = () => {
         setIsOverlay(!isOverlay);
@@ -39,11 +40,21 @@ function Item({ data = {}, handleOnRefresh = DefaultFN }) {
                 </div>
             </button>
             {isOverlay && (
-                <Overlay
-                    handleRerender={handleOnRefresh}
-                    data={data}
-                    handleOnClose={handleOnOverlay}
-                />
+                <>
+                    {type === 'Personal' && (
+                        <Overlay
+                            handleRerender={handleOnRefresh}
+                            data={data}
+                            handleOnClose={handleOnOverlay}
+                        />
+                    )}
+                    {type === 'Security' && (
+                        <OverlaySetting
+                            data={data}
+                            handleOnClose={handleOnOverlay}
+                        />
+                    )}
+                </>
             )}
         </div>
     );

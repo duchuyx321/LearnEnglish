@@ -6,7 +6,12 @@ import Item from '~/pages/Setting/components/Item';
 const cx = classNames.bind(styles);
 const DefaultFN = () => {};
 
-function ListItem({ ListItem = [], title = {}, handle = DefaultFN }) {
+function ListItem({
+    ListItem = [],
+    title = {},
+    handle = DefaultFN,
+    type = '',
+}) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('title')}>
@@ -15,7 +20,12 @@ function ListItem({ ListItem = [], title = {}, handle = DefaultFN }) {
             </div>
             <div className={cx('content')}>
                 {ListItem.map((item) => (
-                    <Item key={item.key} data={item} handleOnRefresh={handle} />
+                    <Item
+                        key={item.key}
+                        data={item}
+                        handleOnRefresh={handle}
+                        type={type}
+                    />
                 ))}
             </div>
         </div>

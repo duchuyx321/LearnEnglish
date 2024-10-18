@@ -148,6 +148,7 @@ function Personal() {
                     ListItem={listInfo.content}
                     title={listInfo.title}
                     handle={handleOnRerender}
+                    type="Personal"
                 />
             </div>
             <div className={cx('inner')}>
@@ -155,6 +156,7 @@ function Personal() {
                     ListItem={listSocial.content}
                     title={listSocial.title}
                     handle={handleOnRerender}
+                    type="Personal"
                 />
             </div>
         </div>
