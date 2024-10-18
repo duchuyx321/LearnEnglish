@@ -1,17 +1,16 @@
 import classNames from 'classnames/bind';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 import styles from './OverlaySetting.module.scss';
 import Button from '~/components/Button';
-import { IoIosCloseCircleOutline } from 'react-icons/io';
+import Password from '~/pages/Setting/components/Security/Components/Password';
 
 const cx = classNames.bind(styles);
 const DefaultFN = () => {};
 
 function OverlaySetting({ data = {}, handleOnClose = DefaultFN }) {
     console.log(data);
-    const handleOnSave = () => {
-        //
-    };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -21,11 +20,8 @@ function OverlaySetting({ data = {}, handleOnClose = DefaultFN }) {
                 >
                     <IoIosCloseCircleOutline />
                 </button>
-                <div className={cx('body')}></div>
-                <div className={cx('action')}>
-                    <Button primary large onClick={() => handleOnSave()}>
-                        Lưu Lại
-                    </Button>
+                <div className={cx('body')}>
+                    {data?.key === 'password' && <Password />}
                 </div>
             </div>
         </div>
