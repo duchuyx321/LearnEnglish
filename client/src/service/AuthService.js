@@ -48,3 +48,16 @@ export const refresh = async () => {
         console.log(error);
     }
 };
+
+export const editPass = async ({ password = '', newPassword = '' }) => {
+    try {
+        const res = await Response.patch('auth/update-password', {
+            password,
+            newPassword,
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        return error.response.data;
+    }
+};

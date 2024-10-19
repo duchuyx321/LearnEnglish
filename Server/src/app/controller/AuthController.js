@@ -115,7 +115,7 @@ class AuthController {
             res.status(502).json({ message: error.message });
         }
     }
-    // [PATCH] -/auth/me
+    // [PATCH] --/auth/me
     async updateCurrentUser(req, res, next) {
         try {
             const fileData = req.file;
@@ -156,6 +156,52 @@ class AuthController {
             if (req.file) cloudinary.v2.uploader.destroy(req.file.filename);
             console.log(err);
             res.status(500).json(err);
+        }
+    }
+    // [PATCH] --/auth/update-password
+    async editPassword(req, res, next) {
+        try {
+            const userID = await req.userID;
+            const { password, newPassword } = req.body;
+            if (!password || !newPassword) {
+                return res
+                    .status(400)
+                    .json({ message: 'password is required' });
+            }
+            const user = await Users.findOne({ _id: userID });
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            const isPasswordValid = await decryptPass(password, user.password);
+            if (!isPasswordValid) {
+                return res.status(404).json({
+                    message: 'Mật khẩu hiện tại không chính xác',
+                    error: 'incorrectCurrentPassword',
+                    type: 'current',
+                });
+            }
+            if (password === newPassword) {
+                return res.status(401).json({
+                    message: 'Không sữ dụng mật khẩu cũ',
+                    error: 'duplicatePassword',
+                    type: 'new',
+                });
+            }
+            const hashPassword = await hashPass(newPassword);
+            const newPass = await Users.updateOne(
+                { _id: userID },
+                { password: hashPassword },
+            );
+            if (newPass.modifiedCount === 0) {
+                return res
+                    .status(400)
+                    .json({ message: 'updated password failed ' });
+            }
+            return res
+                .status(200)
+                .json({ data: { message: 'update password successfully' } });
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
         }
     }
 }

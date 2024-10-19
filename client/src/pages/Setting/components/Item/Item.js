@@ -32,7 +32,11 @@ function Item({ data = {}, handleOnRefresh = DefaultFN, type = '' }) {
                             />
                         </div>
                     ) : (
-                        <p>{data.content || 'Chưa cập nhật'}</p>
+                        <p>
+                            {type === 'Personal'
+                                ? data.content || 'Chưa cập nhật'
+                                : null}
+                        </p>
                     )}
                 </div>
                 <div className={cx('icon-icon')}>

@@ -35,5 +35,6 @@ router.patch(
 
     AuthController.updateCurrentUser,
 );
+router.patch('/update-password', checkToken, AuthController.editPassword);
 
 module.exports = router;
