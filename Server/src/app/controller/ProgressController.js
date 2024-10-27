@@ -4,15 +4,18 @@ const Lessons = require('../module/Lessons');
 const Progress = require('../module/Progress');
 
 class ProgressController {
-    // [GET] -/progress/combined?type
+    // [GET] -/progress/combined?type&limit&page
     async combinedByUserID(req, res, next) {
         try {
-            const { type } = req.query;
+            const { type, page, limit } = req.query;
             const { userID } = req.body;
+            const skip = (page - 1) * limit;
             const progressData = await Progress.find({
                 userID,
                 progressable_type: type,
-            });
+            })
+                .skip(skip)
+                .limit(limit);
 
             const data = await Promise.all(
                 progressData.map(async (item) => {

@@ -8,7 +8,7 @@ import Auth from '~/layouts/components/Auth';
 
 const cx = classNames.bind(styles);
 
-function DefaultLayout({ children }) {
+function HomeLayout({ children }) {
     const [isAuth, setIsAuth] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
 
@@ -39,4 +39,4 @@ function DefaultLayout({ children }) {
     );
 }
 
-export default DefaultLayout;
+export default HomeLayout;

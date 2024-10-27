@@ -45,6 +45,9 @@ export const refresh = async () => {
         const res = await Response.post('auth/refresh');
         return res.data;
     } catch (error) {
+        if (error.response.data.message === 'jwt expired') {
+            return { error: 'jwtExpired' };
+        }
         console.log(error);
     }
 };

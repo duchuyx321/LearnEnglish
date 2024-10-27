@@ -90,7 +90,7 @@ class AuthController {
             }
             jwt.verify(token, process.env.REFRESH_TOKEN, (error, user) => {
                 if (error) {
-                    return res.status(402).json({ message: error });
+                    return res.status(402).json({ message: error.message });
                 }
                 const accessToken = `Bearer ${AccessToken(user)}`;
                 console.log(accessToken);

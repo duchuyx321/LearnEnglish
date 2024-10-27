@@ -1,10 +1,10 @@
 import * as Request from '~/util/httpsRequest';
 
-// [GET] /progress/combined?type=course
-export const combined = async (type = 'course') => {
+// [GET] /progress/combined?type=course&limit = 1 & page = 1
+export const combined = async (type = 'course', limit = 3, page = 1) => {
     try {
         const res = await Request.get('progress/combined', {
-            params: { type },
+            params: { type, page, limit },
         });
         return res.data;
     } catch (err) {

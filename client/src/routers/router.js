@@ -1,4 +1,4 @@
-// page
+// page public
 import Home from '~/pages/Home';
 import LearnPath from '~/pages/LearnPath';
 import Profile from '~/pages/Profile';
@@ -10,12 +10,14 @@ import Success from '~/pages/Success';
 import Setting from '~/pages/Setting';
 import Personal from '~/pages/Setting/components/Personal';
 import Security from '~/pages/Setting/components/Security';
+// page private
+
 // layout
 import LearningLayout from '~/layouts/LearningLayout';
 import HomeLayout from '~/layouts/HomeLayout';
 
 // Private router
-const PrivateRouters = [];
+const PrivateRouters = [{ path: '/admin', component: Home }];
 
 // Public Router
 const PublicRouters = [

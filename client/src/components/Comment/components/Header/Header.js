@@ -1,5 +1,4 @@
 import classNames from 'classnames/bind';
-import { useRef, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 
 import styles from './Header.module.scss';
