@@ -11,13 +11,26 @@ import Setting from '~/pages/Setting';
 import Personal from '~/pages/Setting/components/Personal';
 import Security from '~/pages/Setting/components/Security';
 // page private
+import {
+    Admin,
+    AdminCourses,
+    AdminUsers,
+    AdminSetting,
+    AdminLessons,
+} from '~/pages/Admins';
 
 // layout
 import LearningLayout from '~/layouts/LearningLayout';
 import HomeLayout from '~/layouts/HomeLayout';
 
 // Private router
-const PrivateRouters = [{ path: '/admin', component: Home }];
+const PrivateRouters = [
+    { path: '/admin', component: Admin },
+    { path: '/admin/users', component: AdminUsers },
+    { path: '/admin/courses', component: AdminCourses },
+    { path: '/admin/lessons', component: AdminLessons },
+    { path: '/admin/setting', component: AdminSetting },
+];
 
 // Public Router
 const PublicRouters = [

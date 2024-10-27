@@ -1,10 +1,21 @@
-import { Navigate } from 'react-router-dom';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import { useEffect } from 'react';
 
-function ProtectedRoute({ children, role }) {
-    const navigate = Navigate();
-    if (role !== 'admin') {
-        return navigate('/');
-    }
+function ProtectedRoute({ children }) {
+    const accessToken = localStorage.getItem('token');
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (accessToken) {
+            const token = accessToken.split(' ')[1];
+            const decode = jwtDecode(token);
+            if (decode?.role !== 'admin') {
+                navigate('/');
+                return;
+            }
+        }
+    }, [accessToken]);
     return children;
 }
 

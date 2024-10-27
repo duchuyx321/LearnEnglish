@@ -3,41 +3,47 @@ import { AiFillHome } from 'react-icons/ai';
 import { FaRoad, FaNewspaper } from 'react-icons/fa6';
 
 import styles from './SideBar.module.scss';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useMatch } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 const LIST_SIDEBARS = [
     {
-        name: 'Trang Chủ',
+        title: 'Trang Chủ',
         icon: <AiFillHome />,
         to: '/',
     },
     {
-        name: 'Lộ trình',
+        title: 'Lộ trình',
         icon: <FaRoad />,
         to: '/learning-paths',
     },
     {
-        name: 'Bài Viết',
+        title: 'Bài Viết',
         icon: <FaNewspaper />,
         to: `/blog?page=1`,
     },
 ];
-function SideBarDefault() {
+function SideBarDefault({ ListSidebar = LIST_SIDEBARS }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
-                {LIST_SIDEBARS.map((item, index) => (
+                {ListSidebar.map((item, index) => (
                     <NavLink
                         key={index}
                         to={item.to}
-                        className={(nav) =>
-                            cx('itemBtn', { active: nav.isActive })
-                        }
+                        end
+                        className={(nav) => {
+                            console.log(nav);
+                            return cx('itemBtn', {
+                                active: nav.isActive,
+                            });
+                        }}
                     >
                         <span className={cx('itemBtn-icon')}>{item.icon}</span>
-                        <span className={cx('itemBtn-title')}>{item.name}</span>
+                        <span className={cx('itemBtn-title')}>
+                            {item.title}
+                        </span>
                     </NavLink>
                 ))}
             </div>

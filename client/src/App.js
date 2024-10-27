@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 
 import DefaultLayout from '~/layouts/DefaultLayout';
@@ -10,12 +10,10 @@ import ProtectedRoute from '~/components/GlobalStyle/ProtectedRoute';
 
 function App() {
     const accessToken = localStorage.getItem('token');
-    const [role, setRole] = useState('student');
     useEffect(() => {
         if (accessToken) {
             const token = accessToken.split(' ')[1];
             const decode = jwtDecode(token);
-            setRole(decode.role);
             const expTime = new Date(decode.exp * 1000);
             // gọi trước 10p
             const timeBeforeExpiration = new Date(
@@ -88,7 +86,7 @@ function App() {
                                     key={index}
                                     path={item.path}
                                     element={
-                                        <ProtectedRoute role={role}>
+                                        <ProtectedRoute>
                                             <Layout>
                                                 <Page />
                                             </Layout>
