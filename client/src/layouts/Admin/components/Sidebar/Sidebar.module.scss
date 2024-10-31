@@ -1,0 +1,125 @@
+// responsive
+
+// mobile < 740px
+@media only screen and (max-width: 739px) {
+    .wrapper {
+        padding: 1.6rem;
+    }
+    .header {
+        display: none;
+    }
+    .itemBtn-title {
+        display: none;
+    }
+}
+// tablet (740px - 1024px)
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .wrapper {
+        padding: 1.6rem;
+    }
+    .header {
+        display: none;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+    .wrapper {
+        padding: 3rem 1.6rem;
+    }
+    .header {
+        display: flex;
+    }
+    .body {
+        flex-direction: column;
+    }
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+    .wrapper {
+        padding: 3rem 1.6rem;
+    }
+    .header {
+        display: flex;
+    }
+    .body {
+        flex-direction: column;
+    }
+}
+.wrapper {
+    width: 100%;
+    height: 100%;
+}
+.header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+    margin-bottom: 1.6rem;
+}
+.avatar {
+    width: 10rem;
+    height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    & > img {
+        width: 100%;
+        height: 100%;
+    }
+}
+.profile {
+    width: 100%;
+    & > h3 {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 8px;
+        font-size: 1.8rem;
+        color: var(--primary);
+    }
+    & > p {
+        width: 100%;
+        text-align: center;
+        font-size: 1.5rem;
+        color: #999;
+    }
+}
+.body {
+    display: flex;
+}
+.itemBtn {
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 1.6rem;
+    border-radius: 4px;
+    &:hover {
+        & > .itemBtn-icon,
+        .itemBtn-title {
+            color: var(--primary);
+        }
+    }
+}
+.active {
+    color: var(--primary);
+    border: 1px solid currentColor;
+    &:hover {
+        background-color: rgba(254, 44, 84, 0.06);
+    }
+    & > .itemBtn-icon,
+    .itemBtn-title {
+        color: var(--primary);
+    }
+}
+.itemBtn-icon {
+    font-size: 3rem;
+    color: var(--black-color);
+}
+.itemBtn-title {
+    font-size: 1.6rem;
+    color: var(--black-color);
+}

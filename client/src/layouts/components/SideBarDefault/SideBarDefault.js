@@ -3,7 +3,7 @@ import { AiFillHome } from 'react-icons/ai';
 import { FaRoad, FaNewspaper } from 'react-icons/fa6';
 
 import styles from './SideBar.module.scss';
-import { NavLink, useMatch } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 

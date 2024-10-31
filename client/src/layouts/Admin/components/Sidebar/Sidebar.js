@@ -10,7 +10,7 @@ import { LuTag } from 'react-icons/lu';
 import styles from './Sidebar.module.scss';
 import Image from '~/components/Image';
 import images from '~/assets';
-import SideBarDefault from '~/layouts/components/SideBarDefault';
+import { NavLink } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -49,9 +49,28 @@ function SideBar() {
                 <div className={cx('avatar')}>
                     <Image src={images.noImage} alt="avatar" />
                 </div>
+                <div className={cx('profile')}>
+                    <h3>Đức Huy</h3>
+                    <p>Chào mừng trở lại</p>
+                </div>
             </div>
             <div className={cx('body')}>
-                <SideBarDefault ListSidebar={LIST_SIDEBAR} />
+                {LIST_SIDEBAR.map((item, index) => (
+                    <NavLink
+                        key={index}
+                        to={item.to}
+                        end
+                        className={(nav) => {
+                            console.log(nav);
+                            return cx('itemBtn', {
+                                active: nav.isActive,
+                            });
+                        }}
+                    >
+                        <span className={cx('itemBtn-icon')}>{item.icon}</span>
+                        <span className={cx('itemBtn-title')}>{item.name}</span>
+                    </NavLink>
+                ))}
             </div>
         </div>
     );

@@ -1,0 +1,65 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 1.6rem;
+}
+.header {
+    padding: 0 1.6rem;
+    margin-bottom: 2rem;
+    & > h3 {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 8px;
+    }
+    & > p {
+        font-size: 1.6rem;
+        color: #999;
+    }
+}
+.body {
+    width: 100%;
+    height: 100%;
+    table {
+        width: 100%;
+        margin: 20px 0;
+        font-size: 16px;
+    }
+    .td-input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        & > input {
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--white-color);
+            outline: none;
+            border: 1px var(--primary);
+        }
+        & > input:checked {
+            background: var(--primary);
+        }
+    }
+    th,
+    td {
+        padding: 12px 15px;
+        text-align: left;
+        border: none;
+    }
+
+    thead {
+        background-color: #4caf50;
+        color: white;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tbody tr:hover {
+        background-color: #ddd;
+    }
+    th {
+        border-bottom: 2px solid #ddd;
+    }
+}

@@ -1,0 +1,56 @@
+// responsive
+
+// mobile < 740px
+@media only screen and (max-width: 1023px) {
+    .sidebar {
+        width: 100%;
+        height: calc(var(--height-header-wrapper) * 1.1);
+        bottom: 0;
+        border-top: 1px solid #999;
+        display: flex;
+        align-items: center;
+    }
+    .container {
+        padding: 3rem 3rem 4rem;
+        margin-bottom: calc(var(--height-header-wrapper) * 1.1);
+    }
+}
+
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+    .sidebar {
+        height: 100%;
+        width: var(--width-admin-sidebar);
+        border-right: 1px solid #999;
+    }
+    .container {
+        margin-left: var(--width-admin-sidebar);
+        padding: 3rem 1.6rem 4rem;
+    }
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+    .sidebar {
+        height: 100%;
+        width: var(--width-admin-sidebar);
+        border-right: 1px solid #999;
+    }
+    .container {
+        margin-left: var(--width-admin-sidebar);
+        padding: 3rem 1.6rem 4rem;
+    }
+}
+
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    position: relative;
+}
+.sidebar {
+    position: fixed;
+}
+.container {
+    width: 100%;
+    height: 100%;
+}
