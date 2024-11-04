@@ -6,11 +6,13 @@ import {
     MdOutlineSpeed,
 } from 'react-icons/md';
 import { LuTag } from 'react-icons/lu';
+import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import styles from './Sidebar.module.scss';
 import Image from '~/components/Image';
 import images from '~/assets';
-import { NavLink } from 'react-router-dom';
+import { Profile_ME } from '~/service/ProfileService';
 
 const cx = classNames.bind(styles);
 
@@ -43,14 +45,22 @@ const LIST_SIDEBAR = [
 ];
 
 function SideBar() {
+    const [result, setResult] = useState({});
+    useEffect(() => {
+        const fetchAPI = async () => {
+            const result = await Profile_ME();
+            setResult(result.data);
+        };
+        fetchAPI();
+    }, []);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
                 <div className={cx('avatar')}>
-                    <Image src={images.noImage} alt="avatar" />
+                    <Image src={result.avatar || images.noImage} alt="avatar" />
                 </div>
                 <div className={cx('profile')}>
-                    <h3>Đức Huy</h3>
+                    <h3>{`${result.first_name}${result.last_name}`}</h3>
                     <p>Chào mừng trở lại</p>
                 </div>
             </div>
@@ -61,7 +71,6 @@ function SideBar() {
                         to={item.to}
                         end
                         className={(nav) => {
-                            console.log(nav);
                             return cx('itemBtn', {
                                 active: nav.isActive,
                             });

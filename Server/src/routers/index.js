@@ -10,6 +10,7 @@ const blogRouter = require('./blog');
 const profileRouter = require('./profile');
 const apiRouter = require('./api');
 const commentsRouter = require('./comments');
+const AdminRouter = require('./admin');
 
 const router = (app) => {
     app.use('/auth', authRouter);
@@ -23,6 +24,7 @@ const router = (app) => {
     app.use('/blog', blogRouter);
     app.use('/api', apiRouter);
     app.use('/comments', commentsRouter);
+    app.use('/admin', AdminRouter);
     app.use('/', homeRouter);
 };
 
