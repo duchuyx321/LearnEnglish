@@ -5,13 +5,13 @@ const { checkToken } = require('../app/middleware/checkToken');
 const AdminController = require('../app/controller/AdminController');
 
 // [GET]
-router.get('/admin/users', checkToken, AdminController.getAllUsers);
+router.get('/users', checkToken, AdminController.getAllUsers);
 // [POST]
 
 // [PUT]
 
 // [PATCH]
-
+router.patch('/edit', checkToken, AdminController.editUser);
 // [DELETE]
 
 module.exports = router;
