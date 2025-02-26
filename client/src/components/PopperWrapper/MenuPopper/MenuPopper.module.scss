@@ -1,0 +1,27 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem 2rem;
+    min-width: 25rem;
+    background-color: var(--white-color);
+    border-radius: 8px;
+    gap: 1.6rem;
+    box-shadow: 0 -4px 32px #0003;
+    transition: all ease-in-out 0.3s;
+    animation: _fadeIn_qhx2q_1 ease 0.3s;
+}
+.large {
+    width: 35rem;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.6rem;
+}
+.title {
+    font-weight: 400;
+}
+.extend {
+    color: var(--primary);
+}

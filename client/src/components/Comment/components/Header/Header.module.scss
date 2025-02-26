@@ -1,0 +1,56 @@
+// responsive
+
+// mobile < 740px
+@media only screen and (max-width: 739px) {
+    .comment {
+        max-width: 90%;
+    }
+}
+// tablet (740px - 1024px)
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .comment {
+        max-width: 80%;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+    .comment {
+        max-width: 90%;
+    }
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+    .comment {
+        max-width: 90%;
+    }
+}
+// header
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.exit {
+    position: absolute;
+    font-size: 3rem;
+    top: 0;
+    right: 0;
+}
+.post {
+    display: flex;
+    gap: 8px;
+}
+.user {
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.comment {
+    width: 100%;
+    height: 100%;
+}

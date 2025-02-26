@@ -1,0 +1,26 @@
+.wrapper {
+    min-height: 3rem;
+    background-color: #d9d8d8;
+    border-radius: 4px;
+}
+.status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 10rem;
+    min-height: 3rem;
+    padding: 2px 8px;
+    font-size: 1.8rem;
+    border-radius: 4px;
+    background-color: #d9d8d8;
+    color: var(--primary);
+}
+.btn-status {
+    font-size: 1.8rem;
+    min-width: 10rem;
+    min-height: 3rem;
+    color: var(--primary);
+
+    border-top: 1px solid var(--black-color);
+}

@@ -1,0 +1,52 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+// một số thứ thường dùng
+:root {
+    --white-color: #fff;
+    --black-color: rgba(24, 25, 26);
+    --text-color: #161823;
+    --primary: #fe2c55;
+    --height-header-wrapper: 80px;
+    --height-header-learning-wrapper: 60px;
+    --width-sidebar-wrapper: 10rem;
+    --width-sidebar-setting: 35rem;
+    --width-search-wrapper: 42rem;
+    --width-login-wrapper: 485px;
+    --height-login-wrapper: 65rem;
+    --width-comment-wrapper: 60rem;
+    --height-comment-wrapper: 65rem;
+    --width-admin-sidebar: 30rem;
+    --grid-gutter-y: 3.6rem;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-size: 62.5%; // đưa về size bình thường
+}
+
+a,
+li,
+ul,
+input,
+button,
+label {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    text-decoration: none;
+    user-select: none;
+    font-family: 'Oswald', sans-serif;
+    list-style-type: none;
+}
+
+body {
+    font-size: 1.8rem;
+    font-family: 'Oswald', sans-serif;
+    text-rendering: optimizeLegibility;
+}

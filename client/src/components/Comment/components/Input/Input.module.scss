@@ -1,0 +1,93 @@
+// responsive
+
+// mobile < 740px
+@media only screen and (max-width: 739px) {
+}
+// tablet (740px - 1024px)
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+}
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+}
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+// post
+.post {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.comment {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    .comment-input[contenteditable='true']:empty::before {
+        content: attr(
+            data-placeholder
+        ); /* Lấy nội dung placeholder từ thuộc tính data-placeholder */
+        color: #999; /* Màu của placeholder */
+        pointer-events: none; /* Ngăn chặn người dùng click vào placeholder */
+    }
+}
+.model {
+    width: 90%;
+}
+.total {
+    position: absolute;
+    top: 2px;
+    right: 5rem;
+    display: flex;
+    font-size: 1.4rem;
+}
+.comment-input {
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    padding: 1.6rem 5rem 1.6rem 1.6rem;
+    caret-color: var(--primary);
+    line-height: 1.5;
+    outline: none;
+    background-color: #e5f0ff;
+    border-radius: 8px;
+    z-index: 1;
+    overflow-y: auto; /* Tự động cuộn nếu nội dung quá nhiều */
+}
+.emoji {
+    & > div {
+        position: absolute;
+        right: 0;
+        z-index: 32;
+
+        & > em-emoji-picker {
+            position: relative;
+            right: 0;
+            width: 28rem;
+            height: 30rem;
+            background-color: var(--white-color);
+        }
+    }
+}
+.btn-emoji {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-size: 3rem;
+    color: rgba(0, 0, 0, 0.4);
+    z-index: 5;
+}
+
+// action
+.action {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

@@ -1,0 +1,67 @@
+// responsive
+
+// mobile < 740px
+@media only screen and (max-width: 739px) {
+    .wrapper {
+        padding: 18px;
+    }
+    .content {
+        gap: 5px;
+    }
+}
+// tablet (740px - 1024px)
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .wrapper {
+        padding: 18px;
+    }
+    .content {
+        gap: 5px;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+    .wrapper {
+        padding: 10px;
+    }
+    .content {
+        gap: 2px;
+    }
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+    .wrapper {
+        padding: 18px;
+    }
+    .content {
+        gap: 5px;
+    }
+}
+
+.wrapper {
+    background-color: #fff;
+    box-shadow: #0909091a 0 0 8px, #0000001a 0 0 6px;
+    border-radius: 8px;
+
+    word-break: break-word;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 1.8rem;
+    + .wrapper {
+        margin-top: 20px;
+    }
+    > span {
+        font-size: 2rem;
+        color: #808990;
+    }
+}
+.title {
+    font-size: 1.8rem;
+    color: #808990;
+}
+.content {
+    display: flex;
+}
+.details {
+    flex-direction: column;
+}

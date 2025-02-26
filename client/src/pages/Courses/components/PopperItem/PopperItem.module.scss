@@ -1,0 +1,122 @@
+// responsive
+
+// mobile < 740px
+@media only screen and (max-width: 739px) {
+    .register {
+        padding: 1.2rem 1.2rem;
+        position: fixed;
+        bottom: var(--height-header-wrapper);
+        left: 0;
+        width: 100%;
+    }
+    .box-img {
+        display: none;
+    }
+    .content {
+        display: none;
+    }
+}
+// tablet (740px - 1024px)
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .register {
+        padding: 1.2rem 2rem;
+    }
+    .course-title,
+    .name {
+        text-align: center;
+        font-size: 1.8rem;
+    }
+    .box-img {
+        display: flex;
+    }
+    .content {
+        display: flex;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+    .register {
+        padding: 1.2rem 2rem;
+    }
+    .course-title,
+    .name {
+        text-align: center;
+        font-size: 1.8rem;
+    }
+    .box-img {
+        display: flex;
+    }
+    .content {
+        display: flex;
+    }
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+    .course-title,
+    .name {
+        text-align: center;
+        font-size: 2rem;
+    }
+    .register {
+        padding: 1.2rem 4rem;
+    }
+    .box-img {
+        display: flex;
+    }
+    .content {
+        display: flex;
+    }
+}
+
+.wrapper {
+    width: 100%;
+    position: relative;
+}
+.courses {
+    color: #494949;
+}
+
+.box-img {
+    width: 100%;
+    border-radius: 1.8rem;
+    overflow: hidden;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.courseItem-img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.content {
+    flex: 1;
+
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 20px;
+}
+.name-course {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    gap: 4px;
+}
+
+.name {
+    color: var(--primary);
+}
+.course-icon {
+    display: flex;
+    align-items: center;
+    font-size: 2.4rem;
+}
+
+.type {
+    text-align: center;
+    font-size: 2.4rem;
+    color: var(--primary);
+    font-weight: 600;
+}

@@ -1,0 +1,325 @@
+// responsive
+
+@media only screen and (max-width: 450px) {
+    .subtitle {
+        display: none;
+    }
+    .myLearn-btn {
+        display: none;
+    }
+    .inner {
+        display: none;
+    }
+}
+// mobile < 740px
+@media only screen and (min-width: 451px) and (max-width: 739px) {
+    .subtitle {
+        display: none;
+    }
+    .myLearn-btn {
+        display: none;
+    }
+    .inner-search {
+        width: 17rem;
+    }
+    .inner {
+        display: flex;
+    }
+}
+// tablet (740px - 1024px)
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .subtitle {
+        display: none;
+    }
+    .myLearn-btn {
+        display: none;
+    }
+    .inner-search {
+        width: var(--width-search-wrapper);
+    }
+    .inner {
+        display: flex;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+    .subtitle {
+        display: block;
+    }
+    .myLearn-btn {
+        display: block;
+    }
+    .inner-search {
+        width: var(--width-search-wrapper);
+    }
+    .inner {
+        display: flex;
+    }
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+    .subtitle {
+        display: block;
+    }
+    .myLearn-btn {
+        display: block;
+    }
+    .inner-search {
+        width: var(--width-search-wrapper);
+    }
+    .inner {
+        display: flex;
+    }
+}
+
+.wrapper {
+    width: 100%;
+    height: var(--height-header-wrapper);
+    position: fixed;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e8ebed;
+    background-color: #fff;
+    gap: 3rem;
+    padding: 0 2.8rem;
+    font-size: 1.8rem;
+    z-index: 20;
+}
+
+// _Logo
+._Logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+    font-size: 1.8rem;
+    color: var(--text-color);
+}
+.img-logo {
+    width: 4.8rem;
+    image-rendering: auto;
+    flex-shrink: 0;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Đổ bóng cho ảnh */
+}
+.subtitle {
+    color: var(--text-color);
+}
+
+// _body
+._body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+._search {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inner {
+    justify-content: center;
+    align-items: center;
+}
+.inner-search {
+    position: relative;
+
+    max-width: 100%;
+    height: 5rem;
+    padding: 0 1.6rem 0 1.6rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    border: 2px solid rgb(232, 232, 232);
+    transition: border-color 0.2s ease-in-out;
+}
+.icon-search {
+    font-size: 3.2rem;
+    border-radius: 50%;
+    color: rgb(194, 192, 192);
+    transition: opacity 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input-search {
+    flex: 1;
+    max-width: 100%;
+    height: 100%;
+    padding: 0 8px 0 8px;
+    border-radius: 20px;
+    caret-color: #444;
+}
+.icon-search-clear {
+    font-size: 2.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(133, 131, 131);
+}
+.hidden {
+    display: none;
+}
+
+// tippy search
+.search-result {
+    width: var(--width-search-wrapper);
+    background-color: #fff;
+    min-height: 5rem;
+    padding: 12px 24px;
+    color: #0000008a;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.5);
+}
+.search-result-title {
+    display: flex;
+    gap: 1.6rem;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #0000008a;
+}
+.search-result-icon {
+    font-size: 2rem;
+}
+.search-title-alert {
+    max-width: 90%;
+}
+.search-title-alert > h4 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.search-result-inner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+    font-size: 1.4rem;
+    gap: 1.6rem;
+    padding: 8px 0;
+    color: #0000008a;
+}
+.search-result-inner-img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+.title-course {
+    font-size: 1.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.loading {
+    animation: Loading 1s infinite linear;
+}
+
+// animation Loading
+@keyframes Loading {
+    to {
+        transform: rotate(-360deg);
+    }
+    from {
+        transform: rotate(0deg);
+    }
+}
+// _action
+._action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.portal {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+}
+.myLearn-btn {
+    padding: 5px;
+    font-size: 1.6rem;
+    color: var(--text-color);
+}
+.notification-btn {
+    font-size: 3rem;
+    color: #0000008a;
+}
+.avatar-btn {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+// tippy action
+.menu-list-alert {
+    color: #0000008a;
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    gap: 2rem;
+}
+.user-inner {
+    width: 5rem;
+    height: 5rem;
+    overflow: hidden;
+    border-radius: 100%;
+}
+.use-description {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    flex-direction: column;
+    gap: 8px;
+}
+.name {
+    width: 100%;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #292929;
+}
+.username {
+    width: 100%;
+    font-size: 1.4rem;
+    color: #757575;
+}
+.btn-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #808990;
+    font-size: 1.6rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+    &:hover {
+        transform: scale(1.1);
+    }
+}

@@ -1,0 +1,121 @@
+// responsive
+
+// mobile < 740px
+@media only screen and (max-width: 739px) {
+    .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .container {
+        width: var(--width-comment-wrapper);
+        height: var(--height-comment-wrapper);
+        border-radius: 8px;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .container {
+        width: var(--width-comment-wrapper);
+        height: var(--height-comment-wrapper);
+        border-radius: 8px;
+    }
+}
+// desktop >= 1024px
+@media only screen and (min-width: 1024px) and (max-width: 1399px) {
+    .container {
+        width: 60%;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+//  > 1400
+@media only screen and (min-width: 1400px) {
+    .container {
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    z-index: 31;
+}
+.container {
+    z-index: 35;
+    padding: 4rem 3rem 6rem;
+    animation: slideIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    background-color: var(--white-color);
+    overflow: hidden;
+    overflow-y: auto;
+    will-change: transform;
+    /* Tùy chỉnh thanh cuộn */
+    &::-webkit-scrollbar {
+        width: 12px; /* Độ rộng của thanh cuộn */
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(
+            254,
+            44,
+            84,
+            0.2
+        ); /* Màu của phần di chuyển (thumb) */
+        border-radius: 6px; /* Bo góc cho thumb */
+        border: 3px solid rgba(254, 44, 84, 0.06); /* Khoảng cách giữa thumb và rãnh cuộn */
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(0, 0, 0, 0.6); /* Màu khi hover vào thumb */
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: rgba(240, 240, 240, 0.8); /* Màu nền của rãnh cuộn */
+        border-radius: 6px; /* Bo góc cho rãnh cuộn */
+    }
+
+    &::-webkit-scrollbar-track:hover {
+        background-color: rgba(
+            230,
+            230,
+            230,
+            0.9
+        ); /* Màu khi hover vào rãnh cuộn */
+    }
+}
+.isClose {
+    animation: slideOut 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+// animation
+@keyframes slideIn {
+    from {
+        transform: translateX(100%); // Bắt đầu từ ngoài màn hình
+    }
+    to {
+        transform: translateX(0); // Kết thúc ở vị trí bình thường
+    }
+}
+@keyframes slideOut {
+    from {
+        transform: translateX(0); // Bắt đầu từ vị trí bình thường
+    }
+    to {
+        transform: translateX(100%); // Di chuyển ra ngoài màn hình
+    }
+}

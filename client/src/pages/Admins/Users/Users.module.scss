@@ -1,0 +1,22 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 1.6rem;
+}
+.header {
+    padding: 0 1.6rem;
+    margin-bottom: 2rem;
+    & > h3 {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 8px;
+    }
+    & > p {
+        font-size: 1.6rem;
+        color: #999;
+    }
+}
+.body {
+    width: 100%;
+    height: 100%;
+}

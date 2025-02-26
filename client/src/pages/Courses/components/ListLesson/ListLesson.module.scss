@@ -1,0 +1,86 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.panel {
+}
+
+.panel-heading {
+    padding: 0;
+    border: 1px solid #ebebeb;
+    border-radius: 6px;
+    background: #f5f5f5;
+    user-select: none;
+    width: 100%;
+    min-height: 5.2rem;
+    padding: 0 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    & > h5 {
+        color: var(--text-color);
+        font-weight: 400;
+        font-size: 1.8rem;
+    }
+}
+.collapse {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 30px 0 48px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+    overflow: hidden;
+    font-size: 1.8rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    animation: slideDown 0.5s ease-out;
+    user-select: none;
+}
+.btn-panel {
+    font-size: 2rem;
+    color: var(--primary);
+}
+.description {
+    font-size: 1.8rem;
+    display: flex;
+    gap: 5px;
+    color: #aeadad;
+}
+.hidden {
+    animation: slideUp 0.5s ease-out;
+    display: none;
+}
+.selectAll {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: var(--primary);
+    user-select: none;
+    font-size: 1.6rem;
+}
+
+// animations
+@keyframes slideDown {
+    0% {
+        top: -5rem;
+        opacity: 0;
+    }
+    100% {
+        top: 0;
+        opacity: 1;
+    }
+}
+@keyframes slideUp {
+    0% {
+        top: 0;
+        opacity: 1;
+    }
+    100% {
+        top: -5rem;
+        opacity: 0;
+    }
+}
